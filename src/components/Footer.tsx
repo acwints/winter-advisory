@@ -6,10 +6,6 @@ import { motion } from 'framer-motion'
 interface IconProps extends React.SVGProps<SVGSVGElement> {}
 
 const navigation = {
-  main: [
-    { name: 'About', href: '#about' },
-    { name: 'Pricing', href: '#pricing' },
-  ],
   social: [
     {
       name: 'LinkedIn',
@@ -56,19 +52,19 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-white">
-      <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+    <footer className="bg-gray-900 border-t border-gray-800">
+      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+        <div className="mx-auto max-w-2xl">
           {/* Newsletter Section */}
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold tracking-tight text-white">
               Stay in the Loop
             </h2>
-            <p className="mt-4 text-base text-gray-600">
+            <p className="mt-6 text-lg leading-8 text-gray-400">
               Subscribe to our newsletter for expert insights on business strategy and innovation.
             </p>
-            <form onSubmit={handleSubmit} className="mt-6">
-              <div className="flex max-w-md gap-x-4">
+            <form onSubmit={handleSubmit} className="mt-8">
+              <div className="flex max-w-md mx-auto gap-x-4">
                 <label htmlFor="email-address" className="sr-only">
                   Email address
                 </label>
@@ -80,62 +76,44 @@ export function Footer() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="min-w-0 flex-auto rounded-full bg-white px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                  className="min-w-0 flex-auto rounded-full bg-gray-800/50 px-4 py-3 text-white placeholder:text-gray-500 shadow-sm ring-1 ring-inset ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6"
                   placeholder="Enter your email"
                 />
                 <button
                   type="submit"
-                  className="flex-none rounded-full bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                  className="flex-none rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 transition-colors uppercase tracking-wider"
                 >
                   Subscribe
                 </button>
               </div>
               {status === 'success' && (
-                <p className="mt-4 text-sm text-gray-600">
+                <p className="mt-4 text-sm text-blue-400">
                   Thanks for subscribing! We'll be in touch soon.
                 </p>
               )}
             </form>
           </div>
 
-          {/* Navigation Links */}
-          <div className="lg:ml-auto">
-            <nav className="flex flex-col space-y-8">
-              <div>
-                <div className="flex justify-start space-x-12">
-                  {navigation.main.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="text-sm leading-6 text-gray-600 hover:text-gray-900"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <div className="flex space-x-6">
-                  {navigation.social.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="text-gray-400 hover:text-gray-500"
-                    >
-                      <span className="sr-only">{item.name}</span>
-                      <item.icon className="h-6 w-6" aria-hidden="true" />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </nav>
+          {/* Social Links */}
+          <div className="mt-16 flex justify-center space-x-8">
+            {navigation.social.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                className="text-gray-400 hover:text-blue-400 transition-colors"
+              >
+                <span className="sr-only">{item.name}</span>
+                <item.icon className="h-6 w-6" aria-hidden="true" />
+              </a>
+            ))}
           </div>
-        </div>
 
-        <div className="mt-8 border-t border-gray-900/10 pt-8">
-          <p className="text-xs leading-5 text-gray-500" suppressHydrationWarning>
-            &copy; {new Date().getFullYear()} Winter Advisory. All rights reserved.
-          </p>
+          {/* Copyright */}
+          <div className="mt-16 border-t border-gray-800 pt-8">
+            <p className="text-center text-sm leading-5 text-gray-500">
+              &copy; {new Date().getFullYear()} Winter Advisory. All rights reserved.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
+const spaceGrotesk = Space_Grotesk({ 
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700']
+})
 
 export const metadata: Metadata = {
   title: "Winter Advisory | Boutique Consulting Firm",
   description: "Expert consulting services tailored to your business needs. Winter Advisory helps organizations achieve their strategic goals through innovative solutions.",
   icons: {
-    icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-    ],
+    icon: '/favicon.svg',
   },
 };
 
@@ -33,12 +35,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-      </head>
-      <body className={`${inter.className} antialiased`} suppressHydrationWarning>
+    <html lang="en" className="scroll-smooth dark">
+      <body className={`bg-gray-900 text-gray-100 ${spaceGrotesk.className}`} suppressHydrationWarning>
         {children}
       </body>
     </html>

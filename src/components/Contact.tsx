@@ -30,7 +30,7 @@ export function Contact() {
           className="mx-auto mt-16 max-w-4xl rounded-3xl ring-1 ring-gray-200"
         >
           <div className="grid grid-cols-1 gap-x-8 gap-y-16 p-8 lg:p-12">
-            <div className="calendly-inline-widget min-h-[700px]" data-url="https://calendly.com/andrew-clark-winter"></div>
+            <div className="calendly-inline-widget min-h-[700px]" data-url="https://calendly.com/andrew-c-winter"></div>
             <Script src="https://assets.calendly.com/assets/external/widget.js" async />
           </div>
         </motion.div>

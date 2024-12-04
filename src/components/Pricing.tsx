@@ -48,7 +48,7 @@ const tiers = [
     ],
     cta: 'Contact Us',
     href: '#contact',
-    featured: true,
+    featured: false,
   },
   {
     name: 'Custom',
@@ -69,7 +69,7 @@ const tiers = [
 
 export function Pricing() {
   return (
-    <div id="pricing" className="bg-gray-50 py-24 sm:py-32">
+    <div id="pricing" className="bg-gray-900 py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -78,10 +78,10 @@ export function Pricing() {
           viewport={{ once: true }}
           className="mx-auto max-w-2xl text-center"
         >
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Simple, Transparent Pricing
           </h2>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
+          <p className="mt-6 text-lg leading-8 text-gray-300">
             Choose the perfect consulting package for your business needs
           </p>
         </motion.div>
@@ -100,33 +100,28 @@ export function Pricing() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 * index }}
               viewport={{ once: true }}
-              className={`relative flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-gray-200 xl:p-10 ${
-                tier.featured ? 'ring-2 ring-blue-600' : ''
+              className={`relative flex flex-col justify-between rounded-3xl bg-gray-800 p-8 ring-1 ring-gray-700 xl:p-10 ${
+                tier.featured ? 'ring-2 ring-blue-500' : ''
               }`}
             >
               <div>
                 <div className="flex items-center justify-between gap-x-4">
-                  <h3 className={`text-lg font-semibold leading-8 ${tier.featured ? 'text-blue-600' : 'text-gray-900'}`}>
+                  <h3 className={`text-lg font-semibold leading-8 ${tier.featured ? 'text-blue-400' : 'text-white'}`}>
                     {tier.name}
                   </h3>
-                  {tier.featured && (
-                    <p className="rounded-full bg-blue-600/10 px-2.5 py-1 text-xs font-semibold leading-5 text-blue-600">
-                      Most Popular
-                    </p>
-                  )}
                 </div>
-                <p className="mt-4 text-sm leading-6 text-gray-600">{tier.description}</p>
+                <p className="mt-4 text-sm leading-6 text-gray-300">{tier.description}</p>
                 <p className="mt-6 flex items-baseline gap-x-1">
-                  {tier.price !== 'Custom' && <span className="text-4xl font-bold tracking-tight text-gray-900">$</span>}
-                  <span className="text-4xl font-bold tracking-tight text-gray-900">{tier.price}</span>
+                  {tier.price !== 'Custom' && <span className="text-4xl font-bold tracking-tight text-white">$</span>}
+                  <span className="text-4xl font-bold tracking-tight text-white">{tier.price}</span>
                   {tier.price !== 'Custom' && (
-                    <span className="text-sm font-semibold leading-6 text-gray-600">/package</span>
+                    <span className="text-sm font-semibold leading-6 text-gray-300">/package</span>
                   )}
                 </p>
-                <ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-600">
+                <ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-300">
                   {tier.features.map((feature) => (
                     <li key={feature} className="flex gap-x-3">
-                      <CheckIcon className="h-6 w-5 flex-none text-blue-600" aria-hidden="true" />
+                      <CheckIcon className="h-6 w-5 flex-none text-blue-400" aria-hidden="true" />
                       {feature}
                     </li>
                   ))}
@@ -136,8 +131,8 @@ export function Pricing() {
                 href={tier.href}
                 className={`mt-8 block rounded-full px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
                   tier.featured
-                    ? 'bg-blue-600 text-white shadow-sm hover:bg-blue-500 focus-visible:outline-blue-600'
-                    : 'bg-blue-50 text-blue-600 hover:bg-blue-100'
+                    ? 'bg-blue-600 text-white shadow-sm hover:bg-blue-500 focus-visible:outline-blue-500'
+                    : 'bg-gray-700 text-white hover:bg-gray-600'
                 }`}
               >
                 {tier.cta}
