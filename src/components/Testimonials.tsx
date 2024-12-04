@@ -22,7 +22,7 @@ const testimonials = [
 
 export function Testimonials() {
   return (
-    <div id="testimonials" className="bg-white py-24 sm:py-32">
+    <div id="testimonials" className="bg-gray-900/50 py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -31,10 +31,10 @@ export function Testimonials() {
           viewport={{ once: true }}
           className="mx-auto max-w-xl text-center"
         >
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Trusted by Industry Leaders
           </h2>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
+          <p className="mt-6 text-lg leading-8 text-gray-300">
             See what our clients say about their experience working with Winter Advisory.
           </p>
         </motion.div>
@@ -50,7 +50,7 @@ export function Testimonials() {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="relative isolate flex flex-col justify-between bg-white shadow-xl shadow-gray-900/10 p-8 ring-1 ring-gray-200 rounded-3xl"
+                className="relative isolate flex flex-col justify-between bg-gray-900/30 shadow-xl shadow-gray-900/50 p-8 ring-1 ring-gray-800 rounded-3xl"
               >
                 <div>
                   <div className="flex gap-x-3">
@@ -60,11 +60,11 @@ export function Testimonials() {
                       </span>
                     </div>
                     <div>
-                      <div className="text-sm font-semibold leading-6 text-gray-900">{testimonial.author}</div>
-                      <div className="text-sm leading-6 text-gray-600">{testimonial.role}</div>
+                      <div className="text-sm font-semibold leading-6 text-white">{testimonial.author}</div>
+                      <div className="text-sm leading-6 text-gray-400">{testimonial.role}</div>
                     </div>
                   </div>
-                  <div className="mt-8 text-base leading-7 text-gray-600">
+                  <div className="mt-8 text-base leading-7 text-gray-300">
                     <p>"{testimonial.content}"</p>
                   </div>
                 </div>

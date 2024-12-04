@@ -28,7 +28,7 @@ const services = [
 
 export function About() {
   return (
-    <div id="about" className="relative isolate overflow-hidden bg-white py-24 sm:py-32">
+    <div id="about" className="relative isolate overflow-hidden bg-gray-900/30 py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -37,10 +37,10 @@ export function About() {
           viewport={{ once: true }}
           className="mx-auto max-w-2xl lg:mx-0"
         >
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Transforming Businesses Through Expert Consulting
           </h2>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
+          <p className="mt-6 text-lg leading-8 text-gray-300">
             At Winter Advisory, we combine industry expertise with innovative methodologies to help businesses thrive in today's dynamic market environment.
           </p>
         </motion.div>
@@ -63,13 +63,13 @@ export function About() {
                   viewport={{ once: true }}
                   className="relative pl-16"
                 >
-                  <dt className="text-base font-semibold leading-7 text-gray-900">
+                  <dt className="text-base font-semibold leading-7 text-white">
                     <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
                       <service.icon className="h-6 w-6 text-white" aria-hidden="true" />
                     </div>
                     {service.name}
                   </dt>
-                  <dd className="mt-2 text-base leading-7 text-gray-600">{service.description}</dd>
+                  <dd className="mt-2 text-base leading-7 text-gray-300">{service.description}</dd>
                 </motion.div>
               ))}
             </div>
@@ -79,7 +79,7 @@ export function About() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
                 viewport={{ once: true }}
-                className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-gray-100 shadow-lg"
+                className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-gray-900/50 shadow-lg border border-gray-800"
               >
                 {/* Placeholder for about image 1 */}
                 <div className="absolute inset-0 flex items-center justify-center text-gray-400">
@@ -93,7 +93,7 @@ export function About() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
                 viewport={{ once: true }}
-                className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-gray-100 shadow-lg lg:aspect-[4/3] lg:h-[400px]"
+                className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-gray-900/50 shadow-lg border border-gray-800 lg:aspect-[4/3] lg:h-[400px]"
               >
                 {/* Placeholder for about image 2 */}
                 <div className="absolute inset-0 flex items-center justify-center text-gray-400">

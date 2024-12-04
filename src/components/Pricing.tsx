@@ -114,9 +114,6 @@ export function Pricing() {
                 <p className="mt-6 flex items-baseline gap-x-1">
                   {tier.price !== 'Custom' && <span className="text-4xl font-bold tracking-tight text-white">$</span>}
                   <span className="text-4xl font-bold tracking-tight text-white">{tier.price}</span>
-                  {tier.price !== 'Custom' && (
-                    <span className="text-sm font-semibold leading-6 text-gray-300">/package</span>
-                  )}
                 </p>
                 <ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-300">
                   {tier.features.map((feature) => (

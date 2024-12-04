@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
 const spaceGrotesk = Space_Grotesk({ 
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700']
-})
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-space-grotesk',
+});
 
 export const metadata: Metadata = {
   title: "Winter Advisory | Boutique Consulting Firm",
@@ -14,6 +15,11 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.svg',
   },
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' }
+  ],
 };
 
 // Add security headers
@@ -27,6 +33,9 @@ export const headers = {
     frame-src 'self' https://calendly.com;
     connect-src 'self' https://calendly.com;
   `.replace(/\s+/g, ' ').trim(),
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'X-XSS-Protection': '1; mode=block',
 };
 
 export default function RootLayout({
@@ -35,8 +44,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth dark">
-      <body className={`bg-gray-900 text-gray-100 ${spaceGrotesk.className}`} suppressHydrationWarning>
+    <html lang="en" className={`scroll-smooth dark ${spaceGrotesk.variable}`}>
+      <body 
+        className="bg-gray-900 text-gray-100 antialiased" 
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>
