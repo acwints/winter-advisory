@@ -13,8 +13,7 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 const navigation = [
-  { name: 'About', href: '#about' },
-  { name: 'Pricing', href: '#pricing' },
+  { name: 'Shop', href: '/shop' },
 ]
 
 export function Header() {
@@ -55,42 +54,38 @@ export function Header() {
     <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
       scrolled ? 'bg-gray-900/95 backdrop-blur-md shadow-lg' : 'bg-gray-900/80 backdrop-blur-sm'
     } border-b border-gray-800`}>
-      <nav className="flex items-center justify-between p-4 lg:px-8" aria-label="Global">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="-m-1.5 p-1.5" onClick={closeMenu}>
             <Image
               src="/logo.png"
               alt="Logo"
               width={500}
               height={100}
               priority
-              className="h-14 w-auto transition-transform hover:scale-105"
+              className="h-12 w-auto"
             />
           </Link>
         </div>
         <div className="flex lg:hidden">
           <button
             type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-300"
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <div className="hidden lg:flex lg:gap-x-8">
-          {navigation.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              onClick={handleNavClick}
-              className="text-sm font-semibold leading-6 text-gray-300 hover:text-white hover:bg-gray-800/50 px-4 py-2 rounded-lg transition-all uppercase tracking-wider font-microgramma"
-            >
-              {item.name}
-            </a>
-          ))}
+        <div className="hidden lg:flex lg:flex-1">
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div className="hidden lg:flex lg:items-center lg:gap-x-8">
+          <a
+            href="/shop"
+            className="text-sm font-semibold leading-6 text-gray-300 hover:text-white transition-colors uppercase tracking-wider font-microgramma"
+          >
+            Shop
+          </a>
           <a
             href="#contact"
             onClick={handleNavClick}
