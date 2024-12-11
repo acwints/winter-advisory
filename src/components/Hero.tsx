@@ -28,19 +28,21 @@ export function Hero() {
             className="lg:flex-1"
           >
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-5xl xl:text-6xl">
-              Strategic Solutions for{' '}
-              <span className="text-blue-400">Business Excellence</span>
+              GTM, Product, and Data Solutions{' '}<br />
+              <span className="text-blue-400">for Your Business</span>
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-300">
-              Winter Advisory helps organizations navigate complex challenges and achieve sustainable growth through expert consulting services and innovative strategies.
+              Winter Advisory empowers organizations to overcome complex challenges and achieve sustainable growth through operational experience and innovative strategies.
             </p>
-            <div className="mt-10 flex items-center gap-x-6">
+            <div className="mt-10 flex">
+              <div className="flex-1"></div>
               <a
                 href="#contact"
                 className="rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
               >
                 Schedule a Consultation
               </a>
+              <div className="flex-1"></div>
             </div>
           </motion.div>
           
@@ -52,8 +54,8 @@ export function Hero() {
           >
             <div className="relative aspect-[3/2] w-full rounded-2xl overflow-hidden">
               <Image
-                src="/plane.png"
-                alt="Small plane flying over mountains"
+                src="/images/1.JPG"
+                alt=""
                 fill
                 className="object-cover"
                 priority

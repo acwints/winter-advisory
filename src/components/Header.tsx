@@ -14,6 +14,7 @@ const spaceGrotesk = Space_Grotesk({
 
 const navigation = [
   { name: 'Shop', href: '/shop' },
+  { name: 'Team', href: '/team' },
 ]
 
 export function Header() {
@@ -58,12 +59,12 @@ export function Header() {
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5" onClick={closeMenu}>
             <Image
-              src="/logo.png"
+              src="/images/logo.png"
               alt="Logo"
-              width={500}
-              height={100}
+              width={800}
+              height={200}
               priority
-              className="h-12 w-auto"
+              className="h-16 w-auto"
             />
           </Link>
         </div>
@@ -80,12 +81,15 @@ export function Header() {
         <div className="hidden lg:flex lg:flex-1">
         </div>
         <div className="hidden lg:flex lg:items-center lg:gap-x-8">
-          <a
-            href="/shop"
-            className="text-sm font-semibold leading-6 text-gray-300 hover:text-white transition-colors uppercase tracking-wider font-microgramma"
-          >
-            Shop
-          </a>
+          {navigation.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              className="text-sm font-semibold leading-6 text-gray-300 hover:text-white transition-colors uppercase tracking-wider font-microgramma"
+            >
+              {item.name}
+            </a>
+          ))}
           <a
             href="#contact"
             onClick={handleNavClick}
@@ -101,12 +105,12 @@ export function Header() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center" onClick={closeMenu}>
               <Image
-                src="/logo.png"
+                src="/images/logo.png"
                 alt="Logo"
-                width={500}
-                height={100}
+                width={800}
+                height={200}
                 priority
-                className="h-12 w-auto"
+                className="h-16 w-auto"
               />
             </Link>
             <button

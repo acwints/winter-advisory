@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk } from "next/font/google";
+import localFont from 'next/font/local'
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({ 
@@ -7,6 +8,14 @@ const spaceGrotesk = Space_Grotesk({
   weight: ['400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-space-grotesk',
+});
+
+const microgramma = localFont({
+  src: '../fonts/microgrammanormal.ttf',
+  variable: '--font-microgramma',
+  display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'arial'],
 });
 
 export const metadata: Metadata = {
@@ -34,9 +43,9 @@ export const headers = {
     script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com https://js.stripe.com;
     style-src 'self' 'unsafe-inline';
     img-src 'self' data: https:;
-    font-src 'self' https://js.stripe.com;
-    frame-src 'self' https://calendly.com;
-    connect-src 'self' https://calendly.com;
+    font-src 'self' https://js.stripe.com data:;
+    frame-src 'self' https://calendly.com https://js.stripe.com;
+    connect-src 'self' https://calendly.com https://js.stripe.com;
   `.replace(/\s+/g, ' ').trim(),
   'X-Content-Type-Options': 'nosniff',
   'X-Frame-Options': 'DENY',
@@ -49,7 +58,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`scroll-smooth dark ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`scroll-smooth dark ${spaceGrotesk.variable} ${microgramma.variable}`}>
       <body 
         className="bg-gray-900 text-gray-100 antialiased" 
         suppressHydrationWarning

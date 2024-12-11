@@ -17,13 +17,15 @@ export function Contact() {
               viewport={{ once: true }}
               className="max-w-xl"
             >
-              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-                Schedule a Consultation
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl text-center">
+                Let's Chat
               </h2>
               <p className="mt-8 text-lg leading-8 text-gray-300">
-                Book a meeting with our consultants to discuss how we can help your business grow.
+                Book a meeting to discuss how we can help your business grow.
               </p>
             </motion.div>
+
+            <div className="my-16"></div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -36,10 +38,10 @@ export function Contact() {
               <p className="mt-6 text-base leading-7 text-gray-300">
                 Prefer to email? Reach out to us at{' '}
                 <a
-                  href="mailto:contact@winteradvisory.com"
+                  href="mailto:andrew@winteradvisory.com"
                   className="font-semibold text-blue-400 hover:text-blue-300"
                 >
-                  contact@winteradvisory.com
+                  andrew@winteradvisory.com
                 </a>
               </p>
             </motion.div>

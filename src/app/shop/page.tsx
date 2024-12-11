@@ -2,46 +2,53 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { loadStripe } from '@stripe/stripe-js'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { StarIcon } from '@heroicons/react/20/solid'
+import { toast } from 'react-hot-toast'
+
+// Initialize Stripe
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 const products = [
   {
+    id: 'sheets-crm',
     name: 'Sheets CRM',
     description: 'A powerful CRM system built on Google Sheets, perfect for small businesses and startups.',
     image: '/products/sheets-crm.svg',
     price: 100,
     rating: 5,
     ratingCount: 100,
-    href: '#',
   },
   {
+    id: 'calendar-automations',
     name: 'Calendar Automations',
     description: 'Streamline your scheduling with smart calendar automations and integrations.',
     image: '/products/calendar-automations.svg',
     price: 100,
     rating: 5,
     ratingCount: 100,
-    href: '#',
   },
   {
+    id: 'growth-playbook',
     name: 'Growth Playbook',
     description: 'Comprehensive strategies and tactics for scaling your business effectively.',
     image: '/products/growth-playbook.svg',
     price: 100,
     rating: 5,
     ratingCount: 100,
-    href: '#',
   },
   {
+    id: 'dashboard-template',
     name: 'Dashboard Template',
     description: 'Beautiful and functional dashboard templates for data visualization and analytics.',
     image: '/products/dashboard-template.svg',
     price: 100,
     rating: 5,
     ratingCount: 100,
-    href: '#',
   },
 ]
 
@@ -50,6 +57,54 @@ function classNames(...classes: string[]) {
 }
 
 export default function Shop() {
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    // Check for success/canceled status
+    if (searchParams.get('success')) {
+      toast.success('Payment successful! You will receive an email with your purchase details.')
+    }
+    if (searchParams.get('canceled')) {
+      toast.error('Payment canceled.')
+    }
+  }, [searchParams])
+
+  const handleBuyNow = async (productId: string) => {
+    try {
+      // Create a checkout session
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productId }),
+      })
+
+      const { sessionId, error } = await response.json()
+
+      if (error) {
+        toast.error('Something went wrong. Please try again.')
+        return
+      }
+
+      // Redirect to Stripe checkout
+      const stripe = await stripePromise
+      if (!stripe) {
+        toast.error('Something went wrong. Please try again.')
+        return
+      }
+
+      const { error: stripeError } = await stripe.redirectToCheckout({ sessionId })
+
+      if (stripeError) {
+        toast.error('Something went wrong. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      toast.error('Something went wrong. Please try again.')
+    }
+  }
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
       <Header />
@@ -83,7 +138,7 @@ export default function Shop() {
           >
             {products.map((product, index) => (
               <motion.div
-                key={product.name}
+                key={product.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 * index }}
@@ -127,12 +182,12 @@ export default function Shop() {
                   </p>
                 </div>
                 
-                <a
-                  href={product.href}
+                <button
+                  onClick={() => handleBuyNow(product.id)}
                   className="mt-6 inline-flex items-center justify-center rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 transition-colors"
                 >
                   Buy now
-                </a>
+                </button>
               </motion.div>
             ))}
           </motion.div>

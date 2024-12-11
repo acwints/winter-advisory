@@ -1,22 +1,26 @@
 "use client"
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 const testimonials = [
   {
     content: 'Winter Advisory\'s strategic insights transformed our operations. Their expertise in change management helped us navigate complex transitions seamlessly.',
-    author: 'Sarah Chen',
-    role: 'CEO, TechVision Inc.',
+    author: 'Porter Grieve',
+    role: 'Founder, CEO @ College Sports Co.',
+    image: '/images/grieve.jpg'
   },
   {
     content: 'The team\'s dedication to understanding our unique challenges and providing tailored solutions exceeded our expectations. Highly recommended!',
-    author: 'Michael Rodriguez',
-    role: 'COO, Global Solutions Ltd.',
+    author: 'Blaine Vess',
+    role: 'Founder, CEO @ Immeasurable',
+    image: '/images/vess.jpg'
   },
   {
     content: 'Working with Winter Advisory has been instrumental in our growth. Their innovative approach to problem-solving delivered remarkable results.',
-    author: 'Emily Thompson',
-    role: 'Director of Operations, Innovate Corp',
+    author: 'Jesse Pujji',
+    role: 'Founder, CEO @ GatewayX',
+    image: '/images/pujji.jpg'
   },
 ]
 
@@ -54,10 +58,14 @@ export function Testimonials() {
               >
                 <div>
                   <div className="flex gap-x-3">
-                    <div className="h-10 w-10 flex items-center justify-center rounded-full bg-blue-600">
-                      <span className="text-sm font-semibold leading-6 text-white">
-                        {testimonial.author.split(' ').map(n => n[0]).join('')}
-                      </span>
+                    <div className="relative h-10 w-10 overflow-hidden rounded-full">
+                      <Image
+                        src={testimonial.image}
+                        alt={testimonial.author}
+                        fill
+                        sizes="40px"
+                        className="object-cover"
+                      />
                     </div>
                     <div>
                       <div className="text-sm font-semibold leading-6 text-white">{testimonial.author}</div>
