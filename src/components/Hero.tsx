@@ -52,7 +52,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mt-16 sm:mt-24 lg:mt-0 lg:flex-1"
           >
-            <div className="relative aspect-[3/2] w-full rounded-2xl overflow-hidden">
+            <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden">
               <Image
                 src="/images/1.JPG"
                 alt=""

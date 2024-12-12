@@ -7,19 +7,28 @@ const testimonials = [
   {
     content: 'Andrew\'s dedication to understanding our unique challenges and his ability to provide tailored solutions exceeded our expectations. His insights were invaluable!',
     author: 'Blaine Vess',
-    role: 'Founder, CEO @ Immeasurable',
+    authorLink: 'https://www.linkedin.com/in/blainevess',
+    role: 'Founder, CEO @ ',
+    company: 'Immeasurable',
+    companyLink: 'https://immeasurable.com',
     image: '/images/vess.jpg'
   },
   {
     content: 'Working with Andrew has been transformative for our business. His innovative approach to problem-solving and deep industry expertise delivered remarkable results.',
     author: 'Jesse Pujji',
-    role: 'Founder, CEO @ GatewayX',
+    authorLink: 'https://www.linkedin.com/in/jessepujji/',
+    role: 'Founder, CEO @ ',
+    company: 'GatewayX',
+    companyLink: 'https://gateway.xyz',
     image: '/images/pujji.jpg'
   },
   {
     content: 'Andrew\'s strategic insights and hands-on guidance transformed our operations. His experience in scaling companies helped us navigate complex transitions seamlessly.',
     author: 'Porter Grieve',
-    role: 'Founder, CEO @ College Sports Co.',
+    authorLink: 'https://www.linkedin.com/in/porter-g-9a4b8374/',
+    role: 'Founder, CEO @ ',
+    company: 'College Sports Co.',
+    companyLink: 'https://collegesportsco.com',
     image: '/images/grieve.jpg'
   },
 ]
@@ -58,18 +67,40 @@ export function Testimonials() {
               >
                 <div>
                   <div className="flex gap-x-3">
-                    <div className="relative h-10 w-10 overflow-hidden rounded-full">
+                    <div className="relative h-16 w-16 overflow-hidden rounded-full">
                       <Image
                         src={testimonial.image}
                         alt={testimonial.author}
                         fill
-                        sizes="40px"
+                        sizes="72px"
                         className="object-cover"
                       />
                     </div>
-                    <div>
-                      <div className="text-sm font-semibold leading-6 text-white">{testimonial.author}</div>
-                      <div className="text-sm leading-6 text-gray-400">{testimonial.role}</div>
+                    <div className="-mt-1.5">
+                      <div className="text-sm font-semibold leading-6 text-white">
+                        <a 
+                          href={testimonial.authorLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-blue-400 transition-colors underline decoration-2 decoration-gray-600 hover:decoration-blue-400"
+                        >
+                          {testimonial.author}
+                        </a>
+                      </div>
+                      <div className="text-sm leading-6 text-gray-400">
+                        Founder, CEO
+                      </div>
+                      <div className="text-sm leading-6 text-gray-400">
+                        @{' '}
+                        <a 
+                          href={testimonial.companyLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-blue-400 transition-colors underline decoration-2 decoration-gray-600 hover:decoration-blue-400"
+                        >
+                          {testimonial.company}
+                        </a>
+                      </div>
                     </div>
                   </div>
                   <div className="mt-8 text-base leading-7 text-gray-300">

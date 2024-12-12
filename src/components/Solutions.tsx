@@ -29,7 +29,7 @@ const services = [
 
 export function Solutions() {
   return (
-    <div id="about" className="relative isolate overflow-hidden bg-gray-800 py-24 sm:py-32">
+    <div id="about" className="relative isolate overflow-hidden bg-gray-800 py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -43,7 +43,7 @@ export function Solutions() {
           </h2>
         </motion.div>
 
-        <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+        <div className="mx-auto mt-12 max-w-2xl sm:mt-14 lg:mt-16 lg:max-w-none">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -57,7 +57,7 @@ export function Solutions() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
                 viewport={{ once: true }}
-                className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-gray-900/50 shadow-lg border border-gray-800"
+                className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-gray-900/50 shadow-lg border border-gray-800"
               >
                 <Image
                   src="/images/2.JPG"
