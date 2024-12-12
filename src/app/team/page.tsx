@@ -15,39 +15,38 @@ export default function Team() {
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:items-start"
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-32 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-5 lg:items-start"
           >
-            {/* Image Section - Takes up 1 column */}
-            <div className="relative rounded-2xl border-2 border-white/50 p-0">
-              <Image
-                src="/images/ski.jpg"
-                alt="Team member skiing"
-                width={800}
-                height={1600}
-                className="aspect-[1/2] w-full rounded-2xl object-cover"
-                priority
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
-              />
-            </div>
 
-            {/* About Section - Takes up 2 columns */}
-            <div className="flex flex-col gap-6 lg:col-span-2">
+            {/* About Section - Takes up 3 columns */}
+            <div className="flex flex-col gap-6 lg:col-span-3">
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                className="flex flex-col items-center text-center"
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="flex flex-col w-full"
               >
-                <h2 className="text-3xl font-bold tracking-tight text-white">Andrew Winter</h2>
+                <h2 className="text-3xl font-bold tracking-tight text-white text-center">Andrew Winter</h2>
                 <p className="mt-6 text-lg leading-8 text-gray-300 text-left">
-                  With over a decade of experience in business strategy and digital transformation, our founder brings a unique perspective to every client engagement. Having worked with Fortune 500 companies and innovative startups alike, they understand the diverse challenges businesses face in today's rapidly evolving landscape.
+                  With over a decade of experience in business strategy and digital transformation, Andrew brings a unique perspective to every client engagement. As a former Director of Sales at Snowflake and early employee at several successful startups, he has helped companies scale from seed stage through IPO. His deep expertise spans sales acceleration, revenue operations, and AI-driven automation.
                 </p>
                 <p className="mt-6 text-lg leading-8 text-gray-300 text-left">
-                  Beyond their professional expertise, they're an avid skier and outdoor enthusiast, finding inspiration in nature's challenges and bringing that same spirit of adventure and determination to their consulting work. This unique combination of professional excellence and personal passion enables them to build strong, authentic relationships with clients while delivering exceptional results. As George Costanza would say...
+                  Beyond his professional expertise, Andrew is an avid backcountry skier and mountaineer, finding inspiration in pushing boundaries and tackling ambitious challenges. He brings this same spirit of calculated risk-taking and relentless drive to his consulting work. By combining technical knowledge with authentic relationship building, Andrew helps clients transform their businesses through innovative solutions and data-driven strategies.
                 </p>
-                <div className="mt-6 relative aspect-[16/9] w-full max-w-[500px] overflow-hidden rounded-lg mx-auto">
+                <p className="mt-6 text-lg leading-8 text-gray-300 text-left">
+                  In other words...
+                </p>
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4 }}
+                  viewport={{ once: true }}
+                  className="mt-6 relative aspect-[16/9] w-full max-w-[500px] overflow-hidden rounded-lg mx-auto border-2 border-white/50"
+                >
                   <Image
                     src="https://media1.tenor.com/m/EOuS8MPVU1UAAAAC/seinfeld-george.gif"
                     alt="George Costanza from Seinfeld"
@@ -55,9 +54,31 @@ export default function Team() {
                     sizes="(max-width: 768px) 100vw, 500px"
                     className="object-contain"
                   />
-                </div>
+                </motion.div>
               </motion.div>
             </div>
+
+             {/* Image Section - Takes up 2 columns */}
+             <motion.div 
+               initial={{ opacity: 0, scale: 0.95 }}
+               whileInView={{ opacity: 1, scale: 1 }}
+               transition={{ duration: 0.6 }}
+               viewport={{ once: true }}
+               className="flex items-center justify-start h-full lg:col-span-2"
+             >
+              <div className="relative w-fit">
+                <Image
+                  src="/images/ski.webp"
+                  alt="Team member skiing"
+                  width={300}
+                  height={600}
+                  className="aspect-[1/2] rounded-2xl object-cover border-2 border-white/50"
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  quality={90}
+                />
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

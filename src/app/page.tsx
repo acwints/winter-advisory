@@ -1,6 +1,6 @@
 import { Header } from '@/components/Header'
 import { Hero } from '@/components/Hero'
-import { About } from '@/components/About'
+import { Solutions } from '@/components/Solutions'
 import { Testimonials } from '@/components/Testimonials'
 import { Pricing } from '@/components/Pricing'
 import { Contact } from '@/components/Contact'
@@ -11,7 +11,7 @@ export default function Home() {
     <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
       <Header />
       <Hero />
-      <About />
+      <Solutions />
       <Testimonials />
       <Pricing />
       <Contact />

@@ -46,6 +46,9 @@ export function Header() {
           top: offsetPosition,
           behavior: 'smooth'
         })
+      } else {
+        // If element not found (we're on a different page), navigate to home page with hash
+        window.location.href = '/' + href
       }
       closeMenu()
     }
@@ -95,7 +98,7 @@ export function Header() {
             onClick={handleNavClick}
             className="rounded-full bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 transition-all hover:scale-105 uppercase tracking-wider font-microgramma"
           >
-            Get Started
+            Contact
           </a>
         </div>
       </nav>
@@ -142,7 +145,7 @@ export function Header() {
                   onClick={handleNavClick}
                   className="block rounded-lg px-4 py-3 text-base font-semibold text-white bg-blue-600 hover:bg-blue-500 transition-colors text-center uppercase tracking-wider font-microgramma"
                 >
-                  Get Started
+                  Contact
                 </a>
               </div>
             </div>

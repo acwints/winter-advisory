@@ -34,14 +34,14 @@ export function Contact() {
               viewport={{ once: true }}
               className="mt-16 lg:mt-32"
             >
-              <h3 className="text-xl font-semibold leading-7 text-blue-400">Get in Touch</h3>
+              <h3 className="text-xl font-semibold leading-7 text-blue-400 text-center">Get in Touch</h3>
               <p className="mt-6 text-base leading-7 text-gray-300">
-                Prefer to email? Reach out to us at{' '}
+                Prefer to email? Reach out directly via {' '}
                 <a
-                  href="mailto:andrew@winteradvisory.com"
+                  href="mailto:andrew@winteradvisory.llc"
                   className="font-semibold text-blue-400 hover:text-blue-300"
                 >
-                  andrew@winteradvisory.com
+                  andrew@winteradvisory.llc
                 </a>
               </p>
             </motion.div>

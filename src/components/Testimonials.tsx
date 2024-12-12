@@ -5,28 +5,28 @@ import Image from 'next/image'
 
 const testimonials = [
   {
-    content: 'Winter Advisory\'s strategic insights transformed our operations. Their expertise in change management helped us navigate complex transitions seamlessly.',
-    author: 'Porter Grieve',
-    role: 'Founder, CEO @ College Sports Co.',
-    image: '/images/grieve.jpg'
-  },
-  {
-    content: 'The team\'s dedication to understanding our unique challenges and providing tailored solutions exceeded our expectations. Highly recommended!',
+    content: 'Andrew\'s dedication to understanding our unique challenges and his ability to provide tailored solutions exceeded our expectations. His insights were invaluable!',
     author: 'Blaine Vess',
     role: 'Founder, CEO @ Immeasurable',
     image: '/images/vess.jpg'
   },
   {
-    content: 'Working with Winter Advisory has been instrumental in our growth. Their innovative approach to problem-solving delivered remarkable results.',
+    content: 'Working with Andrew has been transformative for our business. His innovative approach to problem-solving and deep industry expertise delivered remarkable results.',
     author: 'Jesse Pujji',
     role: 'Founder, CEO @ GatewayX',
     image: '/images/pujji.jpg'
+  },
+  {
+    content: 'Andrew\'s strategic insights and hands-on guidance transformed our operations. His experience in scaling companies helped us navigate complex transitions seamlessly.',
+    author: 'Porter Grieve',
+    role: 'Founder, CEO @ College Sports Co.',
+    image: '/images/grieve.jpg'
   },
 ]
 
 export function Testimonials() {
   return (
-    <div id="testimonials" className="bg-gray-900/50 py-24 sm:py-32">
+    <div id="testimonials" className="bg-gray-900/30 py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -39,7 +39,7 @@ export function Testimonials() {
             Trusted by Industry Leaders
           </h2>
           <p className="mt-6 text-lg leading-8 text-gray-300">
-            See what our clients say about their experience working with Winter Advisory.
+            See what our clients say about working with Andrew.
           </p>
         </motion.div>
         

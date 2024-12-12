@@ -11,9 +11,15 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 const microgramma = localFont({
-  src: '../fonts/microgrammanormal.ttf',
+  src: [
+    {
+      path: '../fonts/microgrammanormal.ttf',
+      weight: '400',
+      style: 'normal',
+    }
+  ],
   variable: '--font-microgramma',
-  display: 'swap',
+  display: 'block',
   preload: true,
   fallback: ['system-ui', 'arial'],
 });
