@@ -42,22 +42,6 @@ export const viewport: Viewport = {
   ],
 };
 
-// Add security headers
-export const headers = {
-  'Content-Security-Policy': `
-    default-src 'self';
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com https://js.stripe.com;
-    style-src 'self' 'unsafe-inline';
-    img-src 'self' data: https:;
-    font-src 'self' https://js.stripe.com data:;
-    frame-src 'self' https://calendly.com https://js.stripe.com;
-    connect-src 'self' https://calendly.com https://js.stripe.com;
-  `.replace(/\s+/g, ' ').trim(),
-  'X-Content-Type-Options': 'nosniff',
-  'X-Frame-Options': 'DENY',
-  'X-XSS-Protection': '1; mode=block',
-};
-
 export default function RootLayout({
   children,
 }: {
