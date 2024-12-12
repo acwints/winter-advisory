@@ -40,7 +40,7 @@ const tiers = [
     price: '10,000',
     description: 'In-depth engagement for significant organizational transformation.',
     features: [
-      'Up to 80 full hours of dedicated work',
+      'Up to 80 full hours of collaborative work',
       'Full strategic overhaul and implementation',
       'Built-in progress reviews and reporting',
       'Priority access 24/7'
