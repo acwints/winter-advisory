@@ -10,7 +10,7 @@ export default function Team() {
     <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
       <Header />
       
-      <div className="pt-32 pb-24 sm:pt-40 sm:pb-32">
+      <div className="pt-20 pb-24 sm:pt-24 sm:pb-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
           <motion.div
@@ -32,10 +32,10 @@ export default function Team() {
               >
                 <h2 className="text-3xl font-bold tracking-tight text-white text-center">Andrew Winter</h2>
                 <p className="mt-6 text-lg leading-8 text-gray-300 text-left">
-                  With over a decade of experience in business strategy and digital transformation, Andrew brings a unique perspective to every client engagement. As a former Director of Sales at Snowflake and early employee at several successful startups, he has helped companies scale from seed stage through IPO. His deep expertise spans sales acceleration, revenue operations, and AI-driven automation.
+                  Andrew is the Founder and sole Partner at Winter Advisory, a boutique consulting firm that helps all types of businesses, from startups to enterprises to investment firms, scale up their operations in the age of AI. He's also currently a Venture Partner at <a href="https://mbaventures.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">MBA Ventures</a> and the Co-Founder & CTO at <a href="https://banteegolf.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">Bantee</a>, aka the Strava for golf. His experience spans venture capital, growth strategy, and product development across companies like <a href="https://classpass.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">ClassPass</a>, <a href="https://immeasurable.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">Immeasurable</a>, and <a href="https://gateway.xyz" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">GatewayX</a>. As a self-taught developer, a huge data nerd, and an MBA candidate at Berkeley Haas, he brings both technical expertise and business acumen to every project.
                 </p>
                 <p className="mt-6 text-lg leading-8 text-gray-300 text-left">
-                  Beyond his professional expertise, Andrew is an avid backcountry skier and mountaineer, finding inspiration in pushing boundaries and tackling ambitious challenges. He brings this same spirit of calculated risk-taking and relentless drive to his consulting work. By combining technical knowledge with authentic relationship building, Andrew helps clients transform their businesses through innovative solutions and data-driven strategies.
+                  Beyond his professional work, Andrew is an avid skier and golfer, finding inspiration in pushing boundaries and tackling difficult challenges. His wide-ranging experience is difficult to put in a single box, let alone on a resume 😉, but Andrew is a builder at the core who loves to solve complex problems with ambitious teams.
                 </p>
                 <p className="mt-6 text-lg leading-8 text-gray-300 text-left">
                   In other words...

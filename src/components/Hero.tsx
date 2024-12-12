@@ -32,7 +32,7 @@ export function Hero() {
               <span className="text-blue-400">for Your Business</span>
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-300">
-              Winter Advisory empowers organizations to overcome complex challenges and achieve sustainable growth through operational experience and innovative strategies.
+              Winter Advisory empowers organizations to overcome complex challenges and achieve sustainable growth through operational efficiencies and innovative strategies.
             </p>
             <div className="mt-10 flex">
               <div className="flex-1"></div>

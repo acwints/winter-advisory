@@ -13,7 +13,7 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 const navigation = [
-  { name: 'Shop', href: '/shop' },
+  // { name: 'Shop', href: '/shop' },
   { name: 'Team', href: '/team' },
 ]
 
