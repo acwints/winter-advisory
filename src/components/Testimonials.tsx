@@ -6,30 +6,30 @@ import Image from 'next/image'
 const testimonials = [
   {
     content: 'Andrew\'s dedication to understanding our unique challenges and his ability to provide tailored solutions exceeded our expectations. His insights were invaluable!',
-    author: 'Blaine Vess',
-    authorLink: 'https://www.linkedin.com/in/blainevess',
-    role: 'Founder, CEO @ ',
-    company: 'Immeasurable',
+    author: 'Abraham Lincoln',
+    authorLink: 'https://www.linkedin.com',
+    role: 'Founder, CEO',
+    company: '',
     companyLink: 'https://immeasurable.com',
-    image: '/images/vess.jpg'
+    image: '/images/al.webp'
   },
   {
     content: 'Working with Andrew has been transformative for our business. His innovative approach to problem-solving and deep industry expertise delivered remarkable results.',
-    author: 'Jesse Pujji',
-    authorLink: 'https://www.linkedin.com/in/jessepujji/',
-    role: 'Founder, CEO @ ',
-    company: 'GatewayX',
+    author: 'George Washington',
+    authorLink: 'https://www.linkedin.com',
+    role: 'Founder, CEO',
+    company: '',
     companyLink: 'https://gateway.xyz',
-    image: '/images/pujji.jpg'
+    image: '/images/gw.jpg'
   },
   {
     content: 'Andrew\'s strategic insights and hands-on guidance transformed our operations. His experience in scaling companies helped us navigate complex transitions seamlessly.',
-    author: 'Porter Grieve',
-    authorLink: 'https://www.linkedin.com/in/porter-g-9a4b8374/',
-    role: 'Founder, CEO @ ',
-    company: 'College Sports Co.',
+    author: 'Ben Franklin',
+    authorLink: 'https://www.linkedin.com',
+    role: 'Founder, CEO',
+    company: '',
     companyLink: 'https://collegesportsco.com',
-    image: '/images/grieve.jpg'
+    image: '/images/bf.jpeg'
   },
 ]
 
