@@ -5,7 +5,7 @@ import Script from 'next/script'
 
 export function Contact() {
   return (
-    <div id="contact" className="bg-gray-900/30 py-24 sm:py-32">
+    <div id="contact" className="bg-gray-900/30 py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-3 lg:gap-x-24 lg:items-start">
           {/* Left Column - Text Content */}
@@ -25,14 +25,14 @@ export function Contact() {
               </p>
             </motion.div>
 
-            <div className="my-16"></div>
+            <div className="my-12"></div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
               viewport={{ once: true }}
-              className="mt-16 lg:mt-32"
+              className="mt-12 lg:mt-24"
             >
               <h3 className="text-xl font-semibold leading-7 text-blue-400 text-center">Get in Touch</h3>
               <p className="mt-6 text-base leading-7 text-gray-300">
@@ -53,7 +53,7 @@ export function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="mt-16 lg:mt-0 h-[800px] lg:h-[1000px] lg:col-span-2"
+            className="mt-12 lg:mt-0 h-[800px] lg:h-[1000px] lg:col-span-2"
           >
             <div className="rounded-3xl ring-1 ring-gray-800 lg:rounded-xl bg-gray-900/50 h-full">
               <div className="h-full">

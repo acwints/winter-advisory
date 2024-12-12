@@ -68,7 +68,7 @@ const tiers = [
 
 export function Pricing() {
   return (
-    <div id="pricing" className="bg-gray-900 py-24 sm:py-32">
+    <div id="pricing" className="bg-gray-900 py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -90,7 +90,7 @@ export function Pricing() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="mx-auto mt-16 grid max-w-lg grid-cols-1 gap-6 sm:mt-20 lg:max-w-none lg:grid-cols-4"
+          className="mx-auto mt-12 grid max-w-lg grid-cols-1 gap-6 sm:mt-14 lg:max-w-none lg:grid-cols-4"
         >
           {tiers.map((tier, index) => (
             <motion.div
