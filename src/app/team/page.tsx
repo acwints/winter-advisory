@@ -20,9 +20,30 @@ export default function Team() {
             viewport={{ once: true }}
             className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-32 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-5 lg:items-start"
           >
+            {/* Image Section - Now comes first on mobile/tablet */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="flex items-center justify-center lg:justify-start h-full lg:col-span-2 order-1 lg:order-2"
+            >
+              <div className="relative w-fit">
+                <Image
+                  src="/images/ski.webp"
+                  alt="Team member skiing"
+                  width={300}
+                  height={600}
+                  className="aspect-[1/2] rounded-2xl object-cover border-2 border-white/50"
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  quality={90}
+                />
+              </div>
+            </motion.div>
 
-            {/* About Section - Takes up 3 columns */}
-            <div className="flex flex-col gap-6 lg:col-span-3">
+            {/* About Section - Comes second on mobile/tablet */}
+            <div className="flex flex-col gap-6 lg:col-span-3 order-2 lg:order-1">
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -57,28 +78,6 @@ export default function Team() {
                 </motion.div>
               </motion.div>
             </div>
-
-             {/* Image Section - Takes up 2 columns */}
-             <motion.div 
-               initial={{ opacity: 0, scale: 0.95 }}
-               whileInView={{ opacity: 1, scale: 1 }}
-               transition={{ duration: 0.6 }}
-               viewport={{ once: true }}
-               className="flex items-center justify-start h-full lg:col-span-2"
-             >
-              <div className="relative w-fit">
-                <Image
-                  src="/images/ski.webp"
-                  alt="Team member skiing"
-                  width={300}
-                  height={600}
-                  className="aspect-[1/2] rounded-2xl object-cover border-2 border-white/50"
-                  priority
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  quality={90}
-                />
-              </div>
-            </motion.div>
           </motion.div>
         </div>
       </div>
