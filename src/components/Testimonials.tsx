@@ -8,8 +8,8 @@ const testimonials = [
     content: 'Andrew\'s dedication to understanding our unique challenges and his ability to provide tailored solutions exceeded our expectations. His insights were invaluable!',
     author: 'Abraham Lincoln',
     authorLink: 'https://www.linkedin.com',
-    role: 'Founder, CEO',
-    company: '',
+    role: 'President',
+    company: 'The Union',
     companyLink: 'https://immeasurable.com',
     image: '/images/al.webp'
   },
@@ -18,7 +18,7 @@ const testimonials = [
     author: 'George Washington',
     authorLink: 'https://www.linkedin.com',
     role: 'Founder, CEO',
-    company: '',
+    company: 'USA',
     companyLink: 'https://gateway.xyz',
     image: '/images/gw.jpg'
   },
@@ -26,8 +26,8 @@ const testimonials = [
     content: 'Andrew\'s strategic insights and hands-on guidance transformed our operations. His experience in scaling companies helped us navigate complex transitions seamlessly.',
     author: 'Ben Franklin',
     authorLink: 'https://www.linkedin.com',
-    role: 'Founder, CEO',
-    company: '',
+    role: 'Inventor',
+    company: 'Electricity',
     companyLink: 'https://collegesportsco.com',
     image: '/images/bf.jpeg'
   },
