@@ -10,7 +10,7 @@ const testimonials = [
     authorLink: 'https://www.linkedin.com',
     role: 'President',
     company: 'The Union',
-    companyLink: 'https://immeasurable.com',
+    companyLink: '',
     image: '/images/al.webp'
   },
   {
@@ -19,7 +19,7 @@ const testimonials = [
     authorLink: 'https://www.linkedin.com',
     role: 'Founder, CEO',
     company: 'USA',
-    companyLink: 'https://gateway.xyz',
+    companyLink: '',
     image: '/images/gw.jpg'
   },
   {
@@ -28,7 +28,7 @@ const testimonials = [
     authorLink: 'https://www.linkedin.com',
     role: 'Inventor',
     company: 'Electricity',
-    companyLink: 'https://collegesportsco.com',
+    companyLink: '',
     image: '/images/bf.jpeg'
   },
 ]
@@ -88,7 +88,7 @@ export function Testimonials() {
                         </a>
                       </div>
                       <div className="text-sm leading-6 text-gray-400">
-                        Founder, CEO
+                        {testimonial.role}
                       </div>
                       <div className="text-sm leading-6 text-gray-400">
                         @{' '}
