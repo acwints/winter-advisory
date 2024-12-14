@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 interface LinkedInPost {
     postUrl: string;
@@ -18,66 +19,17 @@ interface LinkedInPost {
 
 export default function LinkedInTicker({ posts: initialPosts }: { posts: LinkedInPost[] }) {
     const [mounted, setMounted] = useState(false);
-    const [posts, setPosts] = useState<LinkedInPost[]>(initialPosts);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [posts] = useState<LinkedInPost[]>(initialPosts);
     const [imageError, setImageError] = useState<Record<string, boolean>>({});
 
     useEffect(() => {
         setMounted(true);
-        refreshPosts();
     }, []);
-
-    const refreshPosts = async () => {
-        try {
-            setLoading(true);
-            setError(null);
-            const response = await fetch('/api/linkedin-posts');
-            if (!response.ok) {
-                throw new Error('Failed to fetch posts');
-            }
-            const data = await response.json();
-            setPosts(data);
-        } catch (err) {
-            console.error('Error fetching posts:', err);
-            setError('Failed to load LinkedIn posts');
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const getInitials = (firstName: string, lastName: string) => {
-        return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
-    };
 
     if (!mounted) return null;
 
-    if (loading && posts.length === 0) {
-        return (
-            <div className="w-full py-12">
-                <div className="text-center">
-                    <h2 className="text-3xl font-bold text-[#0a66c2] mb-4">Trade Action</h2>
-                    <div className="text-gray-300">Loading posts...</div>
-                </div>
-            </div>
-        );
-    }
-
-    if (error && posts.length === 0) {
-        return (
-            <div className="w-full py-12">
-                <div className="text-center">
-                    <h2 className="text-3xl font-bold text-[#0a66c2] mb-4">Trade Action</h2>
-                    <div className="text-red-400">{error}</div>
-                    <button 
-                        onClick={refreshPosts}
-                        className="mt-4 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-white"
-                    >
-                        Try Again
-                    </button>
-                </div>
-            </div>
-        );
+    function getInitials(firstName: string, lastName: string): import("react").ReactNode {
+        throw new Error('Function not implemented.');
     }
 
     return (
@@ -85,31 +37,36 @@ export default function LinkedInTicker({ posts: initialPosts }: { posts: LinkedI
             <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-[#0a66c2]">Trade Action</h2>
             </div>
-            <div className="relative w-full overflow-hidden bg-white/5 backdrop-blur-sm">
-                <div className="animate-scroll-x flex whitespace-nowrap gap-8 py-8 px-4">
-                    {[...posts, ...posts].map((post, index) => (
+            <div className="relative w-full overflow-hidden">
+                <div 
+                    className="flex animate-scroll whitespace-nowrap"
+                    style={{
+                        width: `${posts.length * 416}px`, // 400px card + 16px gap
+                    }}
+                >
+                    {posts.map((post, index) => (
                         <div
                             key={`${post.postUrl}-${index}`}
                             onClick={() => window.open(post.postUrl, '_blank')}
                             className="inline-flex flex-col w-[400px] h-[400px] bg-white/10 backdrop-blur-sm rounded-xl p-8 
-                                     hover:bg-white/15 transition-all cursor-pointer shrink-0
+                                     hover:bg-white/15 transition-all cursor-pointer shrink-0 mx-2
                                      border border-white/10 hover:border-white/20"
                         >
                             <div className="flex items-center gap-4 mb-8">
                                 <div className="w-16 h-16 rounded-full overflow-hidden bg-[#0a66c2] flex items-center justify-center flex-shrink-0">
-                                    {imageError[post.postUrl] ? (
+                                    {(!post.profileImgUrl || imageError[post.postUrl]) ? (
                                         <span className="text-white font-semibold text-xl">
                                             {getInitials(post.firstName, post.lastName)}
                                         </span>
                                     ) : (
-                                        <img
-                                            src={post.profileImgUrl}
+                                        <Image
+                                            src={post.profileImgUrl.replace('amp;', '')}
                                             alt={`${post.firstName} ${post.lastName}`}
+                                            width={64}
+                                            height={64}
                                             className="w-full h-full object-cover"
                                             onError={() => setImageError(prev => ({ ...prev, [post.postUrl]: true }))}
-                                            referrerPolicy="origin"
-                                            crossOrigin="anonymous"
-                                            loading="lazy"
+                                            referrerPolicy="no-referrer"
                                         />
                                     )}
                                 </div>

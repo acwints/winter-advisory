@@ -1,7 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['media1.tenor.com', 'images.squarespace-cdn.com']
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'media.licdn.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.licdn.com',
+        pathname: '/**',
+      }
+    ],
   },
   async headers() {
     return [

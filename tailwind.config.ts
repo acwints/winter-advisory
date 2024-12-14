@@ -21,13 +21,13 @@ export default {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       keyframes: {
-        'scroll-x': {
+        scroll: {
           '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' }
-        }
+          '100%': { transform: 'translateX(-50%)' },
+        },
       },
       animation: {
-        'scroll-x': 'scroll-x 8s linear infinite'
+        'scroll': 'scroll 60s linear infinite',
       }
     },
   },

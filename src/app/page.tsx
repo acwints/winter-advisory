@@ -10,6 +10,7 @@ import { getLinkedInPosts } from '@/lib/linkedInPosts'
 
 export default async function Home() {
   const posts = await getLinkedInPosts();
+  console.log(`Rendering ${posts.length} LinkedIn posts`);
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
