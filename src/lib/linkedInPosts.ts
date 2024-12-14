@@ -26,15 +26,18 @@ export async function getLinkedInPosts(): Promise<LinkedInPost[]> {
 
         const sheets = google.sheets({ version: 'v4', auth });
         
+        console.log('Attempting to fetch from sheet:', process.env.GOOGLE_SHEET_LINKEDIN_ID);
+        
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: process.env.GOOGLE_SHEET_LINKEDIN_ID,
-            range: 'Sheet1!A2:P1000', // Updated to handle up to 1000 rows
+            range: 'Sheet1!A2:P1000',
         });
 
         const rows = response.data.values;
         console.log(`Fetched ${rows?.length || 0} rows from spreadsheet`);
         
         if (!rows) {
+            console.error('No rows returned from spreadsheet');
             return [];
         }
 
@@ -43,16 +46,20 @@ export async function getLinkedInPosts(): Promise<LinkedInPost[]> {
             profileUrl: row[1] || '',
             firstName: row[2] || '',
             lastName: row[3] || '',
-            title: row[5] || '', // Skipping fullName, using title from column F
+            title: row[5] || '',
             profileImgUrl: row[6] || '',
             likeCount: parseInt(row[7]) || 0,
             commentCount: parseInt(row[8]) || 0,
-            postDate: row[10] || '', // Updated index for postDate
-            postTimestamp: row[11] || '', // Updated index for postTimestamp
-            textContent: row[12] || '' // Updated index for textContent
+            postDate: row[10] || '',
+            postTimestamp: row[11] || '',
+            textContent: row[12] || ''
         }));
-    } catch (error) {
-        console.error('Error fetching LinkedIn posts:', error);
+    } catch (error: any) {
+        console.error('Error fetching LinkedIn posts:', {
+            message: error.message,
+            stack: error.stack,
+            name: error.name
+        });
         return [];
     }
 } 
