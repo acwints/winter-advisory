@@ -69,7 +69,7 @@ export default function Team() {
                   className="mt-6 relative aspect-[16/9] w-full max-w-[500px] overflow-hidden rounded-lg mx-auto border-2 border-white/50"
                 >
                   <Image
-                    src="https://media1.tenor.com/m/EOuS8MPVU1UAAAAC/seinfeld-george.gif"
+                    src="/images/george.gif"
                     alt="George Costanza from Seinfeld"
                     fill
                     sizes="(max-width: 768px) 100vw, 500px"
