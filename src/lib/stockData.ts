@@ -170,9 +170,9 @@ export const contestantSelections: Record<number, Array<{ contestant: Contestant
     {
       contestant: 'P',
       picks: [
-        { symbol: '', name: '-' },
-        { symbol: '', name: '-' },
-        { symbol: '', name: '-' }
+        { symbol: 'XOM', name: 'Exxon Mobil Corp' },
+        { symbol: 'UPS', name: 'United Parcel Service Inc' },
+        { symbol: 'SOL-USD', name: 'Solana' }
       ]
     },
     {
@@ -186,9 +186,9 @@ export const contestantSelections: Record<number, Array<{ contestant: Contestant
     {
       contestant: 'S',
       picks: [
-        { symbol: '', name: '-' },
-        { symbol: '', name: '-' },
-        { symbol: '', name: '-' }
+        { symbol: 'BTC-USD', name: 'Bitcoin' },
+        { symbol: 'NVDA', name: 'NVIDIA Corporation' },
+        { symbol: 'PLTR', name: 'Palantir Technologies Inc' }
       ]
     },
     {
