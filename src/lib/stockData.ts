@@ -152,9 +152,9 @@ export const contestantSelections: Record<number, Array<{ contestant: Contestant
     {
       contestant: 'D',
       picks: [
-        { symbol: '', name: '-' },
-        { symbol: '', name: '-' },
-        { symbol: '', name: '-' }
+        { symbol: 'UBER', name: 'Uber Technologies Inc' },
+        { symbol: 'DG', name: 'Dollar General Corp' },
+        { symbol: 'FSTR', name: 'L.B. Foster Company' }
       ]
     }
   ],
