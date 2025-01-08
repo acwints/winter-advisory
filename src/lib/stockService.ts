@@ -1,29 +1,47 @@
 import { StockPick } from './stockData'
 
-const BASE_URL = 'https://query1.finance.yahoo.com/v8/finance/chart/'
+// Use relative URL for API endpoint
+const API_BASE_URL = '/api/stocks'
 
-type YahooFinanceResponse = {
-  chart: {
-    result: [{
-      meta: {
-        regularMarketPrice: number
-        dividendYield?: number
-      }
-    }]
-  }
+type StockResponse = {
+  currentPrice: number
+  yield?: number
+  error?: string
 }
 
-export async function fetchStockData(symbol: string): Promise<{
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
+export async function fetchStockData(symbol: string, date?: string): Promise<{
   currentPrice: number
   yield?: number
 }> {
   try {
-    const response = await fetch(`${BASE_URL}${symbol}?interval=1d&range=1d`)
-    const data: YahooFinanceResponse = await response.json()
-    
+    const params = new URLSearchParams({
+      symbol,
+      ...(date && { date })
+    })
+
+    // Add a range parameter to ensure we get the correct price for the date
+    if (date) {
+      const targetDate = new Date(date)
+      const startDate = new Date(targetDate)
+      startDate.setDate(startDate.getDate() - 7) // Get a week of data to ensure we have valid prices
+      params.append('range', `${Math.floor(startDate.getTime() / 1000)}-${Math.floor(targetDate.getTime() / 1000)}`)
+    }
+
+    const response = await fetch(`${API_BASE_URL}?${params.toString()}`)
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data: StockResponse = await response.json()
+    if (data.error) {
+      throw new Error(data.error)
+    }
+
     return {
-      currentPrice: data.chart.result[0].meta.regularMarketPrice,
-      yield: data.chart.result[0].meta.dividendYield
+      currentPrice: data.currentPrice,
+      yield: data.yield
     }
   } catch (error) {
     console.error(`Error fetching data for ${symbol}:`, error)
@@ -31,25 +49,42 @@ export async function fetchStockData(symbol: string): Promise<{
   }
 }
 
-export async function updateStockPrices(picks: StockPick[]): Promise<StockPick[]> {
-  const updatedPicks = await Promise.all(
-    picks.map(async (pick) => {
-      try {
-        const { currentPrice, yield: dividendYield } = await fetchStockData(pick.symbol)
-        const priceChange = ((currentPrice - pick.startPrice) / pick.startPrice) * 100
-        
-        return {
-          ...pick,
-          currentPrice,
-          priceChange,
-          yield: dividendYield
+export async function updateStockPrices(picks: StockPick[], date?: string): Promise<StockPick[]> {
+  const batchSize = 3
+  const updatedPicks: StockPick[] = []
+
+  for (let i = 0; i < picks.length; i += batchSize) {
+    const batch = picks.slice(i, i + batchSize)
+    const batchResults = await Promise.all(
+      batch.map(async (pick) => {
+        try {
+          const { currentPrice, yield: dividendYield } = await fetchStockData(pick.symbol, date)
+          const priceChange = ((currentPrice - pick.startPrice) / pick.startPrice) * 100
+          
+          return {
+            ...pick,
+            currentPrice,
+            priceChange,
+            yield: dividendYield
+          }
+        } catch (error) {
+          console.error(`Failed to update ${pick.symbol}:`, error)
+          return {
+            ...pick,
+            currentPrice: pick.startPrice,
+            priceChange: 0,
+            yield: undefined
+          }
         }
-      } catch (error) {
-        console.error(`Failed to update ${pick.symbol}:`, error)
-        return pick
-      }
-    })
-  )
+      })
+    )
+    updatedPicks.push(...batchResults)
+    
+    // Add delay between batches
+    if (i + batchSize < picks.length) {
+      await sleep(1000)
+    }
+  }
   
   return updatedPicks
 } 
