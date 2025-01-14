@@ -27,6 +27,14 @@ type Card = {
 
 export function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [mounted, setMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    setIsMobile(window.innerWidth < 640)
+  }, [])
+
   const cards: Card[] = useMemo(() => [
     {
       type: 'video',
@@ -63,16 +71,17 @@ export function Testimonials() {
 
   // Add keyboard navigation
   useEffect(() => {
+    if (!mounted) return
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') rotateLeft()
       if (e.key === 'ArrowRight') rotateRight()
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [rotateLeft, rotateRight])
+  }, [mounted, rotateLeft, rotateRight])
 
   const getCardStyle = (index: number) => {
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640
     const positions = [
       { // Left position
         transform: `translateX(${isMobile ? '-85%' : '-100%'}) scale(${isMobile ? '0.75' : '0.85'}) translateZ(-400px) rotateY(25deg)`,
@@ -98,13 +107,14 @@ export function Testimonials() {
 
   // Add window resize handler
   useEffect(() => {
+    if (!mounted) return
+
     const handleResize = () => {
-      // Force a re-render when window size changes
-      setCurrentIndex(prev => prev)
+      setIsMobile(window.innerWidth < 640)
     }
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  }, [mounted])
 
   return (
     <div id="testimonials" className="bg-gray-900/30 py-8 sm:py-12">
@@ -161,7 +171,7 @@ export function Testimonials() {
                   className="absolute w-[280px] sm:w-[360px] aspect-[9/16] transition-all duration-700 ease-out will-change-transform"
                   style={{
                     ...getCardStyle(index),
-                    transform: `${getCardStyle(index).transform} translateY(${window.innerWidth < 640 ? '10%' : '0'})`
+                    transform: `${getCardStyle(index).transform} translateY(${isMobile ? '10%' : '0'})`
                   }}
                 >
                   {card.type === 'video' ? (
