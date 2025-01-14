@@ -72,9 +72,10 @@ export function Testimonials() {
   }, [rotateLeft, rotateRight])
 
   const getCardStyle = (index: number) => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640
     const positions = [
       { // Left position
-        transform: 'translateX(-100%) scale(0.85) translateZ(-400px) rotateY(25deg)',
+        transform: `translateX(${isMobile ? '-85%' : '-100%'}) scale(${isMobile ? '0.75' : '0.85'}) translateZ(-400px) rotateY(25deg)`,
         opacity: 0.4,
         zIndex: 1
       },
@@ -84,7 +85,7 @@ export function Testimonials() {
         zIndex: 2
       },
       { // Right position
-        transform: 'translateX(100%) scale(0.85) translateZ(-400px) rotateY(-25deg)',
+        transform: `translateX(${isMobile ? '85%' : '100%'}) scale(${isMobile ? '0.75' : '0.85'}) translateZ(-400px) rotateY(-25deg)`,
         opacity: 0.4,
         zIndex: 1
       }
@@ -94,6 +95,16 @@ export function Testimonials() {
     const visualPosition = position > 1 ? position - cards.length : position
     return positions[visualPosition + 1] || positions[1]
   }
+
+  // Add window resize handler
+  useEffect(() => {
+    const handleResize = () => {
+      // Force a re-render when window size changes
+      setCurrentIndex(prev => prev)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   return (
     <div id="testimonials" className="bg-gray-900/30 py-8 sm:py-12">
@@ -121,23 +132,23 @@ export function Testimonials() {
           className="mx-auto mt-4 sm:mt-8"
         >
           {/* Carousel Container */}
-          <div className="relative mx-auto max-w-[1200px] h-[640px] perspective-[1200px]">
+          <div className="relative mx-auto max-w-[1200px] h-[500px] sm:h-[640px] perspective-[1200px] overflow-hidden">
             {/* Navigation Buttons */}
             <button
               onClick={rotateLeft}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-4 text-white/60 hover:text-white hover:bg-white/10 focus:bg-white/10 rounded-full transition-all outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-gray-900"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-4 text-white/60 hover:text-white hover:bg-white/10 focus:bg-white/10 rounded-full transition-all outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-gray-900"
               aria-label="Previous testimonial"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 sm:w-8 sm:h-8">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
               </svg>
             </button>
             <button
               onClick={rotateRight}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-4 text-white/60 hover:text-white hover:bg-white/10 focus:bg-white/10 rounded-full transition-all outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-gray-900"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-4 text-white/60 hover:text-white hover:bg-white/10 focus:bg-white/10 rounded-full transition-all outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-gray-900"
               aria-label="Next testimonial"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 sm:w-8 sm:h-8">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
             </button>
@@ -147,8 +158,11 @@ export function Testimonials() {
               {cards.map((card, index) => (
                 <div
                   key={index}
-                  className="absolute w-[360px] aspect-[9/16] transition-all duration-700 ease-out will-change-transform"
-                  style={getCardStyle(index)}
+                  className="absolute w-[280px] sm:w-[360px] aspect-[9/16] transition-all duration-700 ease-out will-change-transform"
+                  style={{
+                    ...getCardStyle(index),
+                    transform: `${getCardStyle(index).transform} translateY(${window.innerWidth < 640 ? '10%' : '0'})`
+                  }}
                 >
                   {card.type === 'video' ? (
                     <div className="w-full h-full bg-gray-900/30 rounded-3xl overflow-hidden shadow-xl shadow-gray-900/50 ring-1 ring-gray-800">
