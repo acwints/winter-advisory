@@ -1,41 +1,102 @@
 "use client"
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
+import { useState, useCallback, useEffect, useMemo } from 'react'
 
-const testimonials = [
-  {
-    content: 'Andrew\'s dedication to understanding our unique challenges and his ability to provide tailored solutions exceeded our expectations. His insights were invaluable!',
-    author: 'Abraham Lincoln',
-    authorLink: 'https://www.linkedin.com',
-    role: 'President',
-    company: 'The Union',
-    companyLink: '',
-    image: '/images/al.webp'
-  },
-  {
-    content: 'Working with Andrew has been transformative for our business. His innovative approach to problem-solving and deep industry expertise delivered remarkable results.',
-    author: 'George Washington',
-    authorLink: 'https://www.linkedin.com',
-    role: 'Founder, CEO',
-    company: 'USA',
-    companyLink: '',
-    image: '/images/gw.jpg'
-  },
-  {
-    content: 'Andrew\'s strategic insights and hands-on guidance transformed our operations. His experience in scaling companies helped us navigate complex transitions seamlessly.',
-    author: 'Ben Franklin',
-    authorLink: 'https://www.linkedin.com',
-    role: 'Inventor',
-    company: 'Electricity',
-    companyLink: '',
-    image: '/images/bf.jpeg'
-  },
-]
+type VideoContent = {
+  src: string
+  name: string
+  title: string
+  company: string
+  linkedIn: string
+  website: string
+}
+
+type PlaceholderContent = {
+  title: string
+  description?: string
+}
+
+type Card = {
+  type: 'video'
+  content: VideoContent
+} | {
+  type: 'placeholder'
+  content: PlaceholderContent
+}
 
 export function Testimonials() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const cards: Card[] = useMemo(() => [
+    {
+      type: 'video',
+      content: {
+        src: '/images/andrew_testimonial.mp4',
+        name: 'Vernon Foster',
+        title: 'Founder / CEO',
+        company: 'WebinarRev',
+        linkedIn: 'https://www.linkedin.com/in/vernontfoster/',
+        website: 'https://webinarrev.co/'
+      }
+    },
+    {
+      type: 'placeholder',
+      content: {
+        title: 'Coming Soon'
+      }
+    },
+    {
+      type: 'placeholder',
+      content: {
+        title: 'Coming Soon'
+      }
+    }
+  ], [])
+
+  const rotateLeft = useCallback(() => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % cards.length)
+  }, [cards.length])
+
+  const rotateRight = useCallback(() => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + cards.length) % cards.length)
+  }, [cards.length])
+
+  // Add keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') rotateLeft()
+      if (e.key === 'ArrowRight') rotateRight()
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [rotateLeft, rotateRight])
+
+  const getCardStyle = (index: number) => {
+    const positions = [
+      { // Left position
+        transform: 'translateX(-100%) scale(0.85) translateZ(-400px) rotateY(25deg)',
+        opacity: 0.4,
+        zIndex: 1
+      },
+      { // Center position
+        transform: 'translateX(0) scale(1) translateZ(0) rotateY(0deg)',
+        opacity: 1,
+        zIndex: 2
+      },
+      { // Right position
+        transform: 'translateX(100%) scale(0.85) translateZ(-400px) rotateY(-25deg)',
+        opacity: 0.4,
+        zIndex: 1
+      }
+    ]
+
+    const position = (index - currentIndex + cards.length) % cards.length
+    const visualPosition = position > 1 ? position - cards.length : position
+    return positions[visualPosition + 1] || positions[1]
+  }
+
   return (
-    <div id="testimonials" className="bg-gray-900/30 py-16 sm:py-24">
+    <div id="testimonials" className="bg-gray-900/30 py-8 sm:py-12">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -47,7 +108,7 @@ export function Testimonials() {
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Trusted by Industry Leaders
           </h2>
-          <p className="mt-6 text-lg leading-8 text-gray-300">
+          <p className="mt-4 text-lg leading-8 text-gray-300">
             See what our clients say about working with Andrew.
           </p>
         </motion.div>
@@ -57,58 +118,100 @@ export function Testimonials() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="mx-auto mt-16 flow-root max-w-2xl sm:mt-20 lg:mx-0 lg:max-w-none"
+          className="mx-auto mt-4 sm:mt-8"
         >
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className="relative isolate flex flex-col justify-between bg-gray-900/30 shadow-xl shadow-gray-900/50 p-8 ring-1 ring-gray-800 rounded-3xl"
-              >
-                <div>
-                  <div className="flex gap-x-3">
-                    <div className="relative h-16 w-16 overflow-hidden rounded-full">
-                      <Image
-                        src={testimonial.image}
-                        alt={testimonial.author}
-                        fill
-                        sizes="72px"
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="-mt-1.5">
-                      <div className="text-sm font-semibold leading-6 text-white">
-                        <a 
-                          href={testimonial.authorLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:text-blue-400 transition-colors underline decoration-2 decoration-gray-600 hover:decoration-blue-400"
+          {/* Carousel Container */}
+          <div className="relative mx-auto max-w-[1200px] h-[640px] perspective-[1200px]">
+            {/* Navigation Buttons */}
+            <button
+              onClick={rotateLeft}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-4 text-white/60 hover:text-white hover:bg-white/10 focus:bg-white/10 rounded-full transition-all outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-gray-900"
+              aria-label="Previous testimonial"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+            </button>
+            <button
+              onClick={rotateRight}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-4 text-white/60 hover:text-white hover:bg-white/10 focus:bg-white/10 rounded-full transition-all outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-gray-900"
+              aria-label="Next testimonial"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
+
+            {/* Cards Container */}
+            <div className="absolute inset-0 flex items-center justify-center preserve-3d">
+              {cards.map((card, index) => (
+                <div
+                  key={index}
+                  className="absolute w-[360px] aspect-[9/16] transition-all duration-700 ease-out will-change-transform"
+                  style={getCardStyle(index)}
+                >
+                  {card.type === 'video' ? (
+                    <div className="w-full h-full bg-gray-900/30 rounded-3xl overflow-hidden shadow-xl shadow-gray-900/50 ring-1 ring-gray-800">
+                      <div className="relative w-full h-full">
+                        <video
+                          className="absolute inset-0 w-full h-full object-cover"
+                          controls
+                          playsInline
+                          preload="metadata"
+                          loop
+                          poster="/images/andrew_testimonial_poster.jpg"
                         >
-                          {testimonial.author}
-                        </a>
-                      </div>
-                      <div className="text-sm leading-6 text-gray-400">
-                        {testimonial.role}
-                      </div>
-                      <div className="text-sm leading-6 text-gray-400">
-                        @{' '}
-                        <a 
-                          href={testimonial.companyLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:text-blue-400 transition-colors underline decoration-2 decoration-gray-600 hover:decoration-blue-400"
-                        >
-                          {testimonial.company}
-                        </a>
+                          <source src={card.content.src} type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
+                        
+                        {/* Video Caption */}
+                        <div className="absolute top-0 left-0 right-0 p-4 bg-gradient-to-b from-black/70 to-transparent pointer-events-none">
+                          <div className="flex flex-col">
+                            <div className="text-sm font-semibold leading-6 text-white">
+                              <a 
+                                href={card.content.linkedIn}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:text-blue-400 transition-colors underline decoration-2 decoration-white/60 hover:decoration-blue-400 pointer-events-auto"
+                              >
+                                {card.content.name}
+                              </a>
+                            </div>
+                            <div className="text-sm leading-6 text-white/90">
+                              {card.content.title}
+                            </div>
+                            <div className="text-sm leading-6 text-white/90">
+                              @{' '}
+                              <a 
+                                href={card.content.website}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:text-blue-400 transition-colors underline decoration-2 decoration-white/60 hover:decoration-blue-400 pointer-events-auto"
+                              >
+                                {card.content.company}
+                              </a>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="mt-8 text-base leading-7 text-gray-300">
-                    <p>"{testimonial.content}"</p>
-                  </div>
+                  ) : (
+                    <div className="w-full h-full rounded-3xl bg-gray-900/20 ring-1 ring-gray-800 flex items-center justify-center group hover:bg-gray-900/30 transition-all">
+                      <div className="text-center p-6">
+                        <div className="text-xl font-semibold text-white/80 mb-2 group-hover:text-white/90 transition-colors">
+                          {card.content.title}
+                        </div>
+                        {card.content.description && (
+                          <p className="text-gray-400 group-hover:text-gray-300 transition-colors">{card.content.description}</p>
+                        )}
+                        <div className="mt-4 w-3 h-3 rounded-full bg-blue-500/40 mx-auto animate-pulse" />
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>

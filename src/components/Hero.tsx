@@ -28,7 +28,7 @@ export function Hero() {
             className="lg:flex-1"
           >
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-5xl xl:text-6xl">
-              Sales, GTM, and Product Solutions{' '}<br />
+              Sales, GTM, and <span className="whitespace-nowrap">Product Solutions</span>{' '}<br />
               <span className="text-blue-400">for Your Business</span>
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-300">
