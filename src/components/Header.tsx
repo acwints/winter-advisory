@@ -20,20 +20,29 @@ const navigation = [
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!mounted) return
+    
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [mounted])
 
   const closeMenu = () => {
     setMobileMenuOpen(false)
   }
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!mounted) return
+    
     const href = e.currentTarget.getAttribute('href')
     if (href?.startsWith('#')) {
       e.preventDefault()

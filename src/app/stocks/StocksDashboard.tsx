@@ -28,8 +28,15 @@ function useWindowSize() {
     width: undefined,
     height: undefined
   });
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!mounted) return
+
     function handleResize() {
       setSize({
         width: window.innerWidth,
@@ -45,7 +52,7 @@ function useWindowSize() {
     
     // Remove event listener on cleanup
     return () => window.removeEventListener('resize', handleResize);
-  }, []); // Empty array ensures effect is only run on mount
+  }, [mounted]); // Add mounted to dependency array
 
   return size;
 }
