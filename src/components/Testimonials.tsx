@@ -191,7 +191,7 @@ export function Testimonials() {
                         
                         {/* Video Caption */}
                         <div className="absolute top-0 left-0 right-0 p-4 bg-gradient-to-b from-black/70 to-transparent pointer-events-none">
-                          <div className="flex flex-col">
+                          <div className="flex flex-col items-center text-center">
                             <div className="text-sm font-semibold leading-6 text-white">
                               <a 
                                 href={card.content.linkedIn}
@@ -206,7 +206,7 @@ export function Testimonials() {
                               {card.content.title}
                             </div>
                             <div className="text-sm leading-6 text-white/90">
-                              @{' '}
+                              @
                               <a 
                                 href={card.content.website}
                                 target="_blank"
