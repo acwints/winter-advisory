@@ -178,9 +178,9 @@ export const contestantSelections: Record<number, Array<{ contestant: Contestant
     {
       contestant: 'R',
       picks: [
-        { symbol: '', name: '-' },
-        { symbol: '', name: '-' },
-        { symbol: '', name: '-' }
+        { symbol: 'AAPL', name: 'Apple Inc.' },
+        { symbol: 'MRK', name: 'Merck & Co.' },
+        { symbol: 'WM', name: 'Waste Management Inc.' }
       ]
     },
     {
@@ -194,9 +194,9 @@ export const contestantSelections: Record<number, Array<{ contestant: Contestant
     {
       contestant: 'D',
       picks: [
-        { symbol: '', name: '-' },
-        { symbol: '', name: '-' },
-        { symbol: '', name: '-' }
+        { symbol: 'LYFT', name: 'Lyft Inc.' },
+        { symbol: 'MUR', name: 'Murphy Oil Corporation' },
+        { symbol: 'VRSN', name: 'VeriSign Inc.' }
       ]
     }
   ]
