@@ -40,7 +40,7 @@ export function Hero() {
                 href="#contact"
                 className="rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
               >
-                Schedule a Consultation
+                Get In Touch
               </a>
               <div className="flex-1"></div>
             </div>
