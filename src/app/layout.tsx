@@ -25,8 +25,8 @@ const microgramma = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Winter Advisory | Boutique Consulting Firm",
-  description: "Expert consulting services tailored to your needs. Winter Advisory helps organizations achieve their strategic goals through innovative solutions.",
+  title: "Winter Advisory | AI Consulting",
+  description: "We help companies with AI. From strategy to implementation, Winter Advisory partners with organizations to unlock the full potential of artificial intelligence.",
   icons: {
     icon: '/favicon.svg',
   },
