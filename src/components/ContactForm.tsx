@@ -62,11 +62,8 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-          Name
-        </label>
         <input
           type="text"
           id="name"
@@ -74,16 +71,13 @@ export function ContactForm() {
           required
           value={formData.name}
           onChange={handleChange}
-          className="w-full rounded-xl bg-gray-800/50 px-4 py-3 text-white placeholder:text-gray-500 ring-1 ring-inset ring-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-          placeholder="Your name"
+          className="w-full rounded-lg bg-gray-800/50 px-4 py-2.5 text-white placeholder:text-gray-500 ring-1 ring-inset ring-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all text-sm"
+          placeholder="Name"
           disabled={status === 'submitting'}
         />
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-          Email
-        </label>
         <input
           type="email"
           id="email"
@@ -91,24 +85,21 @@ export function ContactForm() {
           required
           value={formData.email}
           onChange={handleChange}
-          className="w-full rounded-xl bg-gray-800/50 px-4 py-3 text-white placeholder:text-gray-500 ring-1 ring-inset ring-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-          placeholder="your@email.com"
+          className="w-full rounded-lg bg-gray-800/50 px-4 py-2.5 text-white placeholder:text-gray-500 ring-1 ring-inset ring-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all text-sm"
+          placeholder="Email"
           disabled={status === 'submitting'}
         />
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-          Message
-        </label>
         <textarea
           id="message"
           name="message"
           required
-          rows={4}
+          rows={3}
           value={formData.message}
           onChange={handleChange}
-          className="w-full rounded-xl bg-gray-800/50 px-4 py-3 text-white placeholder:text-gray-500 ring-1 ring-inset ring-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all resize-none"
+          className="w-full rounded-lg bg-gray-800/50 px-4 py-2.5 text-white placeholder:text-gray-500 ring-1 ring-inset ring-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all resize-none text-sm"
           placeholder="How can we help?"
           disabled={status === 'submitting'}
         />
@@ -120,14 +111,14 @@ export function ContactForm() {
           animate={{ opacity: 1 }}
           className="text-red-400 text-sm"
         >
-          Something went wrong. Please try again or email us directly.
+          Something went wrong. Please try again.
         </motion.p>
       )}
 
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="w-full rounded-xl bg-blue-600 px-6 py-4 text-base font-semibold text-white shadow-sm hover:bg-blue-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-wider font-microgramma"
+        className="w-full rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-wider font-microgramma"
       >
         {status === 'submitting' ? 'Sending...' : 'Send Message'}
       </button>

@@ -60,29 +60,24 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-gray-900 border-t border-gray-800">
-      <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
-        <div className="flex flex-col items-center gap-8">
-          {/* Social Links */}
-          <div className="flex gap-6">
-            {socialLinks.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-blue-400 transition-colors"
-              >
-                <span className="sr-only">{item.name}</span>
-                <item.icon className="h-6 w-6" aria-hidden="true" />
-              </a>
-            ))}
-          </div>
-
-          {/* Copyright */}
-          <p className="text-center text-sm text-gray-500">
-            &copy; {new Date().getFullYear()} Winter Advisory. All rights reserved.
-          </p>
+    <footer className="border-t border-gray-800 py-4 px-6">
+      <div className="mx-auto max-w-7xl flex items-center justify-between">
+        <p className="text-sm text-gray-500">
+          &copy; {new Date().getFullYear()} Winter Advisory
+        </p>
+        <div className="flex gap-4">
+          {socialLinks.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-blue-400 transition-colors"
+            >
+              <span className="sr-only">{item.name}</span>
+              <item.icon className="h-5 w-5" aria-hidden="true" />
+            </a>
+          ))}
         </div>
       </div>
     </footer>
