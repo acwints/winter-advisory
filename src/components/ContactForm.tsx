@@ -48,15 +48,15 @@ export function ContactForm() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center py-12"
+        className="py-10 text-center"
       >
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-600/20 mb-6">
-          <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full border border-emerald-300/20 bg-emerald-300/10">
+          <svg className="h-8 w-8 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-2xl font-semibold text-white mb-2">Message Sent</h3>
-        <p className="text-gray-400">We'll be in touch soon.</p>
+        <h3 className="mb-2 text-2xl font-semibold text-white">Message received</h3>
+        <p className="text-slate-400">We will be in touch soon.</p>
       </motion.div>
     )
   }
@@ -64,6 +64,9 @@ export function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
+        <label htmlFor="name" className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+          Name
+        </label>
         <input
           type="text"
           id="name"
@@ -71,13 +74,16 @@ export function ContactForm() {
           required
           value={formData.name}
           onChange={handleChange}
-          className="w-full rounded-lg bg-gray-800/50 px-4 py-2.5 text-white placeholder:text-gray-500 ring-1 ring-inset ring-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all text-sm"
-          placeholder="Name"
+          className="w-full rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-200/70 focus:bg-slate-950/80"
+          placeholder="Jane Operator"
           disabled={status === 'submitting'}
         />
       </div>
 
       <div>
+        <label htmlFor="email" className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+          Email
+        </label>
         <input
           type="email"
           id="email"
@@ -85,22 +91,25 @@ export function ContactForm() {
           required
           value={formData.email}
           onChange={handleChange}
-          className="w-full rounded-lg bg-gray-800/50 px-4 py-2.5 text-white placeholder:text-gray-500 ring-1 ring-inset ring-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all text-sm"
-          placeholder="Email"
+          className="w-full rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-200/70 focus:bg-slate-950/80"
+          placeholder="jane@company.com"
           disabled={status === 'submitting'}
         />
       </div>
 
       <div>
+        <label htmlFor="message" className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+          What should AI change?
+        </label>
         <textarea
           id="message"
           name="message"
           required
-          rows={3}
+          rows={5}
           value={formData.message}
           onChange={handleChange}
-          className="w-full rounded-lg bg-gray-800/50 px-4 py-2.5 text-white placeholder:text-gray-500 ring-1 ring-inset ring-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all resize-none text-sm"
-          placeholder="How can we help?"
+          className="w-full resize-none rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-200/70 focus:bg-slate-950/80"
+          placeholder="Tell us about the workflow, decision, product, or operating constraint you want to improve."
           disabled={status === 'submitting'}
         />
       </div>
@@ -109,7 +118,7 @@ export function ContactForm() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-red-400 text-sm"
+          className="rounded-2xl border border-red-300/20 bg-red-300/10 px-4 py-3 text-sm text-red-200"
         >
           Something went wrong. Please try again.
         </motion.p>
@@ -118,9 +127,9 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="w-full rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-wider font-microgramma"
+        className="w-full rounded-full bg-cyan-200 px-6 py-3.5 font-microgramma text-sm uppercase text-slate-950 transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {status === 'submitting' ? 'Sending...' : 'Send Message'}
+        {status === 'submitting' ? 'Sending...' : 'Send inquiry'}
       </button>
     </form>
   )

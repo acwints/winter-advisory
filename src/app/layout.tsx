@@ -25,8 +25,8 @@ const microgramma = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Winter Advisory | AI Consulting",
-  description: "We help companies with AI. From strategy to implementation, Winter Advisory partners with organizations to unlock the full potential of artificial intelligence.",
+  title: "Winter Advisory | AI Strategy, Systems, and Operator Enablement",
+  description: "Winter Advisory helps leadership teams turn AI ambition into operating advantage through strategy, workflow automation, implementation advisory, and enablement.",
   icons: {
     icon: '/favicon.svg',
   },
@@ -37,8 +37,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' }
+    { media: '(prefers-color-scheme: light)', color: '#05070a' },
+    { media: '(prefers-color-scheme: dark)', color: '#05070a' }
   ],
 };
 
@@ -50,7 +50,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`scroll-smooth dark ${spaceGrotesk.variable} ${microgramma.variable}`}>
       <body 
-        className="bg-gray-900 text-gray-100 antialiased" 
+        className="bg-[#05070a] text-slate-100 antialiased" 
         suppressHydrationWarning
       >
         {children}

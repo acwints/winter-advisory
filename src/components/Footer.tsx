@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {}
 
@@ -60,19 +60,21 @@ export function Footer() {
   }
 
   return (
-    <footer className="border-t border-gray-800 py-4 px-6">
-      <div className="mx-auto max-w-7xl flex items-center justify-between">
-        <p className="text-sm text-gray-500">
-          &copy; {new Date().getFullYear()} Winter Advisory
-        </p>
-        <div className="flex gap-4">
+    <footer className="border-t border-white/10 bg-[#05070a] px-6 py-8">
+      <div className="mx-auto flex max-w-7xl flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="font-microgramma text-xs uppercase text-slate-500">Winter Advisory</p>
+          <p className="mt-2 text-sm text-slate-500">&copy; {new Date().getFullYear()} Winter Advisory. AI strategy, systems, and operator enablement.</p>
+        </div>
+
+        <div className="flex gap-3">
           {socialLinks.map((item) => (
             <a
               key={item.name}
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-blue-400 transition-colors"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-slate-400 transition hover:border-cyan-200/60 hover:text-cyan-100"
             >
               <span className="sr-only">{item.name}</span>
               <item.icon className="h-5 w-5" aria-hidden="true" />

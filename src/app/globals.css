@@ -11,8 +11,8 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #05070a;
+  --foreground: #f8fafc;
   --transition-duration: 0.3s;
 }
 
@@ -32,6 +32,11 @@ body {
               color var(--transition-duration) ease-in-out;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(165, 243, 252, 0.28);
+  color: #ffffff;
 }
 
 /* Dark mode styles */
@@ -79,6 +84,6 @@ html {
 
 /* Focus states */
 *:focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid #a5f3fc;
   outline-offset: 2px;
 }
