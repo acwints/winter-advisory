@@ -25,8 +25,27 @@ const microgramma = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Winter Advisory | AI Strategy, Systems, and Operator Enablement",
-  description: "Winter Advisory helps leadership teams turn AI ambition into operating advantage through strategy, workflow automation, implementation advisory, and enablement.",
+  metadataBase: new URL('https://winteradvisory.llc'),
+  title: "Winter Advisory | AI Deployment for Ecommerce Brands",
+  description: "Winter Advisory helps Shopify and DTC ecommerce teams deploy practical AI workflows across lifecycle marketing, CX, merchandising, analytics, and operations.",
+  keywords: [
+    'ecommerce AI consulting',
+    'Shopify AI consulting',
+    'AI deployment lead',
+    'DTC AI automation',
+    'Klaviyo AI workflow',
+    'Gorgias AI automation',
+  ],
+  openGraph: {
+    title: 'Winter Advisory | AI Deployment for Ecommerce Brands',
+    description: 'Practical AI deployment advisory for ecommerce teams running Shopify, Klaviyo, CX, analytics, and operations workflows.',
+    url: 'https://winteradvisory.llc',
+    siteName: 'Winter Advisory',
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://winteradvisory.llc',
+  },
   icons: {
     icon: '/favicon.svg',
   },

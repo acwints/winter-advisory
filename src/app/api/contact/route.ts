@@ -2,11 +2,29 @@ import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
   try {
-    const { name, email, message } = await req.json()
+    const {
+      name,
+      email,
+      company,
+      website,
+      role,
+      commerceStack,
+      orderVolume,
+      priority,
+      pilotKpi,
+      timeline,
+      message,
+      sourcePath,
+      referrer,
+      utmSource,
+      utmMedium,
+      utmCampaign,
+      scoreSummary,
+    } = await req.json()
 
-    if (!name || !email || !message) {
+    if (!name || !email || !company || !message) {
       return NextResponse.json(
-        { error: 'All fields are required' },
+        { error: 'Name, email, company, and workflow are required' },
         { status: 400 }
       )
     }
@@ -15,6 +33,13 @@ export async function POST(req: Request) {
       return NextResponse.json(
         { error: 'Invalid email address' },
         { status: 400 }
+      )
+    }
+
+    if (!process.env.GOOGLE_CLIENT_EMAIL || !process.env.GOOGLE_PRIVATE_KEY || !process.env.GOOGLE_SHEET_ID) {
+      return NextResponse.json(
+        { error: 'Contact form is not configured' },
+        { status: 500 }
       )
     }
 
@@ -32,10 +57,29 @@ export async function POST(req: Request) {
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: 'Contact!A:D',
+      range: 'Contact!A:R',
       valueInputOption: 'USER_ENTERED',
       requestBody: {
-        values: [[name, email, message, new Date().toISOString()]],
+        values: [[
+          name,
+          email,
+          company,
+          website || '',
+          role || '',
+          commerceStack || '',
+          orderVolume || '',
+          priority || '',
+          pilotKpi || '',
+          timeline || '',
+          message,
+          sourcePath || '',
+          referrer || '',
+          utmSource || '',
+          utmMedium || '',
+          utmCampaign || '',
+          scoreSummary || '',
+          new Date().toISOString(),
+        ]],
       },
     })
 

@@ -48,6 +48,24 @@ const socialLinks = [
   },
 ]
 
+const serviceLinks = [
+  { label: 'Resources', href: '/resources' },
+  { label: 'Ecommerce AI consultant', href: '/ecommerce-ai-consultant' },
+  { label: 'Ecommerce AI automation', href: '/ecommerce-ai-automation' },
+  { label: 'AI deployment audit', href: '/ecommerce-ai-deployment-audit' },
+  { label: 'Sample deliverables', href: '/ecommerce-ai-audit-sample-deliverables' },
+  { label: '90-day AI roadmap', href: '/ecommerce-ai-roadmap' },
+  { label: 'AI ROI calculator', href: '/ecommerce-ai-roi-calculator' },
+  { label: 'AI vendor selection', href: '/ecommerce-ai-vendor-selection-guide' },
+  { label: 'Ecommerce AI agents', href: '/ecommerce-ai-agents' },
+  { label: 'AI pilot brief template', href: '/ecommerce-ai-pilot-brief-template' },
+  { label: 'Ecommerce AI use cases', href: '/ecommerce-ai-use-cases' },
+  { label: 'AI deployment scorecard', href: '/ai-deployment-scorecard' },
+  { label: 'Shopify AI consultant', href: '/shopify-ai-consultant' },
+  { label: 'Klaviyo AI automation', href: '/klaviyo-ai-automation' },
+  { label: 'Gorgias AI implementation', href: '/gorgias-ai-implementation' },
+]
+
 export function Footer() {
   const [mounted, setMounted] = useState(false)
 
@@ -61,11 +79,19 @@ export function Footer() {
 
   return (
     <footer className="border-t border-white/10 bg-[#05070a] px-6 py-8">
-      <div className="mx-auto flex max-w-7xl flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_auto_auto] lg:items-center">
         <div>
           <p className="font-microgramma text-xs uppercase text-slate-500">Winter Advisory</p>
-          <p className="mt-2 text-sm text-slate-500">&copy; {new Date().getFullYear()} Winter Advisory. AI strategy, systems, and operator enablement.</p>
+          <p className="mt-2 text-sm text-slate-500">&copy; {new Date().getFullYear()} Winter Advisory. AI deployment for ecommerce brands.</p>
         </div>
+
+        <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Service pages">
+          {serviceLinks.map((item) => (
+            <a key={item.href} href={item.href} className="text-sm text-slate-500 transition hover:text-cyan-100">
+              {item.label}
+            </a>
+          ))}
+        </nav>
 
         <div className="flex gap-3">
           {socialLinks.map((item) => (

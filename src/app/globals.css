@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .field-input {
+    @apply w-full rounded-lg border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-200/70 focus:bg-slate-950/80;
+  }
+}
+
 @font-face {
   font-family: 'Microgramma';
   src: url('/fonts/microgrammanormal.ttf') format('truetype');
