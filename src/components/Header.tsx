@@ -2,11 +2,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const navItems = [
-  { label: 'Fit', href: '/#fit' },
-  { label: 'Audit', href: '/#audit' },
-  { label: 'Use cases', href: '/#use-cases' },
-  { label: 'Programs', href: '/#programs' },
-  { label: 'FAQ', href: '/#faq' },
+  { label: 'Consultant', href: '/ecommerce-ai-consultant' },
+  { label: 'Audit', href: '/ecommerce-ai-deployment-audit' },
+  { label: 'Resources', href: '/resources' },
+  { label: 'Use cases', href: '/ecommerce-ai-use-cases' },
+  { label: 'ROI', href: '/ecommerce-ai-roi-calculator' },
 ]
 
 export function Header() {
@@ -41,7 +41,7 @@ export function Header() {
             href="/ecommerce-ai-deployment-audit"
             className="rounded-full border border-cyan-200/30 bg-cyan-200/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:border-cyan-100 hover:bg-cyan-100 hover:text-slate-950"
           >
-            Audit
+            Start audit
           </a>
         </nav>
 
