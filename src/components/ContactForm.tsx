@@ -188,47 +188,6 @@ export function ContactForm() {
         </Field>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Your role" htmlFor="role">
-          <input
-            type="text"
-            id="role"
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            className="field-input"
-            placeholder="Founder, ops, lifecycle, CX"
-            disabled={status === 'submitting'}
-          />
-        </Field>
-
-        <Field label="Monthly orders" htmlFor="orderVolume">
-          <input
-            type="text"
-            id="orderVolume"
-            name="orderVolume"
-            value={formData.orderVolume}
-            onChange={handleChange}
-            className="field-input"
-            placeholder="1k, 10k, 50k+"
-            disabled={status === 'submitting'}
-          />
-        </Field>
-      </div>
-
-      <Field label="Commerce stack" htmlFor="commerceStack">
-        <input
-          type="text"
-          id="commerceStack"
-          name="commerceStack"
-          value={formData.commerceStack}
-          onChange={handleChange}
-          className="field-input"
-          placeholder="Shopify, Klaviyo, Gorgias, Recharge, NetSuite..."
-          disabled={status === 'submitting'}
-        />
-      </Field>
-
       <Field label="Deployment priority" htmlFor="priority">
         <select
           id="priority"
@@ -244,34 +203,6 @@ export function ContactForm() {
         </select>
       </Field>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Pilot KPI" htmlFor="pilotKpi">
-          <input
-            type="text"
-            id="pilotKpi"
-            name="pilotKpi"
-            value={formData.pilotKpi}
-            onChange={handleChange}
-            className="field-input"
-            placeholder="Revenue, speed, deflection, margin"
-            disabled={status === 'submitting'}
-          />
-        </Field>
-
-        <Field label="Timeline" htmlFor="timeline">
-          <input
-            type="text"
-            id="timeline"
-            name="timeline"
-            value={formData.timeline}
-            onChange={handleChange}
-            className="field-input"
-            placeholder="This month, this quarter, exploring"
-            disabled={status === 'submitting'}
-          />
-        </Field>
-      </div>
-
       <Field label="Workflow to deploy" htmlFor="message">
         <textarea
           id="message"
@@ -281,7 +212,7 @@ export function ContactForm() {
           value={formData.message}
           onChange={handleChange}
           className="field-input resize-none"
-          placeholder="What should AI help your team do, what tools are involved, and what would prove it is worth expanding?"
+          placeholder="What should AI help your team do? Mention the stack, owner, and what would make a pilot worth expanding."
           disabled={status === 'submitting'}
         />
       </Field>

@@ -49,21 +49,12 @@ const socialLinks = [
 ]
 
 const serviceLinks = [
-  { label: 'Resources', href: '/resources' },
   { label: 'Ecommerce AI consultant', href: '/ecommerce-ai-consultant' },
-  { label: 'Ecommerce AI automation', href: '/ecommerce-ai-automation' },
   { label: 'AI deployment audit', href: '/ecommerce-ai-deployment-audit' },
-  { label: 'Sample deliverables', href: '/ecommerce-ai-audit-sample-deliverables' },
-  { label: '90-day AI roadmap', href: '/ecommerce-ai-roadmap' },
-  { label: 'AI ROI calculator', href: '/ecommerce-ai-roi-calculator' },
-  { label: 'AI vendor selection', href: '/ecommerce-ai-vendor-selection-guide' },
-  { label: 'Ecommerce AI agents', href: '/ecommerce-ai-agents' },
-  { label: 'AI pilot brief template', href: '/ecommerce-ai-pilot-brief-template' },
+  { label: 'Resources', href: '/resources' },
   { label: 'Ecommerce AI use cases', href: '/ecommerce-ai-use-cases' },
   { label: 'AI deployment scorecard', href: '/ai-deployment-scorecard' },
-  { label: 'Shopify AI consultant', href: '/shopify-ai-consultant' },
-  { label: 'Klaviyo AI automation', href: '/klaviyo-ai-automation' },
-  { label: 'Gorgias AI implementation', href: '/gorgias-ai-implementation' },
+  { label: 'AI ROI calculator', href: '/ecommerce-ai-roi-calculator' },
 ]
 
 export function Footer() {

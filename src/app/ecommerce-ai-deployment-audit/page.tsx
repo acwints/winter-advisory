@@ -153,10 +153,10 @@ export default function EcommerceAiDeploymentAuditPage() {
                 Request the audit
               </a>
               <a
-                href="/ecommerce-ai-audit-sample-deliverables"
+                href="/ai-deployment-scorecard"
                 className="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white transition hover:border-cyan-200/60 hover:bg-white/5"
               >
-                View sample deliverables
+                Score readiness first
               </a>
             </div>
           </div>
@@ -170,12 +170,9 @@ export default function EcommerceAiDeploymentAuditPage() {
                 </div>
               ))}
             </div>
-            <a
-              href="/ecommerce-ai-audit-sample-deliverables"
-              className="mt-6 inline-flex text-sm font-semibold text-cyan-200 transition hover:text-white"
-            >
-              Preview the artifacts
-            </a>
+            <p className="mt-6 text-xs leading-5 text-slate-500">
+              Enough structure to make a decision. Not a strategy deck for its own sake.
+            </p>
           </aside>
         </div>
       </section>
