@@ -49,12 +49,9 @@ const socialLinks = [
 ]
 
 const serviceLinks = [
-  { label: 'Ecommerce AI consultant', href: '/ecommerce-ai-consultant' },
-  { label: 'AI deployment audit', href: '/ecommerce-ai-deployment-audit' },
+  { label: 'Consulting', href: '/ecommerce-ai-consultant' },
+  { label: 'Audit', href: '/ecommerce-ai-deployment-audit' },
   { label: 'Resources', href: '/resources' },
-  { label: 'Ecommerce AI use cases', href: '/ecommerce-ai-use-cases' },
-  { label: 'AI deployment scorecard', href: '/ai-deployment-scorecard' },
-  { label: 'AI ROI calculator', href: '/ecommerce-ai-roi-calculator' },
 ]
 
 export function Footer() {
@@ -70,33 +67,35 @@ export function Footer() {
 
   return (
     <footer className="border-t border-white/10 bg-[#05070a] px-6 py-8">
-      <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_auto_auto] lg:items-center">
+      <div className="mx-auto flex max-w-7xl flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="font-microgramma text-xs uppercase text-slate-500">Winter Advisory</p>
-          <p className="mt-2 text-sm text-slate-500">&copy; {new Date().getFullYear()} Winter Advisory. AI deployment for ecommerce brands.</p>
+          <p className="mt-2 text-sm text-slate-500">&copy; {new Date().getFullYear()} Winter Advisory. AI deployment for ecommerce.</p>
         </div>
 
-        <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Service pages">
-          {serviceLinks.map((item) => (
-            <a key={item.href} href={item.href} className="text-sm text-slate-500 transition hover:text-cyan-100">
-              {item.label}
-            </a>
-          ))}
-        </nav>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+          <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Footer">
+            {serviceLinks.map((item) => (
+              <a key={item.href} href={item.href} className="text-sm text-slate-500 transition hover:text-cyan-100">
+                {item.label}
+              </a>
+            ))}
+          </nav>
 
-        <div className="flex gap-3">
-          {socialLinks.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-slate-400 transition hover:border-cyan-200/60 hover:text-cyan-100"
-            >
-              <span className="sr-only">{item.name}</span>
-              <item.icon className="h-5 w-5" aria-hidden="true" />
-            </a>
-          ))}
+          <div className="flex gap-2">
+            {socialLinks.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-slate-400 transition hover:border-cyan-200/60 hover:text-cyan-100"
+              >
+                <span className="sr-only">{item.name}</span>
+                <item.icon className="h-4 w-4" aria-hidden="true" />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </footer>
