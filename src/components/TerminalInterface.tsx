@@ -80,6 +80,8 @@ const pricingText = [
   '- Vendor/build evaluation is usually scoped inside an audit, sprint, or advisory engagement.',
 ].join('\n')
 
+const guidedResponseDelay = 650
+
 const bootLines: TerminalLine[] = [
   {
     id: 'boot-1',
@@ -153,6 +155,51 @@ function isSkip(value: string) {
 
 function isPricingQuestion(value: string) {
   return /\b(price|pricing|cost|costs|budget|range|fee|fees|retainer|monthly|how much)\b/i.test(value)
+}
+
+function isConfusedReply(value: string) {
+  return /^(huh|what|what\?|wait|why|idk|i don't know|i dont know|confused|\?)$/i.test(value.trim())
+}
+
+function sleep(ms: number) {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, ms)
+  })
+}
+
+function cleanName(value: string) {
+  return value
+    .replace(/[.,!?;:]+$/g, '')
+    .replace(/\s+(and|but|because|from|with)\s+.*$/i, '')
+    .trim()
+}
+
+function extractNameFromIntro(value: string) {
+  const match = value.match(/\b(?:i am|i'm|im|my name is|this is)\s+([a-z][a-z'-]*(?:\s+[a-z][a-z'-]*)?)/i)
+  const name = match ? cleanName(match[1]) : ''
+
+  if (!name || name.length < 2) {
+    return ''
+  }
+
+  return name
+}
+
+function looksLikeName(value: string) {
+  const trimmed = cleanName(value)
+
+  if (trimmed.length < 2 || isConfusedReply(trimmed)) {
+    return false
+  }
+
+  return /^[a-z][a-z' -]{1,60}$/i.test(trimmed)
+}
+
+function formatName(value: string) {
+  return cleanName(value)
+    .split(/\s+/)
+    .map((part) => `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
+    .join(' ')
 }
 
 function normalizeService(value: string) {
@@ -305,6 +352,13 @@ export function TerminalInterface() {
     setLines((current) => [...current, newLine('assistant', text)])
   }
 
+  const addGuidedAssistantLine = async (text: string) => {
+    setIsPending(true)
+    await sleep(guidedResponseDelay)
+    addAssistantLine(text)
+    setIsPending(false)
+  }
+
   const resetTerminal = () => {
     setPreviousResponseId(null)
     setStep('intro')
@@ -433,75 +487,92 @@ export function TerminalInterface() {
     const nextIntake = { ...intake }
 
     if (step !== 'budget' && step !== 'confirm' && isPricingQuestion(value)) {
-      addAssistantLine(`${pricingText}\n\n${currentQuestion(step)}`)
+      await addGuidedAssistantLine(`${pricingText}\n\n${currentQuestion(step)}`)
       return
     }
 
     switch (step) {
       case 'intro':
         nextIntake.intro = value
+        {
+          const introName = extractNameFromIntro(value)
+
+          if (introName) {
+            nextIntake.name = formatName(introName)
+            setIntake(nextIntake)
+            setStep('email')
+            await addGuidedAssistantLine(`Nice to meet you, ${nextIntake.name}. ${nextQuestion('name')}`)
+            return
+          }
+        }
+
         setIntake(nextIntake)
         setStep('name')
-        addAssistantLine(nextQuestion('intro'))
+        await addGuidedAssistantLine(nextQuestion('intro'))
         return
       case 'name':
-        nextIntake.name = value
+        if (!looksLikeName(value)) {
+          await addGuidedAssistantLine('I may have moved too fast. What name should Andrew use when he follows up?')
+          return
+        }
+
+        nextIntake.name = formatName(value)
         setIntake(nextIntake)
         setStep('email')
-        addAssistantLine(nextQuestion('name'))
+        await addGuidedAssistantLine(nextQuestion('name'))
         return
       case 'email':
         if (!isValidEmail(value)) {
-          addAssistantLine('Please enter a valid email address so Andrew can follow up.')
+          await addGuidedAssistantLine('Please enter a valid email address so Andrew can follow up.')
           return
         }
 
         nextIntake.email = value
         setIntake(nextIntake)
         setStep('company')
-        addAssistantLine(nextQuestion('email'))
+        await addGuidedAssistantLine(nextQuestion('email'))
         return
       case 'company':
         nextIntake.company = value
         setIntake(nextIntake)
         setStep('website')
-        addAssistantLine(nextQuestion('company'))
+        await addGuidedAssistantLine(nextQuestion('company'))
         return
       case 'website':
         nextIntake.website = isSkip(value) ? '' : value
         setIntake(nextIntake)
         setStep('role')
-        addAssistantLine(nextQuestion('website'))
+        await addGuidedAssistantLine(nextQuestion('website'))
         return
       case 'role':
         nextIntake.role = value
         setIntake(nextIntake)
         setStep('service')
-        addAssistantLine(nextQuestion('role'))
+        await addGuidedAssistantLine(nextQuestion('role'))
         return
       case 'service':
         nextIntake.serviceInterest = normalizeService(value)
         setIntake(nextIntake)
         setStep('challenge')
-        addAssistantLine(nextQuestion('service'))
+        await addGuidedAssistantLine(nextQuestion('service'))
         return
       case 'challenge':
         nextIntake.challenge = value
         setIntake(nextIntake)
         setStep('timeline')
-        addAssistantLine(nextQuestion('challenge'))
+        await addGuidedAssistantLine(nextQuestion('challenge'))
         return
       case 'timeline':
         nextIntake.timeline = value
         setIntake(nextIntake)
         setStep('budget')
-        addAssistantLine(nextQuestion('timeline'))
+        await addGuidedAssistantLine(nextQuestion('timeline'))
         return
       case 'budget':
         nextIntake.budgetFit = value
         setIntake(nextIntake)
         setStep('notes')
-        addAssistantLine(nextQuestion('budget'))
+        await addGuidedAssistantLine(nextQuestion('budget'))
         return
       case 'notes':
         nextIntake.notes = isSkip(value) ? '' : value
@@ -515,14 +586,14 @@ export function TerminalInterface() {
         }
 
         if (isNegative(value)) {
-          addAssistantLine('No problem. The draft has not been submitted. Reply yes if you want to send it, or /reset to start over.')
+          await addGuidedAssistantLine('No problem. The draft has not been submitted. Reply yes if you want to send it, or /reset to start over.')
           return
         }
 
-        addAssistantLine(currentQuestion('confirm'))
+        await addGuidedAssistantLine(currentQuestion('confirm'))
         return
       case 'submitted':
-        addAssistantLine('This inquiry is already submitted. Use /reset to start a new one.')
+        await addGuidedAssistantLine('This inquiry is already submitted. Use /reset to start a new one.')
         return
     }
   }
