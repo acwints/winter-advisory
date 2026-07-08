@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
@@ -29,7 +28,7 @@ export default function Home() {
       {/* Hero */}
       <section className="relative px-6 pb-20 pt-36 sm:pt-40 lg:px-8 lg:pb-24">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_72%_18%,rgba(103,232,249,0.1),transparent_38%),linear-gradient(135deg,#05070a_0%,#0d1b1e_52%,#111318_100%)]" />
-        <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="mx-auto max-w-7xl">
           <div>
             <p className="font-microgramma text-xs uppercase text-cyan-200">
               AI deployment advisory
@@ -55,25 +54,6 @@ export default function Home() {
               >
                 Chat with us
               </Link>
-            </div>
-          </div>
-
-          <div className="relative mx-auto w-full max-w-md overflow-hidden rounded-lg border border-white/10 shadow-2xl shadow-black/50">
-            <Image
-              src="/images/sentinel-hero.jpg"
-              alt="The Winter Advisory sentinel — a frost-covered robot with ice-blue eyes"
-              width={880}
-              height={1072}
-              priority
-              className="w-full"
-            />
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#05070a] via-[#05070a]/55 to-transparent p-5 pt-16">
-              <p className="font-microgramma text-[0.66rem] uppercase tracking-widest text-cyan-200">
-                AI is coming
-              </p>
-              <p className="mt-1 text-sm text-slate-300">
-                The question is whether it ships under your control.
-              </p>
             </div>
           </div>
         </div>
