@@ -69,7 +69,7 @@ export function Footer() {
       <div className="mx-auto flex max-w-7xl flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="font-microgramma text-xs uppercase text-slate-500">Winter Advisory</p>
-          <p className="mt-2 text-sm text-slate-500">&copy; {new Date().getFullYear()} Winter Advisory. Practical AI deployment.</p>
+          <p className="mt-2 text-sm text-slate-500">&copy; {new Date().getFullYear()} Winter Advisory.</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
