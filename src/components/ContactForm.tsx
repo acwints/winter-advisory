@@ -19,10 +19,7 @@ export function ContactForm() {
     company: '',
     website: '',
     role: '',
-    commerceStack: '',
-    orderVolume: '',
     priority: priorityOptions[0],
-    pilotKpi: '',
     timeline: '',
     message: '',
     sourcePath: '',
@@ -71,10 +68,7 @@ export function ContactForm() {
         company: '',
         website: '',
         role: '',
-        commerceStack: '',
-        orderVolume: '',
         priority: priorityOptions[0],
-        pilotKpi: '',
         timeline: '',
         message: '',
         sourcePath: `${window.location.pathname}${window.location.search}`,
@@ -127,7 +121,7 @@ export function ContactForm() {
             value={formData.name}
             onChange={handleChange}
             className="field-input"
-            placeholder="Jane Operator"
+            placeholder="Jane Smith"
             disabled={status === 'submitting'}
           />
         </Field>

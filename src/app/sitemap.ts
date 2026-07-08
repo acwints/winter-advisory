@@ -5,6 +5,10 @@ const pages = [
     url: 'https://winteradvisory.llc',
     priority: 1,
   },
+  {
+    url: 'https://winteradvisory.llc/contact',
+    priority: 0.9,
+  },
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {

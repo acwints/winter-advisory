@@ -122,7 +122,7 @@ export function LoadingScreen() {
             </span>
           ))}
         </div>
-        <div className="wa-ls__subtitle">winter advisory // intake terminal</div>
+        <div className="wa-ls__subtitle">winter advisory</div>
         <div className="wa-ls__bar"><span /></div>
         {phase === 'playing' ? (
           <div className="wa-ls__skip">press any key to skip</div>

@@ -8,10 +8,7 @@ export async function POST(req: Request) {
       company,
       website,
       role,
-      commerceStack,
-      orderVolume,
       priority,
-      pilotKpi,
       timeline,
       message,
       sourcePath,
@@ -66,10 +63,10 @@ export async function POST(req: Request) {
           company,
           website || '',
           role || '',
-          commerceStack || '',
-          orderVolume || '',
+          '', // retired column (commerce stack) — kept so sheet layout stays aligned
+          '', // retired column (order volume)
           priority || '',
-          pilotKpi || '',
+          '', // retired column (pilot KPI)
           timeline || '',
           message,
           sourcePath || '',

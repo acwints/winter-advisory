@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ContactForm } from '@/components/ContactForm'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { LoadingScreen } from '@/components/LoadingScreen'
@@ -45,16 +44,16 @@ export default function Home() {
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="#contact"
+                href="/contact"
                 className="inline-flex items-center justify-center rounded-full bg-cyan-200 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-white"
               >
                 Contact
               </Link>
               <Link
-                href="#intake"
+                href="#chat"
                 className="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white transition hover:border-cyan-200/60 hover:bg-white/5"
               >
-                Try the intake terminal
+                Chat with us
               </Link>
             </div>
           </div>
@@ -80,46 +79,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Intake terminal */}
-      <section id="intake" className="relative scroll-mt-24 border-t border-white/10 px-6 py-20 lg:px-8 lg:py-24">
+      {/* Chat */}
+      <section id="chat" className="relative scroll-mt-24 border-t border-white/10 px-6 py-20 lg:px-8 lg:py-24">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_30%_20%,rgba(103,232,249,0.12),transparent_34%),linear-gradient(135deg,#05070a_0%,#091111_52%,#0e0f14_100%)]" />
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
-            <p className="font-microgramma text-xs uppercase text-amber-200">Intake terminal</p>
+            <p className="font-microgramma text-xs uppercase text-amber-200">Chat</p>
             <h2 className="mt-4 text-3xl font-semibold text-white sm:text-5xl">
               Skip the discovery call
             </h2>
             <p className="mt-5 text-base leading-7 text-slate-400">
-              The terminal answers service, pricing, and fit questions, then drafts your
-              inquiry for review — no meeting required.
+              Ask about services, pricing, or fit — the chat drafts your inquiry for
+              review as you go. No meeting required.
             </p>
           </div>
           <div className="mt-10">
             <TerminalInterface />
           </div>
-        </div>
-      </section>
-
-      {/* Contact */}
-      <section id="contact" className="scroll-mt-24 border-t border-white/10 bg-white/[0.025] px-6 py-20 lg:px-8 lg:py-24">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <div>
-            <p className="font-microgramma text-xs uppercase text-cyan-200">Contact</p>
-            <h2 className="mt-4 text-3xl font-semibold text-white sm:text-5xl">
-              Tell us what you are deploying
-            </h2>
-            <p className="mt-6 text-sm leading-7 text-slate-400">
-              Share the workflow, systems, and timeline and you will get a scoped
-              recommendation back — not a sales sequence. Prefer email?{' '}
-              <a
-                href="mailto:andrew@winteradvisory.llc"
-                className="font-semibold text-cyan-100 transition hover:text-white"
-              >
-                andrew@winteradvisory.llc
-              </a>
-            </p>
-          </div>
-          <ContactForm />
         </div>
       </section>
 

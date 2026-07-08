@@ -20,6 +20,7 @@ Winter Advisory is a generalist AI deployment advisory. It helps teams take AI f
 ## Important pages
 
 - Homepage: https://winteradvisory.llc/
+- Contact: https://winteradvisory.llc/contact
 
 ## Positioning summary
 
@@ -27,7 +28,7 @@ Winter Advisory is deployment-led AI consulting. It emphasizes workflow scope, b
 
 ## Contact
 
-Use the contact form on https://winteradvisory.llc/ or email andrew@winteradvisory.llc.
+Use the contact form on https://winteradvisory.llc/contact or email andrew@winteradvisory.llc.
 `
 
 export function GET() {

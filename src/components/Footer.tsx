@@ -49,8 +49,8 @@ const socialLinks = [
 ]
 
 const serviceLinks = [
-  { label: 'Intake terminal', href: '/#intake' },
-  { label: 'Contact', href: '/#contact' },
+  { label: 'Chat', href: '/#chat' },
+  { label: 'Contact', href: '/contact' },
 ]
 
 export function Footer() {

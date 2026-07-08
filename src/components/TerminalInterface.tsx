@@ -232,7 +232,7 @@ export function TerminalInterface() {
     setStatus('collecting')
     setLines([
       ...bootLines,
-      newLine('system', 'intake restarted'),
+      newLine('system', 'chat restarted'),
     ])
   }
 
@@ -262,11 +262,11 @@ export function TerminalInterface() {
       const data = (await response.json()) as IntakeAgentResponse
 
       if (!response.ok) {
-        throw new Error(data.error || 'The intake agent could not respond')
+        throw new Error(data.error || 'The chat could not respond')
       }
 
       if (!data.reply || !data.state || !data.status) {
-        throw new Error('The intake agent returned an incomplete response')
+        throw new Error('The chat returned an incomplete response')
       }
 
       const reply = data.reply
@@ -276,7 +276,7 @@ export function TerminalInterface() {
     } catch (error) {
       setLines((current) => [
         ...current,
-        newLine('error', error instanceof Error ? error.message : 'Unknown intake agent error'),
+        newLine('error', error instanceof Error ? error.message : 'Unknown chat error'),
         newLine('assistant', `I kept your place. ${agentState.lastAskedQuestion || initialQuestion}`),
       ])
     } finally {
@@ -311,7 +311,7 @@ export function TerminalInterface() {
         ...current,
         newLine('assistant', [
           'Commands: /clear, /reset, /help',
-          'This agent can answer Winter Advisory service, pricing, fit, and process questions while keeping the intake moving.',
+          'This chat can answer Winter Advisory service, pricing, fit, and process questions and drafts your inquiry as you go.',
           pricingText,
           agentState.lastAskedQuestion || initialQuestion,
         ].join('\n')),
@@ -358,7 +358,7 @@ export function TerminalInterface() {
             <div className="mt-2 font-mono text-sm text-cyan-100">Winter Advisory</div>
           </div>
           <div className="border border-white/10 bg-black/35 p-4">
-            <div className="font-microgramma text-[0.66rem] uppercase text-slate-500">Intake</div>
+            <div className="font-microgramma text-[0.66rem] uppercase text-slate-500">Status</div>
             <div className="mt-2 font-mono text-sm text-emerald-100">{statusLabel(status)}</div>
           </div>
           <div className="border border-white/10 bg-black/35 p-4">
@@ -382,7 +382,7 @@ export function TerminalInterface() {
                 onClick={() => setActive(true)}
                 className="border border-cyan-200/40 bg-cyan-200/10 px-8 py-4 font-microgramma text-xs uppercase tracking-[0.3em] text-cyan-100 transition hover:bg-cyan-100 hover:text-slate-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-100"
               >
-                ▸ Start intake
+                ▸ Start chat
               </button>
             </div>
           ) : null}
@@ -392,7 +392,7 @@ export function TerminalInterface() {
               <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
             </div>
-            <div className="font-microgramma text-[0.66rem] uppercase text-slate-500">winter://intake</div>
+            <div className="font-microgramma text-[0.66rem] uppercase text-slate-500">winter://chat</div>
           </div>
 
           <div
