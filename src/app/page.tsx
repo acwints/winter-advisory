@@ -1,5 +1,6 @@
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
+import { LoadingScreen } from '@/components/LoadingScreen'
 import { TerminalInterface } from '@/components/TerminalInterface'
 
 const jsonLd = {
@@ -22,6 +23,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <LoadingScreen />
       <Header />
       <TerminalInterface />
       <Footer />
