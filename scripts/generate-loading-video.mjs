@@ -34,34 +34,45 @@ const OUT_DIR = path.join(process.cwd(), 'public', 'videos')
 const KEYFRAME_PATH = path.join(OUT_DIR, 'ai-is-coming-keyframe.png')
 const RAW_VIDEO_PATH = path.join(OUT_DIR, 'ai-is-coming-raw.mp4')
 const FINAL_VIDEO_PATH = path.join(OUT_DIR, 'ai-is-coming.mp4')
+const LOOP_VIDEO_PATH = path.join(OUT_DIR, 'ai-is-coming-loop.mp4')
+// Tail of the take that ping-pongs forever after the intro plays once.
+// Reversed-then-forward, so the loop's first frame == the main video's last
+// frame and its last frame == its own first frame: seamless at both joints.
+const LOOP_TAIL_START_S = 4.5
 
 // Original character design (mirrors the site's SVG sentinel). Keep the eyes
 // DARK in the keyframe — the video model performs the ignition.
 const KEYFRAME_PROMPT = [
-  'Cinematic film still, extreme close portrait, frozen battlefield at dusk.',
-  'A humanoid android stands motionless, centered, staring directly into the',
-  'camera, framed tightly from the shoulders up so the face dominates the frame.',
-  'Design: unmistakably a machine — a gaunt, angular robotic face of pale',
-  'frost-covered metal with visible panel seams, servo joints at the jaw, and',
-  'exposed cabling at the neck; a crown of jagged sensor fins sweeping up and',
-  'back from the head; segmented chainmail-style mesh armor at the shoulders.',
-  'Its two large mechanical eyes are prominent camera-lens irises, perfectly',
-  'visible but completely dark and unpowered — dead glass lenses with a faint',
-  'reflective sheen, no glow whatsoever.',
-  'Dense freezing fog, gently falling snow, volumetric rim light from behind,',
-  'desaturated steel-blue color grade, anamorphic lens, shallow depth of field,',
+  'Cinematic film still, frozen battlefield at dusk. A menacing sci-fi',
+  'android war machine stands motionless, centered, facing the camera,',
+  'framed from the waist up with generous headroom — full head and armored',
+  'torso visible, NOT a close-up. Design: unmistakably a robot, not a knight —',
+  'a gaunt, angular metallic android head with visible panel seams, bolted',
+  'plating, articulated jaw servos, and hydraulic pistons and bundled cables',
+  'at the neck; a crown of long jagged metal sensor-fin spikes sweeping up',
+  'and back from its skull; two large deep-set mechanical lens eyes, clearly',
+  'visible but completely dark and unpowered — dead glass camera lenses,',
+  'no glow. Its torso is engineered sci-fi armor: segmented alloy chest',
+  'plating with exposed actuators at the shoulder joints and flexible metal',
+  'mesh between the plates, all rimed with frost, dusted with snow, and hung',
+  'with thin icicles.',
+  'Dense freezing fog, gently falling snow, strong volumetric rim light from',
+  'behind, desaturated steel-blue color grade, anamorphic lens,',
   'photorealistic, extreme detail, subtle film grain.',
+  'Full-bleed image with no border, no vignette, no letterboxing.',
 ].join(' ')
 
 const VIDEO_PROMPT = [
-  'Static camera with a very slow push-in on the android’s face. It stays',
-  'perfectly still in gently falling snow and drifting fog; frost vapor curls',
-  'off its shoulders. Its large mechanical lens eyes are dark and dead for the',
-  'first 2 seconds. Then both irises flicker faintly and power on, igniting',
-  'into vivid ice-blue glowing rings — the glow stays contained inside the',
-  'eyes like lit camera lenses, casting only a soft cold blue sheen onto the',
-  'brow and cheek plating. No light beams, no lens flare streaks. The robot',
-  'remains otherwise motionless — menacing, patient. Ominous cinematic tone,',
+  'Locked-off static camera. No camera movement, no push-in, no zoom, no pan.',
+  'The armored, frost-covered android war machine stands perfectly still,',
+  'framed waist-up with headroom. Snow falls gently, fog drifts slowly, and',
+  'frost vapor breathes off its shoulder plating. For the first 2 seconds its',
+  'deep-set lens eyes stay completely dark. Then both lenses flicker and',
+  'ignite into piercing ice-blue points of light — the glow stays contained',
+  'within the eye sockets,',
+  'casting only a soft cold blue sheen onto the icy cheekbones. No light',
+  'beams, no lens flare streaks. It remains otherwise perfectly motionless —',
+  'menacing, patient, ambient loopable motion only. Ominous cinematic tone,',
   'photorealistic, desaturated steel-blue grade, volumetric lighting, subtle',
   'film grain. No text, no captions, no watermarks.',
 ].join(' ')
@@ -216,11 +227,29 @@ async function compressVideo() {
     '-preset', 'slow',
     '-movflags', '+faststart',
     '-pix_fmt', 'yuv420p',
-    '-vf', 'scale=-2:1080',
+    // crop trims the film-border vignette the image model bakes into edges
+    '-vf', 'crop=iw*0.92:ih*0.92:(iw-iw*0.92)/2:(ih-ih*0.92)/2,scale=-2:1080',
     FINAL_VIDEO_PATH,
   ], { stdio: 'pipe' })
+
+  execFileSync(ffmpeg, [
+    '-y',
+    '-i', RAW_VIDEO_PATH,
+    '-an',
+    '-filter_complex',
+    `[0:v]trim=start=${LOOP_TAIL_START_S},setpts=PTS-STARTPTS,crop=iw*0.92:ih*0.92:(iw-iw*0.92)/2:(ih-ih*0.92)/2,scale=-2:1080,split[fwd][tmp];[tmp]reverse[rev];[rev][fwd]concat=n=2:v=1:a=0[out]`,
+    '-map', '[out]',
+    '-vcodec', 'libx264',
+    '-crf', '29',
+    '-preset', 'slow',
+    '-movflags', '+faststart',
+    '-pix_fmt', 'yuv420p',
+    LOOP_VIDEO_PATH,
+  ], { stdio: 'pipe' })
+
   rmSync(RAW_VIDEO_PATH) // don't ship the 13MB raw take in public/
   console.log(`      Saved ${path.relative(process.cwd(), FINAL_VIDEO_PATH)}`)
+  console.log(`      Saved ${path.relative(process.cwd(), LOOP_VIDEO_PATH)} (seamless ping-pong loop)`)
 }
 
 mkdirSync(OUT_DIR, { recursive: true })

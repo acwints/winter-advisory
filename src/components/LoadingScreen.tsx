@@ -4,6 +4,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 
 const TITLE = 'AI IS COMING'
 const VIDEO_SRC = '/videos/ai-is-coming.mp4'
+// Ping-pong tail of the main take; its first frame matches the main video's
+// last frame, so the handoff and every cycle after it are seamless.
+const LOOP_SRC = '/videos/ai-is-coming-loop.mp4'
 const READY_AT_MS = 5000
 const REDUCED_READY_AT_MS = 300
 const FADE_MS = 800
@@ -17,8 +20,10 @@ export function LoadingScreen() {
   const [phase, setPhase] = useState<Phase>('playing')
   const [reducedMotion, setReducedMotion] = useState(false)
   const [videoOn, setVideoOn] = useState(false)
+  const [loopOn, setLoopOn] = useState(false)
   const [instant, setInstant] = useState(false)
   const timers = useRef<number[]>([])
+  const loopRef = useRef<HTMLVideoElement>(null)
 
   const letters = useMemo(() => TITLE.split(''), [])
 
@@ -96,17 +101,33 @@ export function LoadingScreen() {
       </div>
 
       {!reducedMotion ? (
-        <video
-          className="wa-ls__video"
-          src={VIDEO_SRC}
-          muted
-          playsInline
-          autoPlay
-          preload="auto"
-          aria-hidden="true"
-          onPlaying={() => setVideoOn(true)}
-          onError={() => setVideoOn(false)}
-        />
+        <>
+          <video
+            className="wa-ls__video"
+            src={VIDEO_SRC}
+            muted
+            playsInline
+            autoPlay
+            preload="auto"
+            aria-hidden="true"
+            onPlaying={() => setVideoOn(true)}
+            onError={() => setVideoOn(false)}
+            onEnded={() => {
+              void loopRef.current?.play().catch(() => {})
+            }}
+          />
+          <video
+            ref={loopRef}
+            className={`wa-ls__video wa-ls__video--loop${loopOn ? ' wa-ls__video--loop-on' : ''}`}
+            src={LOOP_SRC}
+            muted
+            playsInline
+            loop
+            preload="auto"
+            aria-hidden="true"
+            onPlaying={() => setLoopOn(true)}
+          />
+        </>
       ) : null}
       <div className="wa-ls__veil" aria-hidden="true" />
       <div className="wa-ls__scrim" aria-hidden="true" />
@@ -417,13 +438,17 @@ const loadingScreenCss = `
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 32%;
+  object-position: 50% 30%;
   opacity: 0;
-  transform: scale(1.045);
-  transition: opacity 1.6s ease, transform 7s ease-out;
+  transition: opacity 1.6s ease;
   pointer-events: none;
 }
-.wa-ls--cinema .wa-ls__video { opacity: 1; transform: scale(1); }
+.wa-ls--cinema .wa-ls__video { opacity: 1; }
+
+/* loop layer sits above the main take and reveals only once it is playing */
+.wa-ls__video--loop { opacity: 0; transition: opacity 0.25s ease; }
+.wa-ls--cinema .wa-ls__video--loop { opacity: 0; }
+.wa-ls--cinema .wa-ls__video--loop.wa-ls__video--loop-on { opacity: 1; }
 
 /* fog veil that swells to mask the SVG -> video handoff */
 .wa-ls__veil {
