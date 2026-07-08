@@ -249,7 +249,7 @@ function questionFor(field: z.infer<typeof fieldSchema>) {
         '4. Vendor/build evaluation',
       ].join('\n')
     case 'challenge':
-      return 'What ecommerce workflow, operating problem, or AI deployment opportunity should Winter Advisory help with?'
+      return 'What workflow, operating problem, or AI deployment opportunity should Winter Advisory help with?'
     case 'timeline':
       return 'What timeline are you working against?'
     case 'budgetFit':
@@ -454,7 +454,7 @@ function createIntakeAgent(requestUrl: string) {
 
       if (lower.includes('what can') || lower.includes('what do')) {
         return [
-          'Winter Advisory helps ecommerce teams identify, scope, and lead practical AI deployments across workflows, vendor/build choices, pilots, and operating controls.',
+          'Winter Advisory helps teams identify, scope, and lead practical AI deployments across workflows, vendor/build choices, pilots, and operating controls.',
           pricingText,
           currentQuestion,
         ].join('\n\n')
@@ -504,7 +504,7 @@ function createIntakeAgent(requestUrl: string) {
       'Never re-ask for information that is already present in state. If the visitor already shared their name, need, or other details, acknowledge them and move to the next missing field.',
       'A first name is enough for the name field. Never ask for a full name, last name, or legal name.',
       'When asking the next intake question, use the lastAskedQuestion wording returned by extract_intake_fields rather than inventing stricter phrasing.',
-      'If the challenge field was seeded from an early message, briefly reflect it back (e.g. "Got it - building your DTC brand") and, if it is vague, ask at most one clarifying follow-up before moving on.',
+      'If the challenge field was seeded from an early message, briefly reflect it back (e.g. "Got it - automating your support workflow") and, if it is vague, ask at most one clarifying follow-up before moving on.',
       'Required fields before draft/submission: name, email, company, serviceInterest, challenge, timeline, budgetFit.',
       'Optional fields: website, role, notes. If skipped, store "Not provided" for website/role and "None" for notes.',
       'If the visitor asks an off-script question, answer briefly using answer_service_question, then re-ask the active intake question.',

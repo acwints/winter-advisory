@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
 const priorityOptions = [
-  'Lifecycle marketing',
+  'Sales and marketing',
   'Customer experience',
-  'Merchandising and catalog',
-  'Operations and reporting',
+  'Operations and back office',
+  'Data, analytics, and reporting',
+  'Engineering and product',
   'Not sure yet',
 ]
 
@@ -34,28 +35,16 @@ export function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
 
   useEffect(() => {
-    function loadSourceContext() {
-      const params = new URLSearchParams(window.location.search)
-      const scoreSummary = window.localStorage.getItem('winter-advisory-score-summary') || ''
+    const params = new URLSearchParams(window.location.search)
 
-      setFormData(prev => ({
-        ...prev,
-        message: scoreSummary || prev.message,
-        sourcePath: `${window.location.pathname}${window.location.search}`,
-        referrer: document.referrer,
-        utmSource: params.get('utm_source') || '',
-        utmMedium: params.get('utm_medium') || '',
-        utmCampaign: params.get('utm_campaign') || '',
-        scoreSummary,
-      }))
-    }
-
-    loadSourceContext()
-    window.addEventListener('winter-advisory-score', loadSourceContext)
-
-    return () => {
-      window.removeEventListener('winter-advisory-score', loadSourceContext)
-    }
+    setFormData(prev => ({
+      ...prev,
+      sourcePath: `${window.location.pathname}${window.location.search}`,
+      referrer: document.referrer,
+      utmSource: params.get('utm_source') || '',
+      utmMedium: params.get('utm_medium') || '',
+      utmCampaign: params.get('utm_campaign') || '',
+    }))
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -76,7 +65,6 @@ export function ContactForm() {
       }
 
       setStatus('success')
-      window.localStorage.removeItem('winter-advisory-score-summary')
       setFormData({
         name: '',
         email: '',
@@ -121,8 +109,8 @@ export function ContactForm() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="mb-2 text-2xl font-semibold text-white">Audit request received</h3>
-        <p className="text-slate-400">I will review the workflow, source context, and scorecard details if included.</p>
+        <h3 className="mb-2 text-2xl font-semibold text-white">Inquiry received</h3>
+        <p className="text-slate-400">I will review the workflow and context and reply with a scoped recommendation.</p>
       </motion.div>
     )
   }
@@ -153,7 +141,7 @@ export function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             className="field-input"
-            placeholder="jane@brand.com"
+            placeholder="jane@company.com"
             disabled={status === 'submitting'}
           />
         </Field>
@@ -169,7 +157,7 @@ export function ContactForm() {
             value={formData.company}
             onChange={handleChange}
             className="field-input"
-            placeholder="Brand name"
+            placeholder="Company name"
             disabled={status === 'submitting'}
           />
         </Field>
@@ -182,7 +170,7 @@ export function ContactForm() {
             value={formData.website}
             onChange={handleChange}
             className="field-input"
-            placeholder="https://brand.com"
+            placeholder="https://company.com"
             disabled={status === 'submitting'}
           />
         </Field>
@@ -212,7 +200,7 @@ export function ContactForm() {
           value={formData.message}
           onChange={handleChange}
           className="field-input resize-none"
-          placeholder="What should AI help your team do? Mention the stack, owner, and what would make a pilot worth expanding."
+          placeholder="What should AI help your team do? Mention the systems involved, the owner, and what would make a pilot worth expanding."
           disabled={status === 'submitting'}
         />
       </Field>
@@ -232,7 +220,7 @@ export function ContactForm() {
         disabled={status === 'submitting'}
         className="w-full rounded-full bg-cyan-200 px-6 py-3.5 font-microgramma text-sm uppercase text-slate-950 transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {status === 'submitting' ? 'Sending...' : 'Request audit'}
+        {status === 'submitting' ? 'Sending...' : 'Send inquiry'}
       </button>
     </form>
   )

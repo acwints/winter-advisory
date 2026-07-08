@@ -49,9 +49,8 @@ const socialLinks = [
 ]
 
 const serviceLinks = [
-  { label: 'Consulting', href: '/ecommerce-ai-consultant' },
-  { label: 'Audit', href: '/ecommerce-ai-deployment-audit' },
-  { label: 'Resources', href: '/resources' },
+  { label: 'Intake terminal', href: '/#intake' },
+  { label: 'Contact', href: '/#contact' },
 ]
 
 export function Footer() {
@@ -70,7 +69,7 @@ export function Footer() {
       <div className="mx-auto flex max-w-7xl flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="font-microgramma text-xs uppercase text-slate-500">Winter Advisory</p>
-          <p className="mt-2 text-sm text-slate-500">&copy; {new Date().getFullYear()} Winter Advisory. AI deployment for ecommerce.</p>
+          <p className="mt-2 text-sm text-slate-500">&copy; {new Date().getFullYear()} Winter Advisory. Practical AI deployment.</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-x-5 gap-y-3">

@@ -11,7 +11,7 @@ const jsonLd = {
   '@type': 'ProfessionalService',
   name: 'Winter Advisory',
   description:
-    'AI deployment advisory for Shopify and DTC ecommerce teams across lifecycle marketing, CX, merchandising, analytics, and operations.',
+    'AI deployment advisory — workflow audits, controlled pilots, and fractional deployment leadership for teams putting AI into production.',
   url: 'https://winteradvisory.llc',
   areaServed: 'Worldwide',
   serviceType: 'AI deployment consulting',
@@ -33,15 +33,15 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             <p className="font-microgramma text-xs uppercase text-cyan-200">
-              AI deployment for ecommerce brands
+              AI deployment advisory
             </p>
             <h1 className="mt-6 max-w-3xl text-5xl font-semibold leading-[0.98] text-white sm:text-6xl lg:text-7xl">
               AI is coming. Deploy it before your competitors do.
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300">
-              Winter Advisory helps Shopify and DTC teams take AI from demo to production
-              across lifecycle marketing, CX, merchandising, analytics, and operations —
-              with the controls to survive contact with real customers.
+              Winter Advisory helps teams take AI from demo to production — auditing the
+              workflows worth automating, running controlled pilots, and scaling only
+              the deployments that produce evidence.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -109,7 +109,7 @@ export default function Home() {
               Tell us what you are deploying
             </h2>
             <p className="mt-6 text-sm leading-7 text-slate-400">
-              Share the workflow, stack, and timeline and you will get a scoped
+              Share the workflow, systems, and timeline and you will get a scoped
               recommendation back — not a sales sequence. Prefer email?{' '}
               <a
                 href="mailto:andrew@winteradvisory.llc"

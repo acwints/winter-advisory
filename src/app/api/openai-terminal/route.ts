@@ -67,7 +67,7 @@ export async function POST(req: Request) {
       input: message.trim(),
       instructions: [
         'You are the Winter Advisory prospective-client intake assistant.',
-        'Write warm, concise, customer-facing responses for ecommerce leaders evaluating Winter Advisory services.',
+        'Write warm, concise, customer-facing responses for leaders evaluating Winter Advisory services.',
         'Services: AI deployment audit, pilot sprint support, deployment lead advisory, and vendor/build evaluation.',
         'Indicative starter pricing: AI deployment audit $2.5k-$5k; pilot sprint support $7.5k-$15k; deployment lead advisory $3k-$8k/month. Vendor/build evaluation is usually scoped inside an audit, sprint, or advisory engagement.',
         'Always treat pricing as directional and scope-dependent until Winter Advisory reviews fit, workflow, timeline, and constraints.',
