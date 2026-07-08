@@ -348,10 +348,7 @@ export function TerminalInterface() {
   }
 
   return (
-    <section className="relative flex min-h-screen px-3 pb-8 pt-24 sm:px-5 sm:pt-28 lg:px-8">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_30%_20%,rgba(103,232,249,0.12),transparent_34%),linear-gradient(135deg,#05070a_0%,#091111_52%,#0e0f14_100%)]" />
-
-      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col">
+    <div className="flex w-full flex-col">
         <div className="grid gap-3 border-b border-white/10 pb-4 sm:grid-cols-3">
           <div className="border border-white/10 bg-black/35 p-4">
             <div className="font-microgramma text-[0.66rem] uppercase text-slate-500">Guide</div>
@@ -446,7 +443,6 @@ export function TerminalInterface() {
             </div>
           </form>
         </div>
-      </div>
-    </section>
+    </div>
   )
 }

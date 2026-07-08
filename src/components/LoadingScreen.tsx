@@ -4,18 +4,18 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 
 const TITLE = 'AI IS COMING'
 const VIDEO_SRC = '/videos/ai-is-coming.mp4'
-const FADE_AT_MS = 6200
-const DONE_AT_MS = 7000
-const REDUCED_FADE_AT_MS = 1600
-const REDUCED_DONE_AT_MS = 2400
+const READY_AT_MS = 5000
+const REDUCED_READY_AT_MS = 300
+const FADE_MS = 800
 const STORAGE_KEY = 'wa-intro-played'
 
-type Phase = 'playing' | 'fading' | 'done'
+type Phase = 'playing' | 'ready' | 'fading' | 'done'
 
 export function LoadingScreen() {
   const [phase, setPhase] = useState<Phase>('playing')
   const [reducedMotion, setReducedMotion] = useState(false)
   const [videoOn, setVideoOn] = useState(false)
+  const [instant, setInstant] = useState(false)
   const timers = useRef<number[]>([])
 
   const letters = useMemo(() => TITLE.split(''), [])
@@ -28,16 +28,9 @@ export function LoadingScreen() {
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     setReducedMotion(reduced)
-    const fadeAt = reduced ? REDUCED_FADE_AT_MS : FADE_AT_MS
-    const doneAt = reduced ? REDUCED_DONE_AT_MS : DONE_AT_MS
+    const readyAt = reduced ? REDUCED_READY_AT_MS : READY_AT_MS
 
-    timers.current.push(window.setTimeout(() => setPhase('fading'), fadeAt))
-    timers.current.push(
-      window.setTimeout(() => {
-        sessionStorage.setItem(STORAGE_KEY, '1')
-        setPhase('done')
-      }, doneAt)
-    )
+    timers.current.push(window.setTimeout(() => setPhase('ready'), readyAt))
 
     return () => {
       timers.current.forEach((id) => window.clearTimeout(id))
@@ -45,24 +38,33 @@ export function LoadingScreen() {
     }
   }, [])
 
-  const skip = () => {
-    if (phase !== 'playing') {
-      return
-    }
-
+  const skipToReady = () => {
     timers.current.forEach((id) => window.clearTimeout(id))
     timers.current = []
+    setInstant(true)
+    setPhase('ready')
+  }
+
+  const enter = () => {
     sessionStorage.setItem(STORAGE_KEY, '1')
     setPhase('fading')
-    timers.current.push(window.setTimeout(() => setPhase('done'), 800))
+    timers.current.push(window.setTimeout(() => setPhase('done'), FADE_MS))
+  }
+
+  const advance = () => {
+    if (phase === 'playing') {
+      skipToReady()
+    } else if (phase === 'ready') {
+      enter()
+    }
   }
 
   useEffect(() => {
-    if (phase !== 'playing') {
+    if (phase !== 'playing' && phase !== 'ready') {
       return
     }
 
-    const onKey = () => skip()
+    const onKey = () => advance()
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -74,10 +76,10 @@ export function LoadingScreen() {
 
   return (
     <div
-      className={`wa-ls${phase === 'fading' ? ' wa-ls--fading' : ''}`}
-      onClick={skip}
+      className={`wa-ls${phase === 'fading' ? ' wa-ls--fading' : ''}${videoOn ? ' wa-ls--cinema' : ''}${instant ? ' wa-ls--instant' : ''}`}
+      onClick={advance}
       role="status"
-      aria-label="Winter Advisory is loading"
+      aria-label="Winter Advisory intro"
     >
       <style>{loadingScreenCss}</style>
 
@@ -93,7 +95,7 @@ export function LoadingScreen() {
 
       {!reducedMotion ? (
         <video
-          className={`wa-ls__video${videoOn ? ' wa-ls__video--on' : ''}`}
+          className="wa-ls__video"
           src={VIDEO_SRC}
           muted
           playsInline
@@ -104,9 +106,10 @@ export function LoadingScreen() {
           onError={() => setVideoOn(false)}
         />
       ) : null}
+      <div className="wa-ls__veil" aria-hidden="true" />
 
-      <div className="wa-ls__caption" aria-hidden="true">
-        <div className="wa-ls__title">
+      <div className="wa-ls__caption">
+        <div className="wa-ls__title" aria-label={TITLE}>
           {letters.map((letter, index) => (
             <span
               key={`${letter}-${index}`}
@@ -118,7 +121,21 @@ export function LoadingScreen() {
         </div>
         <div className="wa-ls__subtitle">winter advisory // intake terminal</div>
         <div className="wa-ls__bar"><span /></div>
-        <div className="wa-ls__skip">press any key to skip</div>
+        {phase === 'playing' ? (
+          <div className="wa-ls__skip">press any key to skip</div>
+        ) : (
+          <button
+            type="button"
+            className="wa-ls__newgame"
+            autoFocus
+            onClick={(event) => {
+              event.stopPropagation()
+              enter()
+            }}
+          >
+            New Game
+          </button>
+        )}
       </div>
     </div>
   )
@@ -399,10 +416,27 @@ const loadingScreenCss = `
   object-fit: cover;
   object-position: 50% 32%;
   opacity: 0;
-  transition: opacity 0.9s ease;
+  transform: scale(1.045);
+  transition: opacity 1.6s ease, transform 7s ease-out;
   pointer-events: none;
 }
-.wa-ls__video--on { opacity: 1; }
+.wa-ls--cinema .wa-ls__video { opacity: 1; transform: scale(1); }
+
+/* fog veil that swells to mask the SVG -> video handoff */
+.wa-ls__veil {
+  position: absolute;
+  inset: -12%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle at 50% 38%, rgba(190, 230, 245, 0.34), rgba(110, 170, 195, 0.16) 46%, transparent 76%);
+  filter: blur(30px);
+}
+.wa-ls--cinema .wa-ls__veil { animation: wa-veil 2.2s ease forwards; }
+.wa-ls--cinema .wa-ls__figure { animation: wa-handoff 1.5s ease 0.15s forwards; }
+.wa-ls--cinema .wa-ls__fog--a,
+.wa-ls--cinema .wa-ls__fog--b,
+.wa-ls--cinema .wa-ls__snow { animation: wa-handoff 1.9s ease forwards; }
 
 .wa-ls__figure {
   width: min(64vw, 42vh, 330px);
@@ -463,7 +497,7 @@ const loadingScreenCss = `
   background: linear-gradient(90deg, rgba(77, 195, 232, 0.2), #7fe4ff);
   transform-origin: left;
   transform: scaleX(0);
-  animation: wa-bar 5.4s linear 0.4s forwards;
+  animation: wa-bar 4.4s linear 0.4s forwards;
 }
 .wa-ls__skip {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -472,7 +506,34 @@ const loadingScreenCss = `
   text-transform: uppercase;
   color: rgba(120, 150, 165, 0.45);
   opacity: 0;
-  animation: wa-fadein 1s ease 5s forwards;
+  animation: wa-fadein 1s ease 2.5s forwards;
+}
+
+.wa-ls__newgame {
+  margin-top: 0.4rem;
+  font-family: var(--font-microgramma), system-ui, sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  text-transform: uppercase;
+  color: #d9f6ff;
+  background: rgba(77, 195, 232, 0.06);
+  border: 1px solid rgba(127, 228, 255, 0.45);
+  padding: 0.95rem 2.6rem;
+  cursor: pointer;
+  text-shadow: 0 0 14px rgba(77, 195, 232, 0.6);
+  opacity: 0;
+  animation: wa-newgame-in 0.7s ease forwards, wa-newgame-pulse 2.6s ease-in-out 0.7s infinite;
+  transition: background 0.25s ease, color 0.25s ease, text-shadow 0.25s ease;
+}
+.wa-ls__newgame:hover {
+  background: #9feaff;
+  color: #05070a;
+  text-shadow: none;
+}
+.wa-ls__newgame:focus-visible {
+  outline: 2px solid #9feaff;
+  outline-offset: 3px;
 }
 
 @keyframes wa-fadein { to { opacity: 1; } }
@@ -514,16 +575,63 @@ const loadingScreenCss = `
 }
 @keyframes wa-corein { to { opacity: 0.8; } }
 @keyframes wa-coreglow { to { opacity: 0.5; } }
+@keyframes wa-handoff {
+  from { opacity: 1; filter: brightness(1); }
+  to { opacity: 0; filter: brightness(1); }
+}
+@keyframes wa-veil {
+  0% { opacity: 0; }
+  28% { opacity: 1; }
+  100% { opacity: 0; }
+}
 @keyframes wa-letter {
   from { opacity: 0; transform: translateY(6px); filter: blur(4px); }
   to { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
 @keyframes wa-bar { to { transform: scaleX(1); } }
+@keyframes wa-newgame-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes wa-newgame-pulse {
+  0%, 100% { box-shadow: 0 0 18px rgba(77, 195, 232, 0.22), inset 0 0 12px rgba(77, 195, 232, 0.08); }
+  50% { box-shadow: 0 0 34px rgba(77, 195, 232, 0.45), inset 0 0 18px rgba(77, 195, 232, 0.16); }
+}
+
+/* user fast-forwarded: jump every layer to its settled state */
+.wa-ls--instant .wa-ls__fog,
+.wa-ls--instant .wa-ls__snow,
+.wa-ls--instant .wa-ls__figure,
+.wa-ls--instant .wa-eyes,
+.wa-ls--instant .wa-rim,
+.wa-ls--instant .wa-ls__subtitle,
+.wa-ls--instant .wa-ls__title span,
+.wa-ls--instant .wa-ls__bar span,
+.wa-ls--instant .wa-ls__flash {
+  animation: none !important;
+}
+.wa-ls--instant .wa-ls__fog { opacity: 1; }
+.wa-ls--instant .wa-ls__snow { opacity: 1; }
+.wa-ls--instant .wa-ls__figure { opacity: 1; filter: brightness(1); }
+.wa-ls--instant .wa-eyes,
+.wa-ls--instant .wa-rim,
+.wa-ls--instant .wa-ls__subtitle,
+.wa-ls--instant .wa-ls__title span { opacity: 1; }
+.wa-ls--instant .wa-core { opacity: 0.8; }
+.wa-ls--instant .wa-coreGlow { opacity: 0.5; }
+.wa-ls--instant .wa-ls__bar span { transform: scaleX(1); }
+/* cinema handoff must still win over the instant state */
+.wa-ls--instant.wa-ls--cinema .wa-ls__figure,
+.wa-ls--instant.wa-ls--cinema .wa-ls__fog,
+.wa-ls--instant.wa-ls--cinema .wa-ls__snow {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .wa-ls * { animation: none !important; }
   .wa-ls__figure { opacity: 1; filter: brightness(1); }
-  .wa-eyes, .wa-rim, .wa-ls__subtitle, .wa-ls__title span { opacity: 1; }
+  .wa-eyes, .wa-rim, .wa-ls__subtitle, .wa-ls__title span, .wa-ls__newgame { opacity: 1; }
   .wa-ls__fog, .wa-ls__snow { opacity: 0.6; }
   .wa-ls__bar span { transform: scaleX(1); }
 }
