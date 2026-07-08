@@ -77,6 +77,12 @@ function createAgent(requestUrl: string, onSubmitted: () => void) {
   })
 }
 
+export function GET() {
+  return NextResponse.json({
+    model: process.env.OPENAI_AGENT_MODEL || 'gpt-4.1-mini',
+  })
+}
+
 const messageSchema = z.object({
   role: z.enum(['user', 'assistant']),
   content: z.string(),
@@ -118,16 +124,39 @@ export async function POST(req: Request) {
             }
       )
 
-    const result = await run(agent, history, { maxTurns: 6 })
-    const reply = typeof result.finalOutput === 'string' ? result.finalOutput.trim() : ''
+    const result = await run(agent, history, { maxTurns: 6, stream: true })
+    const encoder = new TextEncoder()
 
-    if (!reply) {
-      throw new Error('The assistant did not produce a reply')
-    }
+    // NDJSON stream: {type:'delta',text} chunks, then {type:'done',status}
+    const responseStream = new ReadableStream<Uint8Array>({
+      async start(controller) {
+        const send = (event: Record<string, string>) => {
+          controller.enqueue(encoder.encode(`${JSON.stringify(event)}\n`))
+        }
 
-    return NextResponse.json({
-      reply,
-      status: submitted ? 'submitted' : 'collecting',
+        try {
+          for await (const chunk of result.toTextStream()) {
+            send({ type: 'delta', text: chunk })
+          }
+          await result.completed
+          send({ type: 'done', status: submitted ? 'submitted' : 'collecting' })
+        } catch (error) {
+          console.error('Intake agent stream error:', error)
+          send({
+            type: 'error',
+            message: error instanceof Error ? error.message : 'Failed to run the chat',
+          })
+        } finally {
+          controller.close()
+        }
+      },
+    })
+
+    return new Response(responseStream, {
+      headers: {
+        'Content-Type': 'application/x-ndjson; charset=utf-8',
+        'Cache-Control': 'no-store',
+      },
     })
   } catch (error) {
     console.error('Intake agent error:', error)

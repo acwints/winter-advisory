@@ -14,6 +14,25 @@ interface TerminalLine {
 
 const initialQuestion = "Hey — what brings you to Winter Advisory?"
 
+const thinkingWords = [
+  'thinking',
+  'sublimating',
+  'crystallizing',
+  'defrosting',
+  'condensing',
+  'precipitating',
+  'calibrating',
+  'drifting',
+  'glaciating',
+  'routing',
+  'accumulating',
+  'whirring',
+]
+
+function randomThinkingWord() {
+  return thinkingWords[Math.floor(Math.random() * thinkingWords.length)]
+}
+
 const pricingText = [
   'Starter ranges are directional and final pricing follows review:',
   '- AI deployment audit: $2.5k-$5k',
@@ -97,6 +116,9 @@ export function TerminalInterface() {
   const [sessionId, setSessionId] = useState(createSessionId)
   const [status, setStatus] = useState<ChatStatus>('collecting')
   const [active, setActive] = useState(false)
+  const [model, setModel] = useState('')
+  const [thinkingWord, setThinkingWord] = useState(thinkingWords[0])
+  const [streaming, setStreaming] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
 
@@ -113,6 +135,47 @@ export function TerminalInterface() {
     }
   }, [active])
 
+  // rotate the status verb while waiting on the first token
+  useEffect(() => {
+    if (!isPending || streaming) {
+      return
+    }
+
+    setThinkingWord(randomThinkingWord())
+    const interval = window.setInterval(() => setThinkingWord(randomThinkingWord()), 1600)
+    return () => window.clearInterval(interval)
+  }, [isPending, streaming])
+
+  useEffect(() => {
+    let cancelled = false
+
+    fetch('/api/intake-agent')
+      .then((response) => response.json())
+      .then((data: { model?: string }) => {
+        if (!cancelled && data.model) {
+          setModel(data.model)
+        }
+      })
+      .catch(() => {})
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  // "Chat" links point at #chat — arriving on that hash opens the chat directly
+  useEffect(() => {
+    const activateFromHash = () => {
+      if (window.location.hash === '#chat') {
+        setActive(true)
+      }
+    }
+
+    activateFromHash()
+    window.addEventListener('hashchange', activateFromHash)
+    return () => window.removeEventListener('hashchange', activateFromHash)
+  }, [])
+
   const resetTerminal = () => {
     setSessionId(createSessionId())
     setStatus('collecting')
@@ -126,8 +189,17 @@ export function TerminalInterface() {
     setLines(bootLines)
   }
 
+  const appendToLine = (id: string, text: string) => {
+    setLines((current) =>
+      current.map((line) => (line.id === id ? { ...line, text: line.text + text } : line))
+    )
+  }
+
   const runAgentTurn = async (message: string, priorLines: TerminalLine[]) => {
     setIsPending(true)
+    setStreaming(false)
+
+    let streamLineId: string | null = null
 
     try {
       const response = await fetch('/api/intake-agent', {
@@ -141,18 +213,58 @@ export function TerminalInterface() {
         }),
       })
 
-      const data = (await response.json()) as { reply?: string; status?: ChatStatus; error?: string }
-
-      if (!response.ok || !data.reply) {
+      if (!response.ok || !response.body) {
+        const data = (await response.json().catch(() => ({}))) as { error?: string }
         throw new Error(data.error || 'The chat could not respond')
       }
 
-      if (data.status === 'submitted') {
-        setStatus('submitted')
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder()
+      let buffer = ''
+
+      const handleEvent = (event: { type?: string; text?: string; status?: string; message?: string }) => {
+        if (event.type === 'delta' && event.text) {
+          if (!streamLineId) {
+            const line = newLine('assistant', event.text)
+            streamLineId = line.id
+            setStreaming(true)
+            setLines((current) => [...current, line])
+          } else {
+            appendToLine(streamLineId, event.text)
+          }
+        } else if (event.type === 'done' && event.status === 'submitted') {
+          setStatus('submitted')
+        } else if (event.type === 'error') {
+          throw new Error(event.message || 'The chat could not respond')
+        }
       }
 
-      const reply = data.reply
-      setLines((current) => [...current, newLine('assistant', reply)])
+      while (true) {
+        const { done, value } = await reader.read()
+
+        if (value) {
+          buffer += decoder.decode(value, { stream: true })
+          const parts = buffer.split('\n')
+          buffer = parts.pop() ?? ''
+
+          for (const part of parts) {
+            if (part.trim()) {
+              handleEvent(JSON.parse(part))
+            }
+          }
+        }
+
+        if (done) {
+          if (buffer.trim()) {
+            handleEvent(JSON.parse(buffer))
+          }
+          break
+        }
+      }
+
+      if (!streamLineId) {
+        throw new Error('The chat could not respond')
+      }
     } catch (error) {
       setLines((current) => [
         ...current,
@@ -161,6 +273,7 @@ export function TerminalInterface() {
       ])
     } finally {
       setIsPending(false)
+      setStreaming(false)
     }
   }
 
@@ -243,11 +356,11 @@ export function TerminalInterface() {
           </div>
           <div className="border border-white/10 bg-black/35 p-4">
             <div className="font-microgramma text-[0.66rem] uppercase text-slate-500">Status</div>
-            <div className="mt-2 font-mono text-sm text-emerald-100">{status === 'submitted' ? 'submitted' : 'chatting'}</div>
+            <div className="mt-2 font-mono text-sm text-emerald-100">{status === 'submitted' ? 'submitted' : 'online'}</div>
           </div>
           <div className="border border-white/10 bg-black/35 p-4">
-            <div className="font-microgramma text-[0.66rem] uppercase text-slate-500">Pricing</div>
-            <div className="mt-2 font-mono text-sm text-amber-100">starter ranges</div>
+            <div className="font-microgramma text-[0.66rem] uppercase text-slate-500">Model</div>
+            <div className="mt-2 font-mono text-sm text-amber-100">{model || '—'}</div>
           </div>
         </div>
 
@@ -306,13 +419,13 @@ export function TerminalInterface() {
               </div>
             ))}
 
-            {isPending ? (
+            {isPending && !streaming ? (
               <div className="grid gap-2 sm:grid-cols-[8.5rem_1fr]">
                 <div className="flex gap-2 text-xs text-slate-600">
                   <span>{terminalTimestamp()}</span>
                   <span>winter</span>
                 </div>
-                <div className="text-cyan-100">working<span className="animate-pulse">...</span></div>
+                <div className="text-cyan-100">{thinkingWord}<span className="animate-pulse">...</span></div>
               </div>
             ) : null}
           </div>

@@ -48,12 +48,12 @@ export default function Home() {
               >
                 Contact
               </Link>
-              <Link
+              <a
                 href="#chat"
                 className="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white transition hover:border-cyan-200/60 hover:bg-white/5"
               >
                 Chat
-              </Link>
+              </a>
             </div>
           </div>
         </div>

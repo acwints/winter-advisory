@@ -48,11 +48,6 @@ const socialLinks = [
   },
 ]
 
-const serviceLinks = [
-  { label: 'Chat', href: '/#chat' },
-  { label: 'Contact', href: '/contact' },
-]
-
 export function Footer() {
   const [mounted, setMounted] = useState(false)
 
@@ -73,14 +68,6 @@ export function Footer() {
         </div>
 
         <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
-          <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Footer">
-            {serviceLinks.map((item) => (
-              <a key={item.href} href={item.href} className="text-sm text-slate-500 transition hover:text-cyan-100">
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
           <div className="flex gap-2">
             {socialLinks.map((item) => (
               <a
