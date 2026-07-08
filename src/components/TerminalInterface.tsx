@@ -3,20 +3,7 @@
 import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from 'react'
 
 type TerminalRole = 'system' | 'user' | 'assistant' | 'error'
-type IntakeStatus = 'collecting' | 'ready_to_review' | 'submitted' | 'held'
-type IntakeField =
-  | 'intro'
-  | 'name'
-  | 'email'
-  | 'company'
-  | 'website'
-  | 'role'
-  | 'serviceInterest'
-  | 'challenge'
-  | 'timeline'
-  | 'budgetFit'
-  | 'notes'
-  | 'confirm'
+type ChatStatus = 'collecting' | 'submitted'
 
 interface TerminalLine {
   id: string
@@ -25,67 +12,7 @@ interface TerminalLine {
   timestamp: string
 }
 
-interface IntakeFields {
-  intro: string
-  name: string
-  email: string
-  company: string
-  website: string
-  role: string
-  serviceInterest: string
-  challenge: string
-  timeline: string
-  budgetFit: string
-  notes: string
-}
-
-interface QualityFlag {
-  field: string
-  input: string
-  reason: string
-}
-
-interface IntakeAgentState {
-  fields: IntakeFields
-  currentMissingField: IntakeField
-  lastAskedQuestion: string
-  qualityFlags: QualityFlag[]
-  confirmationState: 'none' | 'awaiting_confirmation' | 'confirmed' | 'held'
-  draftSummary: string
-}
-
-interface IntakeAgentResponse {
-  reply?: string
-  state?: IntakeAgentState
-  status?: IntakeStatus
-  draftSummary?: string
-  error?: string
-}
-
-const emptyFields: IntakeFields = {
-  intro: '',
-  name: '',
-  email: '',
-  company: '',
-  website: '',
-  role: '',
-  serviceInterest: '',
-  challenge: '',
-  timeline: '',
-  budgetFit: '',
-  notes: '',
-}
-
-const initialQuestion = 'Start by introducing yourself and what brought you here.'
-
-const emptyAgentState: IntakeAgentState = {
-  fields: emptyFields,
-  currentMissingField: 'intro',
-  lastAskedQuestion: initialQuestion,
-  qualityFlags: [],
-  confirmationState: 'none',
-  draftSummary: '',
-}
+const initialQuestion = "Hey — what brings you to Winter Advisory?"
 
 const pricingText = [
   'Starter ranges are directional and final pricing follows review:',
@@ -104,15 +31,9 @@ const bootLines: TerminalLine[] = [
   },
   {
     id: 'boot-2',
-    role: 'system',
-    text: 'This terminal can help identify the right service, share starter pricing ranges, and draft a short inquiry for review.',
-    timestamp: '00:00:01',
-  },
-  {
-    id: 'boot-3',
     role: 'assistant',
     text: initialQuestion,
-    timestamp: '00:00:02',
+    timestamp: '00:00:01',
   },
 ]
 
@@ -155,47 +76,16 @@ function createSessionId() {
     return crypto.randomUUID()
   }
 
-  return `intake-${Date.now()}-${Math.random().toString(16).slice(2)}`
+  return `chat-${Date.now()}-${Math.random().toString(16).slice(2)}`
 }
 
-function cloneInitialState(): IntakeAgentState {
-  return {
-    ...emptyAgentState,
-    fields: { ...emptyFields },
-    qualityFlags: [],
-  }
-}
-
-function statusLabel(status: IntakeStatus) {
-  if (status === 'submitted') {
-    return 'submitted'
-  }
-
-  if (status === 'ready_to_review') {
-    return 'review'
-  }
-
-  if (status === 'held') {
-    return 'held'
-  }
-
-  return 'collecting'
-}
-
-function placeholderFor(status: IntakeStatus, state: IntakeAgentState) {
-  if (status === 'submitted') {
-    return 'submitted'
-  }
-
-  if (status === 'ready_to_review' || state.confirmationState === 'awaiting_confirmation') {
-    return 'yes to submit, no to hold'
-  }
-
-  if (state.currentMissingField === 'intro') {
-    return 'introduce yourself'
-  }
-
-  return 'answer or ask a question'
+function chatMessages(lines: TerminalLine[]) {
+  return lines
+    .filter((line) => line.role === 'user' || line.role === 'assistant')
+    .map((line) => ({
+      role: line.role as 'user' | 'assistant',
+      content: line.text,
+    }))
 }
 
 export function TerminalInterface() {
@@ -205,8 +95,7 @@ export function TerminalInterface() {
   const [historyIndex, setHistoryIndex] = useState<number | null>(null)
   const [isPending, setIsPending] = useState(false)
   const [sessionId, setSessionId] = useState(createSessionId)
-  const [agentState, setAgentState] = useState<IntakeAgentState>(cloneInitialState)
-  const [status, setStatus] = useState<IntakeStatus>('collecting')
+  const [status, setStatus] = useState<ChatStatus>('collecting')
   const [active, setActive] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -225,10 +114,7 @@ export function TerminalInterface() {
   }, [active])
 
   const resetTerminal = () => {
-    const nextState = cloneInitialState()
-
     setSessionId(createSessionId())
-    setAgentState(nextState)
     setStatus('collecting')
     setLines([
       ...bootLines,
@@ -237,13 +123,10 @@ export function TerminalInterface() {
   }
 
   const clearTerminal = () => {
-    setLines([
-      ...bootLines,
-      newLine('assistant', agentState.lastAskedQuestion || initialQuestion),
-    ])
+    setLines(bootLines)
   }
 
-  const runAgentTurn = async (message: string) => {
+  const runAgentTurn = async (message: string, priorLines: TerminalLine[]) => {
     setIsPending(true)
 
     try {
@@ -253,31 +136,28 @@ export function TerminalInterface() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message,
           sessionId,
-          state: agentState,
+          messages: [...chatMessages(priorLines), { role: 'user', content: message }],
         }),
       })
 
-      const data = (await response.json()) as IntakeAgentResponse
+      const data = (await response.json()) as { reply?: string; status?: ChatStatus; error?: string }
 
-      if (!response.ok) {
+      if (!response.ok || !data.reply) {
         throw new Error(data.error || 'The chat could not respond')
       }
 
-      if (!data.reply || !data.state || !data.status) {
-        throw new Error('The chat returned an incomplete response')
+      if (data.status === 'submitted') {
+        setStatus('submitted')
       }
 
       const reply = data.reply
-      setAgentState(data.state)
-      setStatus(data.status)
       setLines((current) => [...current, newLine('assistant', reply)])
     } catch (error) {
       setLines((current) => [
         ...current,
         newLine('error', error instanceof Error ? error.message : 'Unknown chat error'),
-        newLine('assistant', `I kept your place. ${agentState.lastAskedQuestion || initialQuestion}`),
+        newLine('assistant', 'Sorry about that — say that again and I should catch it this time.'),
       ])
     } finally {
       setIsPending(false)
@@ -291,17 +171,20 @@ export function TerminalInterface() {
       return
     }
 
+    const priorLines = lines
+
     setInput('')
     setHistory((current) => [value, ...current.filter((item) => item !== value)].slice(0, 20))
     setHistoryIndex(null)
-    setLines((current) => [...current, newLine('user', value)])
 
     if (value === '/clear') {
+      setLines((current) => [...current, newLine('user', value)])
       clearTerminal()
       return
     }
 
     if (value === '/reset') {
+      setLines((current) => [...current, newLine('user', value)])
       resetTerminal()
       return
     }
@@ -309,17 +192,18 @@ export function TerminalInterface() {
     if (value === '/help') {
       setLines((current) => [
         ...current,
+        newLine('user', value),
         newLine('assistant', [
           'Commands: /clear, /reset, /help',
-          'This chat can answer Winter Advisory service, pricing, fit, and process questions and drafts your inquiry as you go.',
+          'Ask me anything about Winter Advisory services, pricing, fit, or process.',
           pricingText,
-          agentState.lastAskedQuestion || initialQuestion,
         ].join('\n')),
       ])
       return
     }
 
-    await runAgentTurn(value)
+    setLines((current) => [...current, newLine('user', value)])
+    await runAgentTurn(value, priorLines)
   }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -359,7 +243,7 @@ export function TerminalInterface() {
           </div>
           <div className="border border-white/10 bg-black/35 p-4">
             <div className="font-microgramma text-[0.66rem] uppercase text-slate-500">Status</div>
-            <div className="mt-2 font-mono text-sm text-emerald-100">{statusLabel(status)}</div>
+            <div className="mt-2 font-mono text-sm text-emerald-100">{status === 'submitted' ? 'submitted' : 'chatting'}</div>
           </div>
           <div className="border border-white/10 bg-black/35 p-4">
             <div className="font-microgramma text-[0.66rem] uppercase text-slate-500">Pricing</div>
@@ -448,7 +332,7 @@ export function TerminalInterface() {
                 disabled={!active || isPending || status === 'submitted'}
                 autoComplete="off"
                 spellCheck={false}
-                placeholder={placeholderFor(status, agentState)}
+                placeholder={status === 'submitted' ? 'inquiry sent' : 'ask about services, pricing, or your project'}
                 className="min-w-0 flex-1 bg-transparent text-white outline-none placeholder:text-slate-700 disabled:cursor-wait"
               />
               <button
