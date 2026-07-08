@@ -38,30 +38,32 @@ const FINAL_VIDEO_PATH = path.join(OUT_DIR, 'ai-is-coming.mp4')
 // Original character design (mirrors the site's SVG sentinel). Keep the eyes
 // DARK in the keyframe — the video model performs the ignition.
 const KEYFRAME_PROMPT = [
-  'Cinematic film still, frozen battlefield at dusk.',
-  'A towering humanoid war robot stands motionless, centered, facing the camera,',
-  'framed from the chest up like a character poster.',
-  'Design: matte gunmetal and pale ice-blue steel; an angular faceted skull-like',
-  'faceplate rimed with frost; a crown of seven jagged sensor fins sweeping up',
-  'and back from the head; a vertical vented grille where a mouth would be;',
-  'segmented chainmail-style mesh armor across the chest and shoulders;',
-  'a dark crystalline shard reactor embedded in the sternum.',
-  'Both eye sockets are deep, dark, and completely unlit.',
+  'Cinematic film still, extreme close portrait, frozen battlefield at dusk.',
+  'A humanoid android stands motionless, centered, staring directly into the',
+  'camera, framed tightly from the shoulders up so the face dominates the frame.',
+  'Design: unmistakably a machine — a gaunt, angular robotic face of pale',
+  'frost-covered metal with visible panel seams, servo joints at the jaw, and',
+  'exposed cabling at the neck; a crown of jagged sensor fins sweeping up and',
+  'back from the head; segmented chainmail-style mesh armor at the shoulders.',
+  'Its two large mechanical eyes are prominent camera-lens irises, perfectly',
+  'visible but completely dark and unpowered — dead glass lenses with a faint',
+  'reflective sheen, no glow whatsoever.',
   'Dense freezing fog, gently falling snow, volumetric rim light from behind,',
   'desaturated steel-blue color grade, anamorphic lens, shallow depth of field,',
   'photorealistic, extreme detail, subtle film grain.',
 ].join(' ')
 
 const VIDEO_PROMPT = [
-  'Static camera with a very slow push-in. The frozen robot stands motionless',
-  'in gently falling snow and drifting fog; frost vapor curls off its shoulders.',
-  'At the 2 second mark, its dark eye sockets flicker twice and ignite into',
-  'piercing ice-blue points of light with a soft anamorphic lens flare;',
-  'the cold blue glow casts light across its faceplate and the crystalline',
-  'reactor in its chest wakes with a dim blue pulse. The robot stays otherwise',
-  'perfectly still — menacing, patient. Ominous cinematic tone, photorealistic,',
-  'desaturated steel-blue grade, volumetric lighting, subtle film grain.',
-  'No text, no captions, no watermarks.',
+  'Static camera with a very slow push-in on the android’s face. It stays',
+  'perfectly still in gently falling snow and drifting fog; frost vapor curls',
+  'off its shoulders. Its large mechanical lens eyes are dark and dead for the',
+  'first 2 seconds. Then both irises flicker faintly and power on, igniting',
+  'into vivid ice-blue glowing rings — the glow stays contained inside the',
+  'eyes like lit camera lenses, casting only a soft cold blue sheen onto the',
+  'brow and cheek plating. No light beams, no lens flare streaks. The robot',
+  'remains otherwise motionless — menacing, patient. Ominous cinematic tone,',
+  'photorealistic, desaturated steel-blue grade, volumetric lighting, subtle',
+  'film grain. No text, no captions, no watermarks.',
 ].join(' ')
 
 const args = process.argv.slice(2)

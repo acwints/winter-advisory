@@ -7,7 +7,9 @@ const VIDEO_SRC = '/videos/ai-is-coming.mp4'
 const READY_AT_MS = 5000
 const REDUCED_READY_AT_MS = 300
 const FADE_MS = 800
-const STORAGE_KEY = 'wa-intro-played'
+// v2: earlier builds auto-dismissed and wrote the old key; bumping the name
+// guarantees the New Game gate shows even for tabs that saw those builds.
+const STORAGE_KEY = 'wa-intro-played-v2'
 
 type Phase = 'playing' | 'ready' | 'fading' | 'done'
 
@@ -107,6 +109,7 @@ export function LoadingScreen() {
         />
       ) : null}
       <div className="wa-ls__veil" aria-hidden="true" />
+      <div className="wa-ls__scrim" aria-hidden="true" />
 
       <div className="wa-ls__caption">
         <div className="wa-ls__title" aria-label={TITLE}>
@@ -433,6 +436,18 @@ const loadingScreenCss = `
   filter: blur(30px);
 }
 .wa-ls--cinema .wa-ls__veil { animation: wa-veil 2.2s ease forwards; }
+
+/* legibility scrim under the caption once the bright video is up */
+.wa-ls__scrim {
+  position: absolute;
+  inset: 46% 0 0 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(to bottom, transparent, rgba(3, 6, 9, 0.62) 42%, rgba(3, 6, 9, 0.88));
+  transition: opacity 1.4s ease;
+}
+.wa-ls--cinema .wa-ls__scrim { opacity: 1; }
 .wa-ls--cinema .wa-ls__figure { animation: wa-handoff 1.5s ease 0.15s forwards; }
 .wa-ls--cinema .wa-ls__fog--a,
 .wa-ls--cinema .wa-ls__fog--b,

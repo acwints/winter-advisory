@@ -207,6 +207,7 @@ export function TerminalInterface() {
   const [sessionId, setSessionId] = useState(createSessionId)
   const [agentState, setAgentState] = useState<IntakeAgentState>(cloneInitialState)
   const [status, setStatus] = useState<IntakeStatus>('collecting')
+  const [active, setActive] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
 
@@ -218,8 +219,10 @@ export function TerminalInterface() {
   }, [lines, isPending])
 
   useEffect(() => {
-    inputRef.current?.focus()
-  }, [])
+    if (active) {
+      inputRef.current?.focus()
+    }
+  }, [active])
 
   const resetTerminal = () => {
     const nextState = cloneInitialState()
@@ -365,9 +368,24 @@ export function TerminalInterface() {
         </div>
 
         <div
-          className="mt-4 flex min-h-[520px] flex-1 flex-col border border-white/10 bg-[#020405] shadow-2xl shadow-black/40"
-          onClick={() => inputRef.current?.focus()}
+          className="relative mt-4 flex min-h-[520px] flex-1 flex-col border border-white/10 bg-[#020405] shadow-2xl shadow-black/40"
+          onClick={() => {
+            if (active) {
+              inputRef.current?.focus()
+            }
+          }}
         >
+          {!active ? (
+            <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#020405]/72 backdrop-blur-[2px]">
+              <button
+                type="button"
+                onClick={() => setActive(true)}
+                className="border border-cyan-200/40 bg-cyan-200/10 px-8 py-4 font-microgramma text-xs uppercase tracking-[0.3em] text-cyan-100 transition hover:bg-cyan-100 hover:text-slate-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-100"
+              >
+                ▸ Start intake
+              </button>
+            </div>
+          ) : null}
           <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.03] px-4 py-3">
             <div className="flex items-center gap-2" aria-hidden="true">
               <span className="h-2.5 w-2.5 rounded-full bg-[#ff6259]" />
@@ -427,7 +445,7 @@ export function TerminalInterface() {
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
                 onKeyDown={handleKeyDown}
-                disabled={isPending || status === 'submitted'}
+                disabled={!active || isPending || status === 'submitted'}
                 autoComplete="off"
                 spellCheck={false}
                 placeholder={placeholderFor(status, agentState)}
@@ -435,7 +453,7 @@ export function TerminalInterface() {
               />
               <button
                 type="submit"
-                disabled={isPending || status === 'submitted' || input.trim().length === 0}
+                disabled={!active || isPending || status === 'submitted' || input.trim().length === 0}
                 className="border border-cyan-200/30 bg-cyan-200/10 px-4 py-2 font-microgramma text-[0.66rem] uppercase text-cyan-100 transition hover:border-cyan-100 hover:bg-cyan-100 hover:text-slate-950 disabled:cursor-not-allowed disabled:border-white/10 disabled:bg-white/[0.03] disabled:text-slate-600"
               >
                 Send
