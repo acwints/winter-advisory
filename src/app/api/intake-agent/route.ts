@@ -135,14 +135,26 @@ function titleCaseName(value: string) {
     .join(' ')
 }
 
-function extractName(value: string) {
-  const explicit = value.match(/\b(?:i am|i'm|im|my name is|this is)\s+([a-z][a-z'-]*(?:\s+[a-z][a-z'-]*)?)/i)
+function stripGreeting(value: string) {
+  return value.replace(/^\s*(?:hi|hey|hello|yo|howdy|good\s+(?:morning|afternoon|evening))[\s,!.\-]*/i, '').trim()
+}
+
+function extractName(value: string, current?: z.infer<typeof fieldSchema>) {
+  const explicit = value.match(
+    /\b(?:i am|i'?m|im|my name(?:'s| is)|name(?:'s| is)|this is|call me)\s+([a-z][a-z'-]*(?:\s+(?!(?:and|but|from|with|at|of|in|here|for)\b)[a-z][a-z'-]*){0,2})\b/i
+  )
   if (explicit?.[1]) {
     return titleCaseName(explicit[1])
   }
 
-  if (/^[a-z][a-z' -]{1,60}$/i.test(cleanName(value))) {
-    return titleCaseName(value)
+  // A bare reply is only treated as a name when we actually asked for one
+  // (or during the intro), and only if it is short enough to be a name.
+  if (current === 'name' || current === 'intro') {
+    const bare = cleanName(stripGreeting(value))
+    const looksLikeSentence = /\b(need|want|help|looking|the|a|an|my|our|your|please|brand|company|business)\b/i.test(bare)
+    if (!looksLikeSentence && /^[a-z][a-z'-]*(?:\s+[a-z][a-z'-]*){0,2}$/i.test(bare)) {
+      return titleCaseName(bare)
+    }
   }
 
   return ''
@@ -219,7 +231,7 @@ function questionFor(field: z.infer<typeof fieldSchema>) {
     case 'intro':
       return 'Start by introducing yourself and what brought you here.'
     case 'name':
-      return 'What name should we use for follow-up?'
+      return 'What name should we use for follow-up? A first name is fine.'
     case 'email':
       return 'What email should we use for follow-up?'
     case 'company':
@@ -258,7 +270,7 @@ function mergeExtractedFields(state: IntakeAgentState, message: string) {
   }
 
   if (!fields.name) {
-    fields.name = extractName(message)
+    fields.name = extractName(message, current)
   }
 
   if (current === 'company' && !isQuestion(message) && !isLowQuality(message)) {
@@ -295,6 +307,20 @@ function mergeExtractedFields(state: IntakeAgentState, message: string) {
 
   if (!fields.intro && current === 'intro') {
     fields.intro = message.trim()
+  }
+
+  // Keep volunteered context from early messages instead of dropping it.
+  // If the visitor describes what they need before we reach the challenge
+  // question, seed the challenge so we never make them repeat themselves.
+  if (
+    !fields.challenge &&
+    ['intro', 'name', 'email', 'company'].includes(current) &&
+    /\b(need|want|help|looking|struggl|grow|build|launch|improve|fix|scale|automate)\b/i.test(message) &&
+    !isQuestion(message) &&
+    !isLowQuality(message) &&
+    !isOffTopic(message)
+  ) {
+    fields.challenge = message.trim()
   }
 
   return fields
@@ -473,7 +499,12 @@ function createIntakeAgent(requestUrl: string) {
       'Use only the provided intake tools. You do not have filesystem, shell, code execution, repo, broad browsing, payment, scheduling, or CRM tools.',
       'Your job is to answer concise prospect questions, keep the intake moving, validate low-quality replies, and produce a useful inquiry summary.',
       'Always return structured output matching the schema.',
+      'On every visitor message, call extract_intake_fields first with the message and current state, and treat its returned fields and currentMissingField as the source of truth for what to ask next.',
       'State carries the truth. Preserve existing useful fields unless the visitor clearly corrects them.',
+      'Never re-ask for information that is already present in state. If the visitor already shared their name, need, or other details, acknowledge them and move to the next missing field.',
+      'A first name is enough for the name field. Never ask for a full name, last name, or legal name.',
+      'When asking the next intake question, use the lastAskedQuestion wording returned by extract_intake_fields rather than inventing stricter phrasing.',
+      'If the challenge field was seeded from an early message, briefly reflect it back (e.g. "Got it - building your DTC brand") and, if it is vague, ask at most one clarifying follow-up before moving on.',
       'Required fields before draft/submission: name, email, company, serviceInterest, challenge, timeline, budgetFit.',
       'Optional fields: website, role, notes. If skipped, store "Not provided" for website/role and "None" for notes.',
       'If the visitor asks an off-script question, answer briefly using answer_service_question, then re-ask the active intake question.',
