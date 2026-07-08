@@ -31,10 +31,10 @@ export default function Home() {
         <div className="mx-auto max-w-7xl">
           <div>
             <p className="font-microgramma text-xs uppercase text-cyan-200">
-              AI deployment advisory
+              AI Forward Deployment
             </p>
             <h1 className="mt-6 text-5xl font-semibold leading-[0.98] text-white sm:text-6xl lg:text-7xl">
-              AI is coming. Deploy it before your competitors do.
+              AI is coming. We can help.
             </h1>
             <p className="mt-7 max-w-4xl text-lg leading-8 text-slate-300">
               Winter Advisory helps teams take AI from demo to production — auditing the
@@ -52,7 +52,7 @@ export default function Home() {
                 href="#chat"
                 className="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white transition hover:border-cyan-200/60 hover:bg-white/5"
               >
-                Chat with us
+                Chat
               </Link>
             </div>
           </div>
