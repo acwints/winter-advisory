@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Winter Advisory Site
 
-## Getting Started
+This repo is the public Winter Advisory website and intake surface.
+It contains the marketing site, the terminal-style prospect chat, and the
+contact/inquiry flow.
 
-First, run the development server:
+It is not the main Winter Advisory operating system.
+
+## Canonical HQ
+
+If you are looking for the real Winter Advisory HQ, portfolio coordination, or
+shared operating state, start here instead:
+
+- HQ repo: `/Users/andrewwinter/Documents/GitHub/winter/hq`
+- Winter Advisory instance: `/Users/andrewwinter/Documents/GitHub/winter/hq/instances/winter-advisory`
+
+That HQ instance is the system of record for:
+
+- portfolio priorities
+- operating briefs and routines
+- reports and scorecards
+- agent roles and coordination rules
+- links out to product repos and support assets
+
+This repo should stay focused on the public-facing site.
+
+## What This Repo Owns
+
+- homepage and public positioning
+- contact page and inquiry capture
+- terminal-style intake experience
+- public-site analytics and attribution
+
+## Local Development
+
+Run the site locally:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Key Paths
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app/page.tsx`: homepage
+- `src/app/contact/page.tsx`: contact page
+- `src/app/api/intake-agent/route.ts`: prospect chat intake agent
+- `src/app/api/contact/route.ts`: inquiry submission pipeline
+- `src/components/TerminalInterface.tsx`: terminal UI
 
-## Learn More
+## Routing Rule For Agents
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+If a request is about Winter Advisory strategy, portfolio coordination, daily
+operating review, or cross-business prioritization, use the HQ paths above
+instead of this repo.
