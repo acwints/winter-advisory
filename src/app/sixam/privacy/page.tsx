@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 
-const url = 'https://winteradvisory.llc/sixam/privacy'
+const url = 'https://www.winteradvisory.ai/sixam/privacy'
 
 export const metadata: Metadata = {
   title: '6AM Privacy Policy | Winter Advisory',

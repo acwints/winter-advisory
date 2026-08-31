@@ -10,11 +10,11 @@ const pages = [
     priority: 0.9,
   },
   {
-    url: 'https://winteradvisory.llc/sixam',
+    url: 'https://www.winteradvisory.ai/sixam',
     priority: 0.7,
   },
   {
-    url: 'https://winteradvisory.llc/sixam/privacy',
+    url: 'https://www.winteradvisory.ai/sixam/privacy',
     priority: 0.5,
   },
 ]
