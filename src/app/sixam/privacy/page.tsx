@@ -8,14 +8,14 @@ const url = 'https://www.winteradvisory.ai/sixam/privacy'
 export const metadata: Metadata = {
   title: '6AM Privacy Policy | Winter Advisory',
   description:
-    'How the 6AM iPhone and Apple Watch app handles Apple Health sleep data and alarm information.',
+    'How the 6AM iPhone and Apple Watch app handles Apple Health sleep data and wake-notification information.',
   alternates: {
     canonical: url,
   },
   openGraph: {
     title: '6AM Privacy Policy | Winter Advisory',
     description:
-      'How 6AM handles Apple Health sleep data and Apple Watch alarm information.',
+      'How 6AM handles Apple Health sleep data and Apple Watch wake notifications.',
     url,
     type: 'website',
   },
@@ -27,16 +27,16 @@ const sections = [
     body: 'With your permission, 6AM reads Sleep Analysis data from Apple Health to calculate and display wake-time trends. This processing happens on your iPhone. 6AM does not write to or modify Apple Health data.',
   },
   {
-    title: 'Alarm information',
-    body: '6AM stores the next scheduled wake time locally on your Apple Watch so it can recover the alarm state. This information is not sent to Winter Advisory or any third party.',
+    title: 'Wake-notification information',
+    body: '6AM stores its recurring 5:55–6:05 weekday notification schedule locally on your iPhone. The system may forward these notifications to your paired Apple Watch. The schedule does not contain Health data.',
   },
   {
     title: 'Collection and sharing',
-    body: '6AM does not collect personal data, use third-party analytics, show advertising, track you across apps or websites, or send Health data to a server. Winter Advisory does not sell or share data from 6AM.',
+    body: 'When you create an account, 6AM stores your Sign in with Apple identifier and the name or relay email you choose to share. It also stores your time zone, wake preference, an app installation identifier, app and OS versions, notification scheduling state, and operational wake events. This information supports sign-in, account deletion, preference sync, and service reliability. 6AM does not use third-party analytics, show advertising, track you across apps or websites, sell your data, or send Apple Health data to a server.',
   },
   {
     title: 'Your control',
-    body: 'You can revoke 6AM’s access to Sleep data at any time in Apple Health settings. Removing the app deletes its locally stored app data in accordance with Apple’s platform behavior.',
+    body: 'You can revoke 6AM’s access to Sleep data at any time in Apple Health settings. You can delete your 6AM account and its associated server records from the Profile tab. Removing the app deletes its locally stored app data in accordance with Apple’s platform behavior.',
   },
 ]
 
@@ -54,7 +54,7 @@ export default function SixAMPrivacyPage() {
           <h1 className="mt-4 text-4xl font-semibold text-white sm:text-5xl">
             Privacy Policy
           </h1>
-          <p className="mt-4 text-sm text-slate-500">Effective August 31, 2026</p>
+          <p className="mt-4 text-sm text-slate-500">Effective September 4, 2026</p>
           <p className="mt-6 max-w-3xl text-base leading-8 text-slate-300">
             6AM is designed so your sleep and wake information stays on your
             devices. This policy explains the limited data access the app needs

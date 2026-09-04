@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: '6AM Support | Winter Advisory',
     description:
-      'Setup help and troubleshooting for the private wake-time analytics and Apple Watch alarm app.',
+      'Setup help for the private wake-time analytics and Apple Watch wake-notification app.',
     url,
     type: 'website',
   },
@@ -27,12 +27,16 @@ const supportSections = [
     body: 'Open 6AM on your iPhone, choose Connect Apple Health, and allow read access to Sleep. Your wake-time dashboard will update from qualifying overnight sleep sessions recorded in Apple Health.',
   },
   {
-    title: 'Arm the Watch alarm',
-    body: 'Open 6AM on your Apple Watch once each day before 5:35 a.m. The app schedules its smart-alarm session for 5:35 a.m. and starts the haptic alarm at 6:00 a.m.',
+    title: 'Turn on wake taps',
+    body: 'On iPhone, tap Turn On Wake Taps and allow notifications, sounds, and Time Sensitive Notifications. 6AM schedules eleven weekday notifications, one per minute from 5:55 through 6:05 a.m.',
   },
   {
-    title: 'If the alarm does not arm',
-    body: 'Confirm that background auto-launch is allowed for 6AM, keep the watch charged, and open the Watch app again while it is active. Avoid force-quitting the app after it has been armed.',
+    title: 'Receive taps on Apple Watch',
+    body: 'Wear your charged, unlocked Watch and keep the paired iPhone locked or asleep. Confirm that the Watch mirrors 6AM notifications from iPhone. Each notification is a one-shot alert with no snooze or Stop action.',
+  },
+  {
+    title: 'If a wake tap does not arrive',
+    body: 'Check notification and Time Sensitive settings for 6AM, confirm the Watch is unlocked and connected, and confirm the iPhone is locked or asleep. Apple controls notification forwarding, the precise haptic, and display wake behavior.',
   },
 ]
 
@@ -48,12 +52,13 @@ export default function SixAMSupportPage() {
             6AM Support
           </p>
           <h1 className="mt-4 text-4xl font-semibold text-white sm:text-5xl">
-            A focused 6:00 a.m. alarm with private wake-time analytics
+            A gentle weekday wake sequence with private wake-time analytics
           </h1>
           <p className="mt-6 max-w-3xl text-base leading-8 text-slate-300">
-            6AM pairs a fixed Apple Watch haptic alarm with an iPhone dashboard
-            that summarizes the wake times recorded in Apple Health. Health data
-            is processed on your devices and is never sent to Winter Advisory.
+            6AM pairs eleven one-minute wake notifications from 5:55 through
+            6:05 with an iPhone dashboard that summarizes wake times recorded in
+            Apple Health. Health data is processed on your devices and is never
+            sent to Winter Advisory.
           </p>
 
           <div className="mt-12 grid gap-5">
