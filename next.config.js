@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      { source: '/sixam', destination: '/6am/support', permanent: true },
+      { source: '/sixam/privacy', destination: '/6am/privacy', permanent: true },
+      { source: '/6am', destination: '/6am/support', permanent: true },
+    ]
+  },
   images: {
     remotePatterns: [
       {
