@@ -1,5 +1,5 @@
 import { permanentRedirect } from 'next/navigation'
 
-export default function LegacySixAMPage() {
+export default function SixAMPage() {
   permanentRedirect('/6am/support')
 }

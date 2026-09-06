@@ -2,6 +2,10 @@ import type { MetadataRoute } from 'next'
 
 const pages = [
   {
+    url: 'https://www.winteradvisory.ai/6am/terms',
+    priority: 0.5,
+  },
+  {
     url: 'https://winteradvisory.llc',
     priority: 1,
   },
@@ -10,11 +14,11 @@ const pages = [
     priority: 0.9,
   },
   {
-    url: 'https://www.winteradvisory.ai/sixam',
+    url: 'https://www.winteradvisory.ai/6am/support',
     priority: 0.7,
   },
   {
-    url: 'https://www.winteradvisory.ai/sixam/privacy',
+    url: 'https://www.winteradvisory.ai/6am/privacy',
     priority: 0.5,
   },
 ]
