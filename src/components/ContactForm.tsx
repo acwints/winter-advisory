@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
 const priorityOptions = [
@@ -29,6 +29,7 @@ export function ContactForm() {
     utmCampaign: '',
     scoreSummary: '',
   })
+  const submission = useRef<{ payload: string; id: string } | null>(null)
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
 
   useEffect(() => {
@@ -46,7 +47,12 @@ export function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (status === 'submitting') return
     setStatus('submitting')
+    const payload = JSON.stringify(formData)
+    if (!submission.current || submission.current.payload !== payload) {
+      submission.current = { payload, id: crypto.randomUUID() }
+    }
 
     try {
       const response = await fetch('/api/contact', {
@@ -54,13 +60,14 @@ export function ContactForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, submissionId: submission.current.id }),
       })
 
       if (!response.ok) {
         throw new Error('Failed to send message')
       }
 
+      submission.current = null
       setStatus('success')
       setFormData({
         name: '',

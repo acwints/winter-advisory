@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate:intro": "node scripts/generate-loading-video.mjs"
+    "generate:intro": "node scripts/generate-loading-video.mjs",
+    "test:intake": "node --test tests/inquiry.test.mjs",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@openai/agents": "^0.11.6",

@@ -5,14 +5,15 @@ Guidance for human and AI contributors working in this repository.
 ## Purpose
 
 This repo is the public Winter Advisory website and intake surface.
-It is not the canonical Winter Advisory operating system.
+The canonical Winter Advisory holding company OS is built on Paperclip.
+This website is its public intake surface and remains separately deployable.
 
 If you need to coordinate company work, review portfolio priorities, inspect
 operating briefs, or understand what Winter Advisory is doing today, use the
-real HQ first:
+holding company OS first:
 
-- Canonical HQ repo: `/Users/andrewwinter/Documents/GitHub/winter/hq`
-- Winter Advisory instance: `/Users/andrewwinter/Documents/GitHub/winter/hq/instances/winter-advisory`
+- Canonical Paperclip OS repo: `/Users/andrewwinter/Documents/GitHub/winter/winter-os`
+- Winter Advisory instance: `/Users/andrewwinter/Documents/GitHub/winter/winter-os/instances/winter-advisory`
 
 ## Repo Boundary
 
@@ -33,7 +34,7 @@ Work that does not belong here:
 ## Agent Routing Rule
 
 When a request mentions any of the following, leave this repo and start from the
-HQ instance path above unless the user explicitly asks for website work:
+Paperclip instance path above unless the user explicitly asks for website work:
 
 - Winter Advisory HQ
 - portfolio coordination
