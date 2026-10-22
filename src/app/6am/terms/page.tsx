@@ -14,7 +14,7 @@ export default function TermsPage() {
   return (
     <>
       <h1>Terms of Use</h1>
-      <p className="text-sm">Effective September 6, 2026</p>
+      <p className="text-sm">Effective October 21, 2026</p>
       <p>6AM is provided by Winter Advisory. These terms describe the app’s intended use and account services.</p>
       <section>
         <h2>Your App Store license</h2>
@@ -22,16 +22,21 @@ export default function TermsPage() {
       </section>
       <section>
         <h2>Wake taps and sleep insights</h2>
-        <p>6AM schedules eleven weekday notifications from 5:55 through 6:05 a.m. and can display wake-time trends calculated from Apple Health sleep records. It is a wellness and routine tool, not a medical device, emergency service, or guaranteed alarm.</p>
+        <p>6AM schedules five weekday wake taps from 5:55 through 5:59 a.m., followed by a system alarm at 6:00 a.m. on iOS 26 or later, and can display wake-time trends calculated from Apple Health sleep records. It is a wellness and routine tool, not a medical device, emergency service, or guaranteed alarm.</p>
         <p className="mt-4">Delivery, haptics, and display wake depend on Apple’s operating systems, notification permissions, Focus settings, battery, connectivity between your devices, and how your Watch is worn. Use a separate dependable alarm when missing a wake-up would have serious consequences. Sleep insights depend on the completeness and accuracy of the records in Apple Health and are not medical advice.</p>
       </section>
       <section>
-        <h2>Optional accounts and responsible use</h2>
-        <p>An account is optional for local wake taps and sleep insights. If you sign in, use your own Apple account and protect access to your devices. Do not use the account service to access someone else’s information, bypass security, or disrupt the service. Account features require network access and may be unavailable during outages or maintenance.</p>
+        <h2>6AM Plus subscriptions</h2>
+        <p>An account and an active 6AM Plus trial or subscription are required for the wake sequence, morning briefing, and analytics. Monthly and annual plans offer a seven-day introductory free trial to eligible Apple Accounts. Returning subscribers can sign in and restore an active subscription. Available plans, localized prices, billing periods, and any eligible introductory trial are shown before purchase. Apple charges the Apple Account used for your purchase. Subscriptions renew automatically unless canceled at least 24 hours before the current period ends. If a free trial is offered, cancel at least 24 hours before it ends to avoid the subscription charge.</p>
+        <p className="mt-4">Manage or cancel your subscription in App Store account settings. Use Restore purchases in 6AM to recover an active subscription purchased with the same Apple Account. Deleting the app or a 6AM account does not cancel your subscription. Billing access changes do not automatically cancel an already scheduled alarm; you can turn the wake sequence off in the app. Refund requests are handled by Apple, subject to applicable consumer rights.</p>
+      </section>
+      <section>
+        <h2>Accounts and responsible use</h2>
+        <p>Sign in with Apple is required. Use your own Apple account and protect access to your devices. Do not use the account service to access someone else’s information, bypass security, or disrupt the service. Account features require network access and may be unavailable during outages or maintenance.</p>
       </section>
       <section>
         <h2>Privacy and leaving the service</h2>
-        <p>The <Link href="/6am/privacy">Privacy Policy</Link> explains on-device Health processing and the information used for optional account sync. You can stop using 6AM at any time. Turn off wake taps in the app and use Settings → Delete Account to remove your optional account. Signing out or uninstalling the app does not delete server account records.</p>
+        <p>The <Link href="/6am/privacy">Privacy Policy</Link> explains on-device Health processing and the information used for account services. You can stop using 6AM at any time. Turn off wake taps in the app and use Settings → Delete Account to remove your account. Signing out or uninstalling the app does not delete server account records.</p>
       </section>
       <section>
         <h2>Changes and support</h2>
