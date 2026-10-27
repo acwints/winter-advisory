@@ -2,6 +2,8 @@
 const nextConfig = {
   async redirects() {
     return [
+      { source: '/writing/the-technical-divide', destination: '/writing/ai-adoption-default', permanent: true },
+      { source: '/drafts/ai-upskilling', destination: '/writing/ai-adoption-default', permanent: true },
       { source: '/sixam', destination: '/6am/support', permanent: true },
       { source: '/sixam/privacy', destination: '/6am/privacy', permanent: true },
       { source: '/6am', destination: '/6am/support', permanent: true },
@@ -23,6 +25,10 @@ const nextConfig = {
   },
   async headers() {
     return [
+      {
+        source: '/drafts/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }],
+      },
       {
         source: '/:path*',
         headers: [

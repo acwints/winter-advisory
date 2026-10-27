@@ -1,0 +1,2 @@
+/* Hallmark: user-selected Winter Advisory theme, scoped to the essay. */
+[data-theme="winter-essay"] { --ink: #f2f1e9; --muted: #bdc5c7; --line: #343d42; --accent: #b1eee8; --bg: #0c151a; --paper: #eeeae0; --paper-ink: #1d3034; --paper-muted: #43595b; --rule: #afbeb7; --grid: #c9d0c6; --dot: #a8b1ab; --builder: #127669; --shade: #12766916; --button: #1c4543; --font: var(--font-space-grotesk), sans-serif; --wordmark-font: var(--font-microgramma), sans-serif; }

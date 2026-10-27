@@ -5,6 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
+      disallow: '/drafts/',
     },
     sitemap: 'https://winteradvisory.llc/sitemap.xml',
   }

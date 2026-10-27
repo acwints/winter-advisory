@@ -1,6 +1,8 @@
 import type { MetadataRoute } from 'next'
 
 const pages = [
+  { url: 'https://www.winteradvisory.ai/writing', priority: 0.8 },
+  { url: 'https://www.winteradvisory.ai/writing/ai-adoption-default', priority: 0.8 },
   {
     url: 'https://www.winteradvisory.ai/6am/terms',
     priority: 0.5,
