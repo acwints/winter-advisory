@@ -13,7 +13,9 @@ const spaceGrotesk = Space_Grotesk({
 const microgramma = localFont({
   src: [
     {
-      path: '../fonts/microgrammanormal.ttf',
+      // Subset (Latin-1 + Latin Extended-A + punctuation), unhinted WOFF2.
+      // Source: microgrammanormal.ttf; see commit message for the recipe.
+      path: '../fonts/microgramma.woff2',
       weight: '400',
       style: 'normal',
     }
@@ -67,7 +69,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`scroll-smooth dark ${spaceGrotesk.variable} ${microgramma.variable}`}>
+    <html
+      lang="en"
+      className={`scroll-smooth dark ${spaceGrotesk.variable} ${microgramma.variable}`}
+      // Bare face name (no fallback stack) so `.font-microgramma` in
+      // globals.css reuses this one font file and keeps its own fallbacks.
+      style={{ ['--font-microgramma-face' as string]: microgramma.style.fontFamily.split(',')[0] }}
+    >
       <body 
         className="bg-[#05070a] text-slate-100 antialiased" 
         suppressHydrationWarning
