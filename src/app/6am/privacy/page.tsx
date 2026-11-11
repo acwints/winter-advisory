@@ -14,7 +14,7 @@ export default function PrivacyPage() {
   return (
     <>
       <h1>Privacy Policy</h1>
-      <p className="text-sm">Effective October 21, 2026</p>
+      <p className="text-sm">Effective November 10, 2026</p>
       <p>This policy explains how Winter Advisory handles information in the 6AM iPhone and Apple Watch app and when you contact us for 6AM support. An account and an active trial or subscription are required to use the app.</p>
 
       <section>
@@ -32,7 +32,7 @@ export default function PrivacyPage() {
       <section>
         <h2>Subscriptions</h2>
         <p>Apple processes in-app payments. RevenueCat manages subscription access, purchase restoration, and subscription reporting. RevenueCat receives your 6AM account identifier, purchase and renewal records, product identifiers, subscription status, and technical information such as app version, operating-system version, and storefront. Your 6AM account name, email, Apple Health data, derived sleep insights, and location are not sent to RevenueCat. We do not receive your payment-card details. Learn more in <a href="https://www.revenuecat.com/privacy/">RevenueCat’s privacy policy</a>.</p>
-        <p className="mt-4">Subscriptions are linked to your App Store purchase history and RevenueCat’s anonymous identifier, separately from an 6AM account. Deleting your 6AM account does not cancel an App Store subscription or automatically erase purchase records kept by Apple or RevenueCat. Manage subscriptions in App Store settings, or contact us for help with purchase-data requests and applicable retention requirements.</p>
+        <p className="mt-4">Subscriptions are linked to your App Store purchase history and your 6AM account identifier in RevenueCat. Deleting your 6AM account does not cancel an App Store subscription or automatically erase purchase records kept by Apple or RevenueCat. Manage subscriptions in App Store settings, or contact us for help with purchase-data requests and applicable retention requirements.</p>
       </section>
       <section>
         <h2>Account information</h2>
@@ -47,7 +47,11 @@ export default function PrivacyPage() {
       <section>
         <h2>Service providers and sharing</h2>
         <p>Apple provides Sign in with Apple, Health access, in-app purchases, system alarms, and notification services. RevenueCat provides subscription management, and MET Norway provides weather forecasts. Railway hosts the 6AM account service and database. These providers process information needed to operate their services. Hosting infrastructure may also process IP addresses and request metadata to deliver and secure network requests. Our service records operational errors and request identifiers for troubleshooting.</p>
-        <p className="mt-4">6AM does not show advertising, include advertising SDKs, sell personal information, or track you across other companies’ apps and websites. RevenueCat reporting is limited to subscription operations and revenue; your Health data remains on your iPhone. We may disclose information where required by law or necessary to address fraud, security incidents, or threats to people’s rights. The public support pages are hosted on Vercel; visiting them sends ordinary web-request information to that hosting service.</p>
+        <p className="mt-4">6AM does not show advertising, include advertising SDKs, sell personal information, or track you across other companies’ apps and websites. RevenueCat also measures which Apple Ads campaigns lead to subscriptions. Your Health data remains on your iPhone. We may disclose information where required by law or necessary to address fraud, security incidents, or threats to people’s rights. The public support pages are hosted on Vercel; visiting them sends ordinary web-request information to that hosting service.</p>
+      </section>
+      <section>
+        <h2>Apple Ads attribution</h2>
+        <p>6AM uses Apple’s standard AdServices attribution to measure advertising for 6AM on the App Store. The app sends an Apple attribution token to RevenueCat, which requests campaign information from Apple and associates the returned campaign, ad group, keyword, and attribution type, when available, with subscription outcomes. We use this to evaluate acquisition costs, trials, purchases, and renewals. We do not collect the advertising identifier (IDFA) or request cross-app tracking permission for this measurement. Health samples, sleep scores, wake times, and weather location are not included in advertising attribution.</p>
       </section>
       <section>
         <h2>Retention and account deletion</h2>
